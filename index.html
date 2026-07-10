@@ -51,7 +51,7 @@
   }
 
   /* ---------- hero ---------- */
-  header{padding:56px 0 32px;text-align:center}
+  header.wrap{padding:56px 24px 32px;text-align:center}
   h1{
     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
     font-size:clamp(38px,7vw,64px);
@@ -154,7 +154,7 @@
   .lowest .l-val.r{color:var(--red-text)}
 
   /* ---------- sections ---------- */
-  section{padding:72px 0}
+  section.wrap{padding:72px 24px}
   .kicker{
     font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
     color:var(--muted);margin-bottom:14px;
@@ -177,8 +177,8 @@
 
   .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
   .feat{background:var(--card);border-radius:var(--radius-md);padding:24px}
-  .feat .f-dot{width:10px;height:10px;border-radius:50%;margin-bottom:14px}
-  .feat h3{font-size:17px;font-weight:700;letter-spacing:-.015em;margin-bottom:6px}
+  .feat .f-dot{flex:0 0 auto;width:10px;height:10px;border-radius:50%;margin-top:6px}
+  .feat h3{display:flex;align-items:flex-start;gap:9px;font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.3;margin-bottom:6px}
   .feat p{font-size:15px;color:var(--muted)}
 
   .privacy{
@@ -204,7 +204,7 @@
   footer .f-sub{font-size:13px;color:var(--muted);margin-top:6px}
 
   @media (max-width:720px){
-    section{padding:52px 0}
+    section.wrap{padding:52px 24px}
     .contrast,.feats{grid-template-columns:1fr}
     .privacy{grid-template-columns:1fr;padding:32px 24px}
     .day{font-size:13px;border-radius:10px}
@@ -288,18 +288,15 @@
   <h2>Your money already has dates. Now it has a calendar.</h2>
   <div class="feats">
     <div class="feat">
-      <div class="f-dot" style="background:var(--green)"></div>
-      <h3>Put money on the timeline</h3>
+      <h3><span class="f-dot" style="background:var(--green)"></span>Put money on the timeline</h3>
       <p>Paychecks, rent, subscriptions and one-off plans — each on the day it actually happens.</p>
     </div>
     <div class="feat">
-      <div class="f-dot" style="background:var(--amber)"></div>
-      <h3>Spot your lowest balance day</h3>
+      <h3><span class="f-dot" style="background:var(--amber)"></span>Spot your lowest balance day</h3>
       <p>Green means on track, yellow means pay attention, red means a decision is coming. Weeks in advance.</p>
     </div>
     <div class="feat">
-      <div class="f-dot" style="background:var(--red)"></div>
-      <h3>Test purchases before you make them</h3>
+      <h3><span class="f-dot" style="background:var(--red)"></span>Test purchases before you make them</h3>
       <p>Ask "what if I buy this today?" and watch how it changes every day after — before you spend.</p>
     </div>
   </div>
