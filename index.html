@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Jayck Flow — See tomorrow's balance today</title>
+<meta name="description" content="Jayck Flow is a financial calendar for iPhone that shows your future balance before money decisions happen. Coming soon.">
+<style>
+  :root{
+    /* aligned with app theme tokens (src/index.css --c-*) */
+    --bg:#F2F2F7;            /* --c-bg */
+    --card:#FFFFFF;          /* --c-card */
+    --ink:#1C1C1E;           /* --c-label */
+    --muted:#8E8E93;         /* --c-label2 */
+    --hair:#E5E5EA;          /* --c-sep */
+    --green:#34C759;         /* --c-green */
+    --green-soft:#E9F9EE;    /* --c-greenbg */
+    --green-text:#1C7A3A;    /* --c-green-text */
+    --amber:#FF9500;         /* --c-orange */
+    --amber-soft:#FFEFCC;    /* --c-amber-bg */
+    --amber-text:#9A6400;    /* --c-amber-text */
+    --red:#FF3B30;           /* --c-red */
+    --red-soft:#FFECEB;      /* --c-redbg */
+    --red-text:#B3261E;      /* --c-red-text */
+    --radius-lg:28px;
+    --radius-md:18px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px}
+
+  /* ---------- nav ---------- */
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 0;
+  }
+  .logo{font-size:19px;font-weight:700;letter-spacing:-.02em}
+  .logo span{color:var(--muted);font-weight:500}
+  .soon-pill{
+    font-size:13px;font-weight:600;color:var(--muted);
+    border:1px solid var(--hair);border-radius:100px;
+    padding:6px 14px;background:var(--card);
+    white-space:nowrap;
+  }
+
+  /* ---------- hero ---------- */
+  header{padding:56px 0 32px;text-align:center}
+  h1{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
+    font-size:clamp(38px,7vw,64px);
+    font-weight:700;letter-spacing:-.03em;line-height:1.05;
+  }
+  .sub{
+    margin:20px auto 0;max-width:560px;
+    font-size:clamp(17px,2.4vw,21px);color:var(--muted);letter-spacing:-.01em;
+  }
+  .cta-row{margin-top:28px;display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap}
+  .cta{
+    display:inline-flex;align-items:center;gap:9px;
+    background:var(--ink);color:#fff;border-radius:100px;
+    padding:13px 24px;font-size:16px;font-weight:600;letter-spacing:-.01em;
+  }
+  .cta svg{width:17px;height:20px;display:block}
+  .cta-note{font-size:14px;color:var(--muted)}
+
+  /* ---------- demo card ---------- */
+  .demo{
+    margin:44px auto 0;max-width:520px;
+    background:var(--card);border-radius:var(--radius-lg);
+    box-shadow:0 1px 2px rgba(0,0,0,.04),0 24px 60px -24px rgba(0,0,0,.18);
+    padding:24px 22px 20px;text-align:left;
+  }
+  .demo-top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px}
+  .demo-month{font-size:17px;font-weight:700;letter-spacing:-.02em}
+  .demo-legend{display:flex;gap:12px;font-size:11px;color:var(--muted)}
+  .demo-legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+  .dow{
+    display:grid;grid-template-columns:repeat(7,1fr);
+    margin-top:12px;font-size:11px;font-weight:600;color:var(--muted);
+    text-align:center;text-transform:uppercase;letter-spacing:.04em;
+  }
+  .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:8px}
+  .day{
+    aspect-ratio:1/1;border-radius:12px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+    font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;
+    background:transparent;border:none;cursor:pointer;color:var(--ink);
+    transition:background .35s ease,color .35s ease,box-shadow .2s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .day:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .day.empty{visibility:hidden;pointer-events:none}
+  .day .dot{width:5px;height:5px;border-radius:50%;background:transparent;transition:background .35s ease}
+  .day.g{background:var(--green-soft);color:var(--green-text)}
+  .day.g .dot{background:var(--green)}
+  .day.a{background:var(--amber-soft);color:var(--amber-text)}
+  .day.a .dot{background:var(--amber)}
+  .day.r{background:var(--red-soft);color:var(--red-text)}
+  .day.r .dot{background:var(--red)}
+  .day.sel{box-shadow:inset 0 0 0 2px var(--ink)}
+  .day.buy-mark{position:relative}
+  .day.buy-mark::after{
+    content:"";position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;
+    background:var(--ink);
+  }
+
+  .detail{
+    margin-top:14px;min-height:44px;
+    background:var(--bg);border-radius:14px;
+    padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+    font-size:14px;
+  }
+  .detail .d-label{color:var(--muted)}
+  .detail .d-bal{font-weight:700;font-variant-numeric:tabular-nums}
+
+  .whatif{
+    margin-top:14px;border-top:1px solid var(--hair);padding-top:16px;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+  }
+  .whatif-copy{font-size:15px;font-weight:600;letter-spacing:-.01em}
+  .whatif-copy small{display:block;font-weight:400;color:var(--muted);font-size:13px;margin-top:2px}
+  .switch{
+    position:relative;width:51px;height:31px;flex:0 0 auto;border:none;cursor:pointer;
+    border-radius:100px;background:rgba(120,120,128,.16);
+    transition:background .25s ease;
+  }
+  .switch::after{
+    content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;
+    background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.15),0 1px 1px rgba(0,0,0,.16);
+    transition:transform .25s ease;
+  }
+  .switch[aria-checked="true"]{background:var(--green)}
+  .switch[aria-checked="true"]::after{transform:translateX(20px)}
+  .switch:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+  .lowest{
+    margin-top:14px;display:flex;align-items:center;justify-content:space-between;
+    background:var(--bg);border-radius:14px;padding:12px 14px;
+  }
+  .lowest .l-label{font-size:13px;color:var(--muted)}
+  .lowest .l-val{
+    font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em;
+    transition:color .35s ease;
+  }
+  .lowest .l-val.g{color:var(--green-text)}
+  .lowest .l-val.a{color:var(--amber-text)}
+  .lowest .l-val.r{color:var(--red-text)}
+
+  /* ---------- sections ---------- */
+  section{padding:72px 0}
+  .kicker{
+    font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--muted);margin-bottom:14px;
+  }
+  h2{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
+    font-size:clamp(28px,4.6vw,40px);font-weight:700;letter-spacing:-.025em;line-height:1.12;
+    max-width:560px;
+  }
+  .lede{margin-top:16px;max-width:520px;font-size:17px;color:var(--muted)}
+
+  .contrast{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:36px}
+  .c-card{
+    background:var(--card);border-radius:var(--radius-md);padding:24px;
+  }
+  .c-card .c-tag{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:8px}
+  .c-card p{font-size:19px;font-weight:600;letter-spacing:-.015em;line-height:1.3}
+  .c-card.future{background:var(--ink);color:#fff}
+  .c-card.future .c-tag{color:rgba(255,255,255,.55)}
+
+  .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+  .feat{background:var(--card);border-radius:var(--radius-md);padding:24px}
+  .feat .f-dot{width:10px;height:10px;border-radius:50%;margin-bottom:14px}
+  .feat h3{font-size:17px;font-weight:700;letter-spacing:-.015em;margin-bottom:6px}
+  .feat p{font-size:15px;color:var(--muted)}
+
+  .privacy{
+    background:var(--card);border-radius:var(--radius-lg);
+    padding:48px clamp(24px,5vw,56px);
+    display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;
+  }
+  .p-list{list-style:none;display:grid;gap:12px}
+  .p-list li{
+    display:flex;align-items:center;gap:12px;font-size:16px;font-weight:500;
+  }
+  .p-list .check{
+    flex:0 0 auto;width:24px;height:24px;border-radius:50%;
+    background:var(--green-soft);color:var(--green);
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;
+  }
+
+  footer{
+    border-top:1px solid var(--hair);
+    padding:36px 0 48px;text-align:center;
+  }
+  footer .f-line{font-size:15px;font-weight:600;letter-spacing:-.01em}
+  footer .f-sub{font-size:13px;color:var(--muted);margin-top:6px}
+
+  @media (max-width:720px){
+    section{padding:52px 0}
+    .contrast,.feats{grid-template-columns:1fr}
+    .privacy{grid-template-columns:1fr;padding:32px 24px}
+    .day{font-size:13px;border-radius:10px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{transition:none!important;animation:none!important}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav>
+    <div class="logo">Jayck <span>Flow</span></div>
+    <div class="soon-pill">Coming soon to iPhone</div>
+  </nav>
+</div>
+
+<header class="wrap">
+  <h1>See tomorrow's<br>balance today.</h1>
+  <p class="sub">Jayck Flow is a financial calendar. Put your income, bills and plans on a timeline — and know your future balance before the day arrives.</p>
+  <div class="cta-row">
+    <span class="cta" aria-label="Coming soon on the App Store">
+      <svg viewBox="0 0 17 20" fill="currentColor" aria-hidden="true"><path d="M13.9 10.6c0-2.2 1.8-3.3 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.7.8-3.4.8-.7 0-1.8-.8-2.9-.8C4.8 5.6 3.4 6.5 2.6 7.8c-1.5 2.6-.4 6.6 1.1 8.7.7 1.1 1.6 2.2 2.7 2.2 1.1 0 1.5-.7 2.9-.7 1.3 0 1.7.7 2.9.7 1.2 0 2-1.1 2.7-2.2.9-1.2 1.2-2.4 1.2-2.5-.1 0-2.2-.9-2.2-3.4zM11.7 3.8c.6-.7 1-1.7.9-2.8-.9 0-1.9.6-2.5 1.3-.6.6-1 1.7-.9 2.7 1 .1 1.9-.5 2.5-1.2z"/></svg>
+      Coming soon
+    </span>
+    <span class="cta-note">Free at launch · iPhone first</span>
+  </div>
+
+  <!-- signature: live what-if calendar -->
+  <div class="demo" id="demo">
+    <div class="demo-top">
+      <div class="demo-month">This month</div>
+      <div class="demo-legend" aria-hidden="true">
+        <span><i style="background:var(--green)"></i>On track</span>
+        <span><i style="background:var(--amber)"></i>Watch</span>
+        <span><i style="background:var(--red)"></i>Decide</span>
+      </div>
+    </div>
+    <div class="dow"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+    <div class="grid" id="grid" role="group" aria-label="Calendar of projected daily balance. Tap a day to see its balance."></div>
+
+    <div class="detail" id="detail">
+      <span class="d-label" id="d-label">Tap any day to see its projected balance</span>
+      <span class="d-bal" id="d-bal"></span>
+    </div>
+
+    <div class="whatif">
+      <div class="whatif-copy">
+        What if I buy the $299 headphones?
+        <small>Adds a purchase on the 18th</small>
+      </div>
+      <button class="switch" id="switch" role="switch" aria-checked="false" aria-label="Simulate buying $299 headphones on the 18th"></button>
+    </div>
+
+    <div class="lowest">
+      <span class="l-label">Lowest balance day</span>
+      <span class="l-val" id="lowest"></span>
+    </div>
+  </div>
+</header>
+
+<section class="wrap">
+  <p class="kicker">Future first</p>
+  <h2>Most apps look back. Jayck Flow looks ahead.</h2>
+  <div class="contrast">
+    <div class="c-card">
+      <div class="c-tag">Budget trackers ask</div>
+      <p>"Where did my money go?"</p>
+    </div>
+    <div class="c-card future">
+      <div class="c-tag">Jayck Flow answers</div>
+      <p>"What will my money look like tomorrow?"</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" style="padding-top:0">
+  <p class="kicker">How it works</p>
+  <h2>Your money already has dates. Now it has a calendar.</h2>
+  <div class="feats">
+    <div class="feat">
+      <div class="f-dot" style="background:var(--green)"></div>
+      <h3>Put money on the timeline</h3>
+      <p>Paychecks, rent, subscriptions and one-off plans — each on the day it actually happens.</p>
+    </div>
+    <div class="feat">
+      <div class="f-dot" style="background:var(--amber)"></div>
+      <h3>Spot your lowest balance day</h3>
+      <p>Green means on track, yellow means pay attention, red means a decision is coming. Weeks in advance.</p>
+    </div>
+    <div class="feat">
+      <div class="f-dot" style="background:var(--red)"></div>
+      <h3>Test purchases before you make them</h3>
+      <p>Ask "what if I buy this today?" and watch how it changes every day after — before you spend.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" style="padding-top:0">
+  <div class="privacy">
+    <div>
+      <p class="kicker">Private by design</p>
+      <h2 style="max-width:420px">Your financial timeline belongs to you.</h2>
+      <p class="lede">No bank connection required. No ads, no selling data — your numbers stay in your hands.</p>
+    </div>
+    <ul class="p-list">
+      <li><span class="check">✓</span>No account required to start</li>
+      <li><span class="check">✓</span>Your data stays on your device</li>
+      <li><span class="check">✓</span>No unnecessary tracking</li>
+      <li><span class="check">✓</span>Manual control, always</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="f-line">Jayck Flow — the calendar for your money.</p>
+    <p class="f-sub">Coming soon to the App Store · © 2026 Jayck Flow</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var DAYS = 30, OFFSET = 2; // month starts on Wednesday
+  var START_BALANCE = 180;
+  var EVENTS = {
+    1:  [{label:"Paycheck", amt: 1900}],
+    3:  [{label:"Rent", amt: -1150}],
+    6:  [{label:"Utilities", amt: -120}],
+    9:  [{label:"Groceries", amt: -85}],
+    12: [{label:"Subscriptions", amt: -42}],
+    15: [{label:"Freelance", amt: 600}],
+    16: [{label:"Groceries", amt: -90}],
+    20: [{label:"Car insurance", amt: -380}],
+    23: [{label:"Groceries", amt: -95}],
+    26: [{label:"Dining out", amt: -60}],
+    27: [{label:"Phone bill", amt: -65}],
+    29: [{label:"Gym", amt: -45}]
+  };
+  var BUY_DAY = 18, BUY = {label:"Headphones", amt:-299};
+  var RED_BELOW = 300, AMBER_BELOW = 750;
+
+  var grid = document.getElementById("grid");
+  var sw = document.getElementById("switch");
+  var lowestEl = document.getElementById("lowest");
+  var dLabel = document.getElementById("d-label");
+  var dBal = document.getElementById("d-bal");
+  var buying = false, selected = null;
+  var cells = [];
+
+  function compute(withBuy){
+    var bal = START_BALANCE, out = [];
+    for(var d=1; d<=DAYS; d++){
+      var evs = (EVENTS[d]||[]).slice();
+      if(withBuy && d===BUY_DAY) evs.push(BUY);
+      for(var i=0;i<evs.length;i++) bal += evs[i].amt;
+      out.push({day:d, balance:bal, events:evs});
+    }
+    return out;
+  }
+  function statusOf(b){ return b < RED_BELOW ? "r" : b < AMBER_BELOW ? "a" : "g"; }
+  function fmt(n){ return "$" + n.toLocaleString("en-US"); }
+  function ordinal(n){
+    var s=["th","st","nd","rd"], v=n%100;
+    return n + (s[(v-20)%10] || s[v] || s[0]);
+  }
+
+  // build grid once
+  for(var i=0;i<OFFSET;i++){
+    var e = document.createElement("span");
+    e.className = "day empty"; e.setAttribute("aria-hidden","true");
+    grid.appendChild(e);
+  }
+  for(var d=1; d<=DAYS; d++){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "day";
+    b.innerHTML = "<span>"+d+"</span><span class='dot'></span>";
+    (function(day, btn){
+      btn.addEventListener("click", function(){ select(day); });
+    })(d, b);
+    grid.appendChild(b);
+    cells.push(b);
+  }
+
+  function render(){
+    var data = compute(buying);
+    var low = data[0];
+    for(var i=0;i<data.length;i++){
+      var row = data[i], cell = cells[i];
+      var st = statusOf(row.balance);
+      cell.className = "day " + st
+        + (buying && row.day===BUY_DAY ? " buy-mark" : "")
+        + (selected===row.day ? " sel" : "");
+      cell.setAttribute("aria-label",
+        "Day " + row.day + ", projected balance " + fmt(row.balance));
+      if(row.balance < low.balance) low = row;
+    }
+    var st = statusOf(low.balance);
+    lowestEl.textContent = ordinal(low.day) + " · " + fmt(low.balance);
+    lowestEl.className = "l-val " + st;
+    if(selected) showDetail(data[selected-1]);
+  }
+
+  function showDetail(row){
+    var parts = [];
+    for(var i=0;i<row.events.length;i++){
+      var ev = row.events[i];
+      parts.push(ev.label + " " + (ev.amt>0 ? "+$" : "\u2212$") + Math.abs(ev.amt).toLocaleString("en-US"));
+    }
+    dLabel.textContent = ordinal(row.day) + (parts.length ? " · " + parts.join(", ") : " · No events");
+    dBal.textContent = fmt(row.balance);
+  }
+
+  function select(day){
+    selected = day;
+    render();
+  }
+
+  sw.addEventListener("click", function(){
+    buying = !buying;
+    sw.setAttribute("aria-checked", String(buying));
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
