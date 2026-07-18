@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Support — JayCK Flow</title>
+<meta name="description" content="JayCK Flow support and FAQ.">
+<style>
+  :root{
+    --bg:#F2F2F7;--card:#FFFFFF;--ink:#1C1C1E;--muted:#8E8E93;--hair:#E5E5EA;
+    --green:#34C759;--green-soft:#E9F9EE;--green-text:#1C7A3A;
+    --amber:#FF9500;--amber-soft:#FFEFCC;--amber-text:#9A6400;
+    --red:#FF3B30;--red-soft:#FFECEB;--red-text:#B3261E;
+    --blue:#0A6CFF;--radius-lg:28px;--radius-md:18px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+  .logo{font-size:19px;font-weight:700;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+  .logo span{color:var(--muted);font-weight:500}
+  .soon-pill{font-size:13px;font-weight:600;color:var(--muted);border:1px solid var(--hair);
+    border-radius:100px;padding:6px 14px;background:var(--card);white-space:nowrap}
+  main{padding:36px 0 24px}
+  .kicker{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}
+  h1{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
+    font-size:clamp(30px,5.5vw,44px);font-weight:700;letter-spacing:-.025em;line-height:1.1}
+  .sub{margin-top:14px;max-width:560px;font-size:17px;color:var(--muted)}
+  .date{margin-top:10px;font-size:13px;color:var(--muted)}
+  h2{font-size:19px;font-weight:700;letter-spacing:-.015em;margin:34px 0 8px}
+  p,li{font-size:16px;color:#3A3A3C}
+  ul{padding-left:20px;margin:8px 0}
+  li{margin:5px 0}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  strong{color:var(--ink)}
+  .card{background:var(--card);border-radius:var(--radius-md);padding:22px 24px;margin:14px 0}
+  .card h3{font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.3;margin-bottom:6px;
+    display:flex;align-items:flex-start;gap:9px}
+  .card h3 .f-dot{flex:0 0 auto;width:10px;height:10px;border-radius:50%;margin-top:6px}
+  .card p{font-size:15px;color:var(--muted);margin:6px 0}
+  .card p strong{color:var(--ink)}
+  .cta{display:inline-flex;align-items:center;background:var(--ink);color:#fff !important;border-radius:100px;
+    padding:13px 24px;font-size:16px;font-weight:600;letter-spacing:-.01em;margin-top:18px}
+  .cta:hover{text-decoration:none;opacity:.92}
+  .note{background:var(--card);border-radius:var(--radius-md);padding:14px 18px;font-size:14px;color:var(--muted);margin-top:26px}
+  footer{border-top:1px solid var(--hair);margin-top:56px;padding:36px 0 48px;text-align:center}
+  footer .f-line{font-size:15px;font-weight:600;letter-spacing:-.01em}
+  footer .f-links{margin-top:10px;font-size:14px}
+  footer .f-links a{color:var(--muted);margin:0 8px}
+  footer .f-sub{font-size:13px;color:var(--muted);margin-top:10px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav>
+    <a class="logo" href="/">JayCK <span>Flow</span></a>
+    <div class="soon-pill">Coming soon to iPhone</div>
+  </nav>
+</div>
+
+<main class="wrap">
+<p class="kicker">We're here to help</p>
+<h1>Support</h1>
+<p class="sub">A real person reads these — JayCK Flow is built by a small independent team. We aim to reply within two business days.</p>
+<a class="cta" href="mailto:support@jayck.dev">Email support@jayck.dev</a>
+
+<h2 style="margin-top:40px">Frequently asked</h2>
+
+<div class="card">
+  <h3><span class="f-dot" style="background:var(--red)"></span>I lost my sync passphrase. Can you recover it?</h3>
+  <p><strong>No — and that's by design.</strong> Your data is encrypted on your device with the passphrase before it reaches us; we only ever store an unreadable blob. Without the passphrase, the server copy cannot be decrypted by anyone, including us.</p>
+  <p>Your data is still on any device where the app has it locally. From there you can keep working offline, or delete the account in-app and re-enable sync with a new passphrase — the app will upload a fresh encrypted copy.</p>
+</div>
+
+<div class="card">
+  <h3><span class="f-dot" style="background:var(--amber)"></span>How do I cancel the subscription?</h3>
+  <p>Subscriptions are billed by Apple: iPhone Settings → your name → Subscriptions → JayCK Flow Premium → Cancel. It stays active until the end of the paid period. After it lapses, uploading pauses, but downloading your synced data keeps working.</p>
+</div>
+
+<div class="card">
+  <h3><span class="f-dot" style="background:var(--amber)"></span>Sync isn't working — what should I check?</h3>
+  <p>1) You're signed in (Account &amp; sync). 2) The <em>same</em> passphrase is entered on every device — a wrong passphrase shows a clear error and never overwrites anything. 3) Uploading needs an active subscription. 4) You're online. Still stuck? Email us with what the sync status line says.</p>
+</div>
+
+<div class="card">
+  <h3><span class="f-dot" style="background:var(--green)"></span>How do I delete my account?</h3>
+  <p>In the app: Account &amp; sync → Delete account. It asks you to type your email to confirm, then permanently removes the account and your encrypted vault from our servers. Data on your device stays until you remove the app.</p>
+</div>
+
+<div class="card">
+  <h3><span class="f-dot" style="background:var(--green)"></span>Can I use the app without an account?</h3>
+  <p>Yes — fully. An account exists only for sync between devices. Without one, everything stays on your device and nothing is stored on our servers.</p>
+</div>
+
+<div class="card">
+  <h3><span class="f-dot" style="background:var(--green)"></span>How do I get my data out?</h3>
+  <p>The app can export your data locally at any time (Data section) — it's your file, in a readable format, no subscription required.</p>
+</div>
+
+<p class="note">Security reminder: our emails contain only short codes — never links to click — and we will never ask for your password or sync passphrase.</p>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="f-line">JayCK Flow — the calendar for your money.</p>
+    <p class="f-links"><a href="/privacy">Privacy</a>·<a href="/terms">Terms</a>·<a href="/support">Support</a>·<a href="mailto:support@jayck.dev">support@jayck.dev</a></p>
+    <p class="f-sub">Coming soon to the App Store · © 2026 JayCK Flow</p>
+  </div>
+</footer>
+
+</body>
+</html>
