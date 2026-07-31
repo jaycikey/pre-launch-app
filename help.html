@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Help — JayCK Flow</title>
+<meta name="description" content="A guide to every screen and button in JayCK Flow: the calendar, the balance card, What if?, savings, debts, sync and settings.">
+<style>
+  :root{
+    --bg:#F2F2F7;--card:#FFFFFF;--ink:#1C1C1E;--muted:#8E8E93;--hair:#E5E5EA;
+    --green:#34C759;--green-soft:#E9F9EE;--green-text:#1C7A3A;
+    --amber:#FF9500;--amber-soft:#FFEFCC;--amber-text:#9A6400;
+    --red:#FF3B30;--red-soft:#FFECEB;--red-text:#B3261E;
+    --blue:#0A6CFF;--radius-lg:28px;--radius-md:18px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+  .logo{font-size:19px;font-weight:700;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+  .logo span{color:var(--muted);font-weight:500}
+  .soon-pill{font-size:13px;font-weight:600;color:var(--muted);border:1px solid var(--hair);
+    border-radius:100px;padding:6px 14px;background:var(--card);white-space:nowrap}
+  main{padding:36px 0 24px}
+  .kicker{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}
+  h1{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
+    font-size:clamp(30px,5.5vw,44px);font-weight:700;letter-spacing:-.025em;line-height:1.1}
+  .sub{margin-top:14px;max-width:560px;font-size:17px;color:var(--muted)}
+  h2{font-size:22px;font-weight:700;letter-spacing:-.02em;margin:44px 0 6px;scroll-margin-top:20px}
+  h3{font-size:17px;font-weight:700;letter-spacing:-.015em;margin:22px 0 4px}
+  p,li{font-size:16px;color:#3A3A3C}
+  ul{padding-left:20px;margin:8px 0}
+  li{margin:5px 0}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  strong{color:var(--ink)}
+  .card{background:var(--card);border-radius:var(--radius-md);padding:22px 24px;margin:14px 0}
+  .card p{font-size:15px;color:var(--muted);margin:6px 0}
+  .card p strong{color:var(--ink)}
+  /* Jump links */
+  .toc{background:var(--card);border-radius:var(--radius-md);padding:18px 22px;margin:22px 0 6px;
+    display:flex;flex-wrap:wrap;gap:8px 18px}
+  .toc a{font-size:15px;font-weight:600}
+  /* Control reference rows: what it's called · where it lives · what it does */
+  .ctrl{background:var(--card);border-radius:var(--radius-md);padding:6px 4px;margin:14px 0}
+  .ctrl .row{display:flex;gap:14px;padding:14px 20px;border-top:1px solid var(--hair)}
+  .ctrl .row:first-child{border-top:none}
+  .ctrl .n{flex:0 0 34%;font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+  .ctrl .n em{display:block;font-style:normal;font-weight:500;font-size:13px;color:var(--muted);margin-top:2px}
+  .ctrl .d{flex:1;font-size:15px;color:#3A3A3C}
+  @media (max-width:560px){
+    .ctrl .row{flex-direction:column;gap:4px}
+    .ctrl .n{flex:none}
+  }
+  .chip{display:inline-block;border-radius:100px;padding:1px 9px;font-size:13px;font-weight:700;
+    vertical-align:baseline;white-space:nowrap}
+  .chip.g{background:var(--green-soft);color:var(--green-text)}
+  .chip.a{background:var(--amber-soft);color:var(--amber-text)}
+  .chip.r{background:var(--red-soft);color:var(--red-text)}
+  .note{background:var(--card);border-radius:var(--radius-md);padding:14px 18px;font-size:14px;color:var(--muted);margin-top:18px}
+  .note strong{color:var(--ink)}
+  footer{border-top:1px solid var(--hair);margin-top:56px;padding:36px 0 48px;text-align:center}
+  footer .f-line{font-size:15px;font-weight:600;letter-spacing:-.01em}
+  footer .f-links{margin-top:10px;font-size:14px}
+  footer .f-links a{color:var(--muted);margin:0 8px}
+  footer .f-sub{font-size:13px;color:var(--muted);margin-top:10px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav>
+    <a class="logo" href="/">JayCK <span>Flow</span></a>
+    <a class="soon-pill" href="https://apps.apple.com/app/jayck-flow/id6789696499" style="text-decoration:none">Now on the App Store</a>
+  </nav>
+</div>
+
+<main class="wrap">
+<p class="kicker">Guide</p>
+<h1>How JayCK Flow works</h1>
+<p class="sub">Every screen and every button — what it's called, where it lives, and what it does. The app is a forecast, not a ledger: you tell it what's coming, and it shows you the balance you'll actually have on any future day.</p>
+
+<div class="toc">
+  <a href="#screen">Main screen</a>
+  <a href="#views">Views</a>
+  <a href="#money">Adding money</a>
+  <a href="#whatif">What if?</a>
+  <a href="#menu">Menu</a>
+  <a href="#savings">Savings</a>
+  <a href="#debts">Debts</a>
+  <a href="#settings">Settings</a>
+  <a href="#sync">Account &amp; sync</a>
+  <a href="#firstrun">First run &amp; starting over</a>
+</div>
+
+<h2 id="screen">The main screen</h2>
+<p>Three bands, top to bottom: a toolbar, your balance card, and the calendar itself.</p>
+
+<h3>Toolbar</h3>
+<div class="ctrl">
+  <div class="row"><div class="n">‹ 2026 <em>top left</em></div><div class="d">Zooms out. From the month view it opens the <strong>year</strong>; from a day it goes back to that day's month. In the year view it just shows the year.</div></div>
+  <div class="row"><div class="n">Cloud with a line <em>top centre</em></div><div class="d">Appears only when sync is paused — your session ended or the subscription lapsed. Tap-free indicator; the banner underneath explains what to do.</div></div>
+  <div class="row"><div class="n">What if? <em>top right</em></div><div class="d">Enters the sandbox. See <a href="#whatif">What if?</a> below.</div></div>
+  <div class="row"><div class="n">☰ Menu <em>far top right</em></div><div class="d">Transactions, Finances, Analytics, Settings, and Account &amp; sync all live here.</div></div>
+</div>
+
+<h3>Balance card</h3>
+<div class="ctrl">
+  <div class="row"><div class="n">Balance now</div><div class="d">Your balance today: the anchor balance plus everything that has happened since.</div></div>
+  <div class="row"><div class="n">Pencil icon</div><div class="d">Opens <strong>Anchor</strong> — the starting balance and the date it applies from. The forecast is built forward from that point, so to include older transactions, set the anchor date earlier than them.</div></div>
+  <div class="row"><div class="n">Reconcile icon</div><div class="d">Opens <strong>Reconcile balance</strong>: type what's really in the account right now and the forecast restarts from today. Use it when real life has drifted from the plan.</div></div>
+  <div class="row"><div class="n">Reserved · Available</div><div class="d">Shows only when savings goals hold a reserve. Reserved money stays in your balance but is treated as spoken for, so <strong>Available</strong> is what you can actually spend.</div></div>
+  <div class="row"><div class="n">Lowest point</div><div class="d">The lowest your balance is projected to fall, and the date it happens. This is the number the whole app exists for — a green dot means it stays safe, red means you dip below your buffer.</div></div>
+</div>
+
+<h3>The calendar grid</h3>
+<div class="ctrl">
+  <div class="row"><div class="n">A day cell</div><div class="d">The date, any transactions on it, and the <strong>projected balance</strong> after that day. Tap it to open that day.</div></div>
+  <div class="row"><div class="n">Day colour</div><div class="d">A red date means the projected balance is below zero (or below your buffer) that day. Black is fine.</div></div>
+  <div class="row"><div class="n"><span class="chip a">2/4</span> badge</div><div class="d">Expenses ticked off vs. planned for that day. <span class="chip a">Amber</span> = upcoming and still pending. <span class="chip r">Red</span> = a past day with expenses you never marked done.</div></div>
+  <div class="row"><div class="n"><span class="chip g">✓</span> badge</div><div class="d">Everything planned for that day is marked done.</div></div>
+  <div class="row"><div class="n">Small number, left gutter</div><div class="d">The ISO week number. It turns red when that week contains a risk day.</div></div>
+  <div class="row"><div class="n">Today</div><div class="d">Today's date is circled. The bottom-right <strong>Today</strong> pill jumps you back to it from anywhere.</div></div>
+  <div class="row"><div class="n">+ <em>bottom right</em></div><div class="d">Adds a transaction on the selected day.</div></div>
+</div>
+
+<h2 id="views">The three views</h2>
+<div class="ctrl">
+  <div class="row"><div class="n">Month</div><div class="d">The default. Scrolls continuously through months, so next month is one swipe away rather than a separate screen.</div></div>
+  <div class="row"><div class="n">Day</div><div class="d">Tap any date. Shows everything on that day, each with a done tick and an edit tap; also scrolls day by day.</div></div>
+  <div class="row"><div class="n">Year</div><div class="d">Tap ‹ from the month view. Twelve mini-months at a glance for spotting rough patches; tap a month to open it.</div></div>
+</div>
+<p class="note">On iPad and Mac the app uses a two-column layout instead: the calendar on the right, and your balance, transactions and category totals in a permanent sidebar on the left.</p>
+
+<h2 id="money">Adding and editing money</h2>
+<p>Tap <strong>+</strong>, or tap any existing transaction. The same editor handles both.</p>
+<div class="ctrl">
+  <div class="row"><div class="n">Name</div><div class="d">What it is — "Rent", "Spotify", "Salary".</div></div>
+  <div class="row"><div class="n">Type</div><div class="d"><strong>Expense</strong>, <strong>Income</strong>, or <strong>Transfer</strong> (money moving between your own accounts).</div></div>
+  <div class="row"><div class="n">Amount · Date</div><div class="d">How much, and the day it lands.</div></div>
+  <div class="row"><div class="n">Repeat</div><div class="d">Once, daily, weekly, every 2 weeks, monthly, yearly, or every N days. A repeating entry fills the calendar forward on its own — this is what turns one payday into a visible future.</div></div>
+  <div class="row"><div class="n">End date</div><div class="d">Optional. Stops a series on a date — a loan that finishes, a subscription you're cancelling.</div></div>
+  <div class="row"><div class="n">Category</div><div class="d">Feeds the category totals and Analytics. You can add your own in Settings.</div></div>
+  <div class="row"><div class="n">Notes</div><div class="d">Optional free text.</div></div>
+  <div class="row"><div class="n">Duplicate · Delete · Save</div><div class="d">Duplicate copies the entry for quick variations. Save applies; Delete removes.</div></div>
+</div>
+
+<h3>Marking things off</h3>
+<div class="ctrl">
+  <div class="row"><div class="n">Done tick</div><div class="d">In the day view. Marks the transaction as actually completed, which keeps "how many still pending" honest and drives the day badges.</div></div>
+  <div class="row"><div class="n">Paid from another account</div><div class="d">Marks it as settled elsewhere, so it does <strong>not</strong> affect this balance — useful for anything a partner or a second account covers.</div></div>
+</div>
+
+<h3>Editing a repeating transaction</h3>
+<p>Change or delete one and the app asks what you meant — <strong>This event only</strong>, <strong>This and following</strong>, or <strong>All events in the series</strong>. Nothing is guessed for you.</p>
+
+<h2 id="whatif">What if?</h2>
+<p>The sandbox. Tap <strong>What if?</strong> and the app enters <strong>Safe mode</strong>: add, change or delete anything and watch every future day re-colour — nothing is written to your data and nothing syncs until you decide.</p>
+<div class="ctrl">
+  <div class="row"><div class="n">Apply</div><div class="d">Keeps the changes for real.</div></div>
+  <div class="row"><div class="n">Discard</div><div class="d">Throws the whole experiment away and restores exactly what you had.</div></div>
+  <div class="row"><div class="n">Outlook</div><div class="d">A forward summary over <strong>3 or 6 months</strong>: end-of-month balance, the lowest point, and a list of upcoming risk days.</div></div>
+  <div class="row"><div class="n">Variable spending forecast <em>in Outlook</em></div><div class="d">Estimates your irregular day-to-day spending from your own history and places predicted expenses on future dates. It's an estimate, it sharpens as history builds, and it's dropped when you leave the sandbox.</div></div>
+  <div class="row"><div class="n">Count transfers <em>in Outlook</em></div><div class="d">Includes recurring outgoing transfers (like credit-card repayments) as their own streams. Needs a few transfers sharing a name.</div></div>
+</div>
+
+<h2 id="menu">The menu (☰)</h2>
+<div class="ctrl">
+  <div class="row"><div class="n">Transactions</div><div class="d">Every entry in one list, with search, a period filter (this month / 3 months / this year), status filters (all / done / planned) and a by-category grouping.</div></div>
+  <div class="row"><div class="n">Finances</div><div class="d">Three things: <a href="#savings">Savings</a>, <a href="#debts">Debts</a>, and an in-app "How it works" explainer.</div></div>
+  <div class="row"><div class="n">Analytics</div><div class="d">Income vs. expense and spending by category, over 1, 3, 6 or 12 months.</div></div>
+  <div class="row"><div class="n">Settings</div><div class="d">Preferences, categories, notifications, backup. See <a href="#settings">below</a>.</div></div>
+  <div class="row"><div class="n">Account &amp; sync</div><div class="d">Sign-in, subscription and encrypted sync. See <a href="#sync">below</a>.</div></div>
+</div>
+
+<h2 id="savings">Savings</h2>
+<p>A savings goal is an <strong>earmark</strong>, not a second account. The money stays in your balance, but reserving it lowers your <strong>Available</strong> figure so you don't spend it twice. Each goal has a rule that decides what the app suggests setting aside:</p>
+<div class="ctrl">
+  <div class="row"><div class="n">Fixed amount</div><div class="d">The same amount every month.</div></div>
+  <div class="row"><div class="n">% of income</div><div class="d">A share of what you actually earn. Prompts you right after you record income.</div></div>
+  <div class="row"><div class="n">Target by date</div><div class="d">Name a sum and a deadline; the app works out the monthly share needed to get there.</div></div>
+  <div class="row"><div class="n">Emergency fund</div><div class="d">Target = N months of your average expenses, built up by a monthly contribution.</div></div>
+  <div class="row"><div class="n">Round-up</div><div class="d">Rounds each completed expense up to your chosen base and reserves the change — automatically, as you tick things done.</div></div>
+  <div class="row"><div class="n">52-week</div><div class="d">The classic challenge: week 1 saves one unit, week 2 saves two, and so on.</div></div>
+  <div class="row"><div class="n">Save the raise</div><div class="d">Reserves only what you earn <strong>above</strong> a baseline income, so a good month builds the goal instead of the lifestyle.</div></div>
+</div>
+<p><strong>Reserve</strong> sets money aside (you can type your own amount), <strong>Withdraw</strong> releases it when you actually use the goal, and <strong>Skip</strong> dismisses a suggestion until the next period. Reserving never creates a transaction — no money "leaves", your safe-to-spend simply drops.</p>
+
+<h2 id="debts">Debts</h2>
+<p>Each debt is a balance, an APR, and a minimum monthly payment. From those the app builds a payoff plan.</p>
+<div class="ctrl">
+  <div class="row"><div class="n">Strategy: Avalanche</div><div class="d">Highest interest rate first — mathematically cheapest.</div></div>
+  <div class="row"><div class="n">Strategy: Snowball</div><div class="d">Smallest balance first — quick wins, better momentum.</div></div>
+  <div class="row"><div class="n">Extra / month</div><div class="d">Anything you can put in above the minimums. <strong>Use surplus</strong> fills in a figure your forecast can actually support.</div></div>
+  <div class="row"><div class="n">Debt-free in · Total interest · Payoff order</div><div class="d">The plan's output: when you finish, what it costs you, and which debt to attack first.</div></div>
+  <div class="row"><div class="n">Show payments in calendar</div><div class="d">Overlays the planned monthly payments onto the forecast, so the lowest point reflects what debt repayment really does to your cash flow. These are projections, not real transactions.</div></div>
+  <div class="row"><div class="n">Record payment</div><div class="d">When you actually pay: lowers the debt balance <strong>and</strong> writes a real completed expense on today. The plan recalculates from there.</div></div>
+</div>
+
+<h2 id="settings">Settings</h2>
+<h3>Preferences</h3>
+<ul>
+  <li><strong>Currency</strong>, <strong>Language</strong> (English / Ukrainian), <strong>Appearance</strong> (system, light, dark), <strong>First day of the week</strong>.</li>
+  <li><strong>Income shown as</strong> — median or average, used wherever the app reasons about your typical income.</li>
+  <li><strong>Savings goal (% of income)</strong> — the default share behind the savings nudge; 0 turns it off.</li>
+  <li><strong>Reconcile reminder</strong> — how often to be nudged to check the forecast against your real balance.</li>
+</ul>
+<h3>Anchor &amp; categories</h3>
+<p><strong>Anchor</strong> is the same starting-balance editor the pencil on the balance card opens. <strong>Categories</strong> lets you add your own, rename them, and hide built-in ones you don't use; deleting a category moves its transactions to "Other".</p>
+<h3>Notifications</h3>
+<p>Upcoming transactions, the reconcile reminder and the savings nudge, each switchable. You can set the lead time (morning of, 1 day, 3 days), the time of day, which transactions count (all, expenses only, unpaid only), and a minimum amount so small stuff stays quiet. Reminders are scheduled on your device and fire offline.</p>
+<h3>Data &amp; backup</h3>
+<div class="ctrl">
+  <div class="row"><div class="n">Export to file (.json)</div><div class="d">Writes a readable copy of everything to your device. No subscription needed — it's your data.</div></div>
+  <div class="row"><div class="n">Import from file</div><div class="d">Restores a backup. It replaces the current data on this device (and, if sync is on, propagates).</div></div>
+  <div class="row"><div class="n">Reset &amp; start over</div><div class="d">Deletes all your data and restarts the setup flow. If sync is on, the wipe reaches your synced storage too — the confirmation says so and suggests exporting first.</div></div>
+</div>
+
+<h2 id="sync">Account &amp; sync</h2>
+<p>The app works completely without an account. An account exists only to keep several devices in step.</p>
+<div class="ctrl">
+  <div class="row"><div class="n">Sign in / create account</div><div class="d">By email, or with Apple or Google.</div></div>
+  <div class="row"><div class="n">Passphrase</div><div class="d">Your data is encrypted on the device with this passphrase before it ever leaves, so the server only holds an unreadable blob. Use the <strong>same</strong> passphrase on every device. It is never sent to us and <strong>cannot be recovered</strong> — a wrong one shows a clear error and never overwrites anything.</div></div>
+  <div class="row"><div class="n">Sync now</div><div class="d">Forces a round. Sync otherwise runs by itself after edits and when the app reopens.</div></div>
+  <div class="row"><div class="n">Status line</div><div class="d"><strong>Synced</strong> · <strong>Offline</strong> (changes are saved locally and go up when you're back) · <strong>Download-only</strong> (the subscription ended: your data still downloads, uploading resumes when you renew) · <strong>Sync failed</strong> with the reason.</div></div>
+  <div class="row"><div class="n">Restore purchases</div><div class="d">Re-applies a subscription bought with the same Apple ID.</div></div>
+  <div class="row"><div class="n">Delete account</div><div class="d">Asks you to type your email, then permanently removes the account and the encrypted vault from the servers. Data already on your device stays.</div></div>
+</div>
+<p class="note">Editing always works offline. Sync is a convenience layer on top of an offline-first app, never a requirement for using it.</p>
+
+<h2 id="firstrun">First run &amp; starting over</h2>
+<p>On a fresh install the app walks you through building your own calendar: your balance today, your last income and whether it repeats, one regular bill — and then it shows you your own month with your own numbers. There is no sample data anywhere; everything you see is yours. You can take the quick path instead ("Skip for now"), answer the single balance question, and start from an empty calendar.</p>
+<p>Want to run through it again? <strong>Settings → Reset &amp; start over</strong> clears your data and restarts the flow. Export a backup first if there's any chance you'll want the old data back.</p>
+
+<p class="note"><strong>Still stuck?</strong> The app has a short "How it works" explainer under Finances, and a real person answers <a href="mailto:support@jayck.dev">support@jayck.dev</a> — see the <a href="/support">support page</a> for common questions.</p>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="f-line">JayCK Flow — the calendar for your money.</p>
+    <p class="f-links"><a href="/help">Help</a>·<a href="/privacy">Privacy</a>·<a href="/terms">Terms</a>·<a href="/support">Support</a>·<a href="mailto:support@jayck.dev">support@jayck.dev</a></p>
+    <p class="f-sub">On the App Store · © 2026 JayCK Flow</p>
+  </div>
+</footer>
+
+</body>
+</html>
