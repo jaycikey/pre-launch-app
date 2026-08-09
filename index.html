@@ -124,12 +124,19 @@
   }
 
   /* ---------- 6. horizontal gallery ---------- */
+  /* The rail spans the viewport and pads itself in to the page column, so the first
+     card lines up with the text above while the last runs off the edge. The previous
+     version computed a `margin-left` from `50% - min(...)`: correct at 1400px and a
+     48px indent at 500px, which pushed the final cards out of reach. And its wrapper
+     carried negative margins while sitting directly in a `<section>` that has no
+     `max-width`, so it was wider than the window. `max()` needs no viewport
+     arithmetic to go wrong: below the page width it is simply the gutter. */
   .rail{display:flex;gap:var(--s-3);overflow-x:auto;scroll-snap-type:x mandatory;
-    padding:var(--s-2) var(--s-3) var(--s-4);
-    margin-left:calc(50% - min(var(--page)/2, 50vw - var(--s-3)));
-    scrollbar-width:none}
+    padding-block:var(--s-2) var(--s-4);
+    padding-left:max(var(--s-3), calc((100vw - var(--page)) / 2 + var(--s-3)));
+    padding-right:var(--s-3);
+    scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .rail::-webkit-scrollbar{display:none}
-  .rail-outer{margin:0 calc(-1 * var(--s-3))}
   .rail>.rcard{scroll-snap-align:start;flex:0 0 min(420px,82vw);
     background:var(--card);border:1px solid var(--hair);border-radius:var(--r-lg);
     padding:var(--s-4) var(--s-3);
@@ -144,7 +151,9 @@
   .giant .corner{max-width:660px}
 
   /* ---------- 4. full-bleed band (substituted for photography — see SPEC) ---------- */
-  .bleed{width:100vw;margin-left:calc(50% - 50vw);padding:0 var(--s-3)}
+  /* `100vw` includes the scrollbar and overflowed on desktop; the section is
+     already full width, so a percentage is both simpler and correct. */
+  .bleed{width:100%;padding:0 var(--s-3)}
   .bleed-inner{max-width:1600px;margin:0 auto;background:var(--card);
     border:1px solid var(--hair);border-radius:var(--r-xl);
     padding:var(--s-5) clamp(20px,4vw,64px);overflow:hidden;
@@ -162,10 +171,29 @@
        #grid, #d-bal, #d-label, #lowest, #switch and builds .day cells) ---------- */
   .demo-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:var(--s-2)}
   .demo-month{font-size:17px;font-weight:700;letter-spacing:-.02em}
-  .seg{display:inline-flex;background:var(--bg);border-radius:100px;padding:3px;gap:2px}
-  .seg button{border:0;background:transparent;color:var(--muted);font:inherit;font-size:13px;
-    font-weight:600;padding:5px 13px;border-radius:100px;cursor:pointer;transition:all .2s var(--ease)}
-  .seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  /* `#switch` toggles the what-if purchase — the script flips `buying` on click and
+     reflects it in `aria-checked`. The restyle turned it into a three-way segmented
+     control built from the words "On track / Watch / Decide", which were never a
+     control at all: they are the legend for the three day colours. Both are restored
+     to what they are. */
+  .wi{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--hair);
+    background:var(--card);border-radius:100px;padding:5px 13px 5px 7px;cursor:pointer;
+    font:inherit;font-size:13px;font-weight:600;color:var(--muted);
+    transition:border-color .2s var(--ease),color .2s var(--ease)}
+  .wi .track{width:34px;height:20px;border-radius:100px;background:var(--hair);
+    position:relative;flex:0 0 auto;transition:background .22s var(--ease)}
+  .wi .track::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;
+    border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);
+    transition:transform .22s var(--ease)}
+  .wi[aria-checked="true"]{border-color:var(--blue);color:var(--blue-text)}
+  .wi[aria-checked="true"] .track{background:var(--blue)}
+  .wi[aria-checked="true"] .track::after{transform:translateX(14px)}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:var(--s-2)}
+  .legend span{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--muted)}
+  .legend i{width:9px;height:9px;border-radius:50%;display:block}
+  @media(prefers-reduced-motion:reduce){
+    .wi .track,.wi .track::after{transition:none}
+  }
   .bal-row{display:flex;align-items:baseline;gap:10px;margin:var(--s-2) 0 4px}
   #d-bal{font-size:clamp(30px,5vw,42px);font-weight:700;letter-spacing:-.03em;
     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif}
@@ -179,12 +207,27 @@
     transition:transform .18s var(--ease),background .18s var(--ease)}
   .day:hover{transform:scale(1.06)}
   .day.empty{background:transparent;cursor:default}
-  .day .l-val{font-size:9px;font-weight:800;line-height:1}
-  .l-val.g{color:var(--green-text)} .l-val.a{color:var(--amber-text)} .l-val.r{color:var(--red-text)}
+  /* The script sets `class="day g|a|r"` from `statusOf(balance)` and puts a
+     `<span class="dot">` inside each cell. The restyle defined `.l-val` variants
+     instead — a class the script has never used — so every day rendered grey and the
+     three states the demo exists to show were invisible. */
+  .day.g{background:var(--green-soft);color:var(--green-text)}
+  .day.a{background:var(--amber-soft);color:var(--amber-text)}
+  .day.r{background:var(--red-soft);color:var(--red-text)}
+  .day .dot{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.55}
+  .day.g .dot{background:var(--green)} .day.a .dot{background:var(--amber)} .day.r .dot{background:var(--red)}
+  /* The what-if purchase day, so the cause of the re-colouring is visible. */
+  .day.buy-mark{box-shadow:inset 0 0 0 2px var(--blue)}
+  .day.buy-mark .dot{background:var(--blue);opacity:1}
   .day.sel{background:var(--ink);color:var(--bg)}
-  .day.sel .l-val{color:var(--bg)}
+  .day.sel .dot{background:var(--bg)}
   .hint{font-size:13px;color:var(--faint);text-align:center;margin-top:var(--s-2)}
-  #lowest{margin-top:var(--s-2);font-size:14px;font-weight:600;color:var(--muted);text-align:center}
+  /* `#lowest` gets `class="l-val g|a|r"` from the script, so it needs those variants
+     too — the restyle removed them along with the day ones, and the lowest-point line
+     is the single sentence this whole demo exists to deliver. It went grey silently. */
+  #lowest{margin-top:var(--s-2);font-size:14px;font-weight:700;text-align:center;color:var(--muted)}
+  #lowest::before{content:"Lowest balance day · "; font-weight:600; color:var(--faint)}
+  .l-val.g{color:var(--green-text)} .l-val.a{color:var(--amber-text)} .l-val.r{color:var(--red-text)}
 
   /* ---------- 10. minimal CTA ---------- */
   .cta{text-align:center}
@@ -242,22 +285,25 @@
       <div class="device">
         <div class="demo-head">
           <span class="demo-month">This month</span>
-          <span class="seg" id="switch">
-            <button type="button" data-k="ok" aria-pressed="true">On track</button>
-            <button type="button" data-k="watch" aria-pressed="false">Watch</button>
-            <button type="button" data-k="decide" aria-pressed="false">Decide</button>
-          </span>
+          <button class="wi" id="switch" type="button" role="switch" aria-checked="false">
+            <span class="track" aria-hidden="true"></span>What if?
+          </button>
         </div>
         <div class="bal-row"><strong id="d-bal">$180</strong><span id="d-label">today</span></div>
         <div class="wk"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
         <div id="grid"></div>
-        <p class="hint">Tap any day to see its projected balance</p>
+        <p class="legend">
+          <span><i style="background:var(--green)"></i>On track</span>
+          <span><i style="background:var(--amber)"></i>Watch</span>
+          <span><i style="background:var(--red)"></i>Decide</span>
+        </p>
+        <p class="hint">Tap any day to see its projected balance · toggle <em>What if?</em> to add a $299 purchase on the 18th</p>
         <p id="lowest"></p>
       </div>
       <div class="float">
         <p class="eyebrow" style="margin-bottom:6px">What if?</p>
         <p style="font-size:15px;font-weight:600;letter-spacing:-.02em">What if I buy the $299 headphones?</p>
-        <p style="font-size:13px;color:var(--muted);margin-top:4px">Adds a purchase on the 18th</p>
+        <p style="font-size:13px;color:var(--muted);margin-top:4px">Turn it on above and every day after the 18th re-colours.</p>
       </div>
     </div>
   </div>
@@ -345,7 +391,7 @@
 
 <!-- 6. horizontal gallery -->
 <section class="tight" style="padding-top:0">
-  <div class="rail-outer">
+  <div>
     <div class="rail rise">
       <div class="rcard">
         <span class="dot" style="background:var(--amber)"></span>
@@ -436,8 +482,23 @@
       e.target.classList.add("in");
       io.unobserve(e.target);
     });
-  }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
+  }, { threshold: 0.05 });
   els.forEach(function(el){ io.observe(el); });
+
+  /* Last resort. An element that never intersects stays at `opacity: 0` forever, and
+     an invisible section is a worse failure than an unanimated one — the previous
+     `rootMargin: "0px 0px -12%"` could strand anything sitting in the last 12% of the
+     viewport once the page was fully scrolled, which is exactly where the closing CTA
+     lives. The negative inset is gone; this is the belt to its braces. */
+  window.addEventListener("load", function(){
+    setTimeout(function(){
+      els.forEach(function(el){
+        if (el.classList.contains("in")) return;
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) el.classList.add("in");
+      });
+    }, 400);
+  });
 })();
 </script>
 <script>
