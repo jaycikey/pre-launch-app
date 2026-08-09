@@ -11,7 +11,7 @@
     --green:#34C759;--green-soft:#E9F9EE;--green-text:#1C7A3A;
     --amber:#FF9500;--amber-soft:#FFEFCC;--amber-text:#9A6400;
     --red:#FF3B30;--red-soft:#FFECEB;--red-text:#B3261E;
-    --blue:#0A6CFF;--radius-lg:28px;--radius-md:18px;
+    --blue:#0A6CFF;--blue-soft:#E4F0FF;--blue-text:#0060CC;--radius-lg:28px;--radius-md:18px;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
@@ -59,6 +59,7 @@
   .chip.g{background:var(--green-soft);color:var(--green-text)}
   .chip.a{background:var(--amber-soft);color:var(--amber-text)}
   .chip.r{background:var(--red-soft);color:var(--red-text)}
+  .chip.b{background:var(--blue-soft);color:var(--blue-text)}
   .note{background:var(--card);border-radius:var(--radius-md);padding:14px 18px;font-size:14px;color:var(--muted);margin-top:18px}
   .note strong{color:var(--ink)}
   footer{border-top:1px solid var(--hair);margin-top:56px;padding:36px 0 48px;text-align:center}
@@ -126,8 +127,11 @@
 <div class="ctrl">
   <div class="row"><div class="n">Balance now</div><div class="d">Your balance today: the anchor balance plus everything that has happened since.</div></div>
   <div class="row"><div class="n">Pencil icon</div><div class="d">Opens <strong>Anchor</strong> — the starting balance and the date it applies from. The forecast is built forward from that point, so to include older transactions, set the anchor date earlier than them.</div></div>
-  <div class="row"><div class="n">Reconcile icon</div><div class="d">Opens <strong>Reconcile balance</strong>: type what's really in the account right now and the forecast restarts from today. Use it when real life has drifted from the plan.</div></div>
+  <div class="row"><div class="n">Reconcile icon</div><div class="d">Opens <strong>Reconcile balance</strong>: type what's really in the account right now and the forecast restarts from today. Use it when real life has drifted from the plan. As you type it does the subtraction for you — <em>"We expected 1,240. That's 340 less than we had."</em> It states the gap and stops there: what the gap <strong>was</strong> is yours to know, not ours to guess.</div></div>
   <div class="row"><div class="n">Reserved · Available</div><div class="d">Shows only when savings goals hold a reserve. Reserved money stays in your balance but is treated as spoken for, so <strong>Available</strong> is what you can actually spend.</div></div>
+  <div class="row"><div class="n"><span class="chip a">Overdue</span></div><div class="d">Past expenses you never marked done, with their total. Shows only when there are some.</div></div>
+  <div class="row"><div class="n"><span class="chip b">Unconfirmed</span></div><div class="d">Past <strong>income</strong> you never marked received. Kept separate from Overdue and never summed with it, because they are different news with different owners: one is yours to settle, the other is someone else's to pay — and a combined figure would hide both. Deliberately not called overdue; a payment that has not arrived is not late by anything you did.</div></div>
+  <div class="row"><div class="n">Card colour</div><div class="d">The card tints away from green while either of the two above is showing. Both mean the same thing about the balance printed on it: <strong>it may not be true yet.</strong></div></div>
   <div class="row"><div class="n">Lowest point</div><div class="d">The lowest your balance is projected to fall, and the date it happens. This is the number the whole app exists for — a green dot means it stays safe, red means you dip below your buffer.</div></div>
 </div>
 
@@ -135,8 +139,10 @@
 <div class="ctrl">
   <div class="row"><div class="n">A day cell</div><div class="d">The date, any transactions on it, and the <strong>projected balance</strong> after that day. Tap it to open that day.</div></div>
   <div class="row"><div class="n">Day colour</div><div class="d">A red date means the projected balance is below zero (or below your buffer) that day. Black is fine.</div></div>
-  <div class="row"><div class="n"><span class="chip a">2/4</span> badge</div><div class="d">Expenses ticked off vs. planned for that day. <span class="chip a">Amber</span> = upcoming and still pending. <span class="chip r">Red</span> = a past day with expenses you never marked done.</div></div>
-  <div class="row"><div class="n"><span class="chip g">✓</span> badge</div><div class="d">Everything planned for that day is marked done.</div></div>
+  <div class="row"><div class="n"><span class="chip a">2/4</span> badge</div><div class="d">Ticked off vs. planned for that day, when only one direction is left to confirm. <span class="chip a">Amber</span> for money going out, <span class="chip b">blue</span> for money coming in.</div></div>
+  <div class="row"><div class="n"><span class="chip b">+1</span> <span class="chip a">−3</span> badge</div><div class="d">When both directions are still unconfirmed there is no room for fractions, so the badge shows what is <strong>left</strong>: <span class="chip b">+1</span> payment in and <span class="chip a">−3</span> out. It never shows a zero — a direction that is fully confirmed simply disappears.</div></div>
+  <div class="row"><div class="n"><span class="chip r">Red</span> badge</div><div class="d">A past day with something you never marked. The colour replaces the direction here, because an unconfirmed past row means the balance above may not be true — and that is equally so whether a bill went out or a payment failed to arrive. The <strong>+</strong> and <strong>−</strong> still tell the two apart.</div></div>
+  <div class="row"><div class="n"><span class="chip g">✓</span> badge</div><div class="d">Everything on that day is marked — money in as well as money out.</div></div>
   <div class="row"><div class="n">Small number, left gutter</div><div class="d">The ISO week number. It turns red when that week contains a risk day.</div></div>
   <div class="row"><div class="n">Today</div><div class="d">Today's date is circled. The bottom-right <strong>Today</strong> pill jumps you back to it from anywhere.</div></div>
   <div class="row"><div class="n">+ <em>bottom right</em></div><div class="d">Adds a transaction on the selected day.</div></div>
@@ -165,7 +171,7 @@
 
 <h3>Marking things off</h3>
 <div class="ctrl">
-  <div class="row"><div class="n">Done tick</div><div class="d">In the day view. Marks the transaction as actually completed, which keeps "how many still pending" honest and drives the day badges.</div></div>
+  <div class="row"><div class="n">Done tick</div><div class="d">In the day view. Marks the transaction as actually completed, which keeps "how many still pending" honest and drives the day badges. <strong>It matters just as much on income:</strong> a past payment the app has recorded is counted in your balance whether or not you confirmed it, so a paycheck that never arrived is money the forecast is promising you. Marking income received is what clears that.</div></div>
   <div class="row"><div class="n">Paid from another account</div><div class="d">Marks it as settled elsewhere, so it does <strong>not</strong> affect this balance — useful for anything a partner or a second account covers.</div></div>
 </div>
 
