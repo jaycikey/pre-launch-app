@@ -79,8 +79,15 @@
     backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
     border-bottom:1px solid var(--hair)}
   nav .wrap{display:flex;align-items:center;justify-content:space-between;padding:14px var(--s-3)}
-  .logo{font-size:19px;font-weight:700;letter-spacing:-.03em}
-  .logo em{font-style:normal;color:var(--blue)}
+  /* Matched to the four sibling pages rather than the other way round. They render
+     the wordmark as `JayCK` in ink with `Flow` in muted grey at weight 500 — the
+     second half deliberately quieter — and the restyle here invented a blue `<em>` at
+     weight 700. A logo that changes between pages of one site is not a style
+     preference, it is two logos; and `<em>` is emphasis, which "Flow" is not. It is
+     part of the name, so it is a `<span>`. The letter-spacing was -.03em here and
+     -.02em everywhere else; theirs wins for the same reason. */
+  .logo{font-size:19px;font-weight:700;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+  .logo span{color:var(--muted);font-weight:500}
   .pill{font-size:13px;font-weight:600;color:var(--muted);background:var(--card);
     border:1px solid var(--hair);border-radius:100px;padding:6px 14px}
 
@@ -264,6 +271,12 @@
   .f-line{font-size:17px;font-weight:600;letter-spacing:-.02em}
   .f-links{margin-top:12px;font-size:14px;color:var(--muted);display:flex;gap:10px;
     justify-content:center;flex-wrap:wrap}
+  /* Muted, matching the four sibling pages. The restyle dropped this rule and the
+     links fell through to the global `a{color:var(--blue)}`, so the same five links
+     were blue here and grey everywhere else. A footer is navigation of last resort;
+     it should not be the loudest thing on the page. */
+  .f-links a{color:var(--muted)}
+  .f-links a:hover{color:var(--ink)}
   .f-sub{margin-top:10px;font-size:13px;color:var(--faint)}
 
   /* ---------- appearing ----------
@@ -287,7 +300,7 @@
 
 <nav>
   <div class="wrap">
-    <span class="logo">JayCK <em>Flow</em></span>
+    <a class="logo" href="/">JayCK <span>Flow</span></a>
     <span class="pill">Now on the App Store</span>
   </div>
 </nav>
