@@ -91,6 +91,7 @@
   <a href="#money">Adding money</a>
   <a href="#whatif">What if?</a>
   <a href="#menu">Menu</a>
+  <a href="#cards">Cards</a>
   <a href="#savings">Savings</a>
   <a href="#debts">Debts</a>
   <a href="#settings">Settings</a>
@@ -105,10 +106,19 @@
 <p>JayCK Flow tracks a single balance: the money you can actually spend right now — your cash and debit as one pool. It never asks what's on your credit card or in your savings account, and there's nowhere to add them. That's deliberate: the forecast only works if there's one number to forecast.</p>
 <p>Everything else is a <em>direction money flows to</em>, recorded on the day it leaves:</p>
 <ul>
-  <li><strong>Credit card.</strong> Don't record the purchase — record the payment. If you buy something on the 5th and the card is paid on the 28th, add an expense on the <strong>28th</strong>. That's the day your balance actually drops, and it's the day the forecast needs to know about.</li>
+  <li><strong>Credit card.</strong> Record the <strong>purchase on the day you buy</strong>, mark it with the
+    <strong>↗</strong> button and pick the card. The purchase leaves your balance that day and the money comes
+    back on the card&rsquo;s <strong>closing date</strong>, as one calculated row you can open, check and pay
+    — in part or in full. What is left rides to the next closing date. This replaces the old advice to skip the
+    purchase and record only the payment: that worked for the balance and lost what the money was
+    <em>for</em>, because an expense dated on the payment day belongs to no category.</li>
   <li><strong>Savings.</strong> A transfer to savings is an ordinary expense on the day you move it. Savings goals live in the menu and track what you've set aside — they're an earmark against this balance, not a second account with its own total.</li>
   <li><strong>Debts.</strong> Same idea: you track the payments that leave, and the payoff plan shows how the balance falls over time.</li>
-  <li><strong>Paid by someone else.</strong> If money never touches your account — a partner covered it, or it went on a different card you don't manage here — add it and switch on <strong>Paid from another account</strong>. It stays in your history and your stats, and stays out of the forecast.</li>
+  <li><strong>Money that was never yours.</strong> If it never touched your account &mdash; someone else
+    covered it &mdash; add it and switch on the <strong>eye</strong>. It stays in your history and in its
+    category, and stays out of your balance for good. That is different from a card purchase, which also leaves
+    your balance today but <em>comes back</em> on the card&rsquo;s payment day: hidden rows are struck through
+    with a solid line, card purchases with a dashed one.</li>
 </ul>
 <p>The short version: if it changes the money in your pocket, put it on the day it changes. If it doesn't, mark it so it can't move the forecast.</p>
 
@@ -172,7 +182,14 @@
 <h3>Marking things off</h3>
 <div class="ctrl">
   <div class="row"><div class="n">Done tick</div><div class="d">In the day view. Marks the transaction as actually completed, which keeps "how many still pending" honest and drives the day badges. <strong>It matters just as much on income:</strong> a past payment the app has recorded is counted in your balance whether or not you confirmed it, so a paycheck that never arrived is money the forecast is promising you. Marking income received is what clears that.</div></div>
-  <div class="row"><div class="n">Paid from another account</div><div class="d">Marks it as settled elsewhere, so it does <strong>not</strong> affect this balance — useful for anything a partner or a second account covers.</div></div>
+  <div class="row"><div class="n">Eye — hide</div><div class="d">Takes the row <strong>off your balance for
+    good</strong>: money that was never yours to spend. It stays in your history and in its category, and its
+    name and amount are struck through with a <strong>solid</strong> line. Offered on every row.</div></div>
+  <div class="row"><div class="n">↗ — on a card</div><div class="d">Only on an expense. Asks <strong>which
+    card</strong>, then takes the purchase off today&rsquo;s balance and brings the money back on that
+    card&rsquo;s payment day. Struck through with a <strong>dashed</strong> line, because it is not gone &mdash;
+    it is later. A row can be hidden <em>or</em> on a card, never both, and neither is offered while the row is
+    marked completed.</div></div>
 </div>
 
 <h3>Editing a repeating transaction</h3>
@@ -196,6 +213,62 @@
   <div class="row"><div class="n">Settings</div><div class="d">Preferences, categories, notifications, backup. See <a href="#settings">below</a>.</div></div>
   <div class="row"><div class="n">Account &amp; sync</div><div class="d">Sign-in, subscription and encrypted sync. See <a href="#sync">below</a>.</div></div>
 </div>
+
+<h2 id="cards">Credit cards</h2>
+<p>A card is a <strong>delay</strong>, not a second account. You still have one balance; a card just moves when
+  the money leaves it.</p>
+<p>Add cards in <strong>Finances → Cards</strong>. A card needs a name and its <strong>closing date</strong> —
+  pick the date, and the day of the month becomes the recurring one. A card that closes on the 31st is paid on
+  the 30th in April and the 28th in February, the way a bank does it, never skipping a month.</p>
+<p>Then, for a purchase you put on that card:</p>
+<ul>
+  <li>Add the expense <strong>on the day you bought it</strong>, in its real category.</li>
+  <li>Tap <strong>↗</strong> on the row and choose the card. The purchase leaves today&rsquo;s balance.</li>
+  <li>On the card&rsquo;s closing date, one <strong>calculated row</strong> appears for that card, marked with a
+    dashed edge because the app made it rather than you. It says how many purchases it covers.</li>
+  <li>Open it to see the statement: <strong>what came from the previous period</strong>, what was charged, what you
+    have transferred, and <strong>what carries to the next one</strong> &mdash; four lines that add up, so you can check
+    the figure rather than take it. Below them, the purchases and the payments behind it.</li>
+  <li>Pay any amount, <strong>on any date you choose</strong> — the payment is a plan, not a receipt, so it stays
+    unticked until the money actually moves, like every other row. What is left moves to the next closing date on its
+    own, together with anything you charge in between.</li>
+</ul>
+<p><strong>Moving the remainder yourself.</strong> The carry happens on its own once the closing date passes, and that
+  is deliberate: an unpaid figure hanging there until its day is the consequence of not acting, and hiding it would be
+  doing you a favour you did not ask for. But you do not have to wait. Beside <em>Carries to the next period</em> there
+  is an arrow that moves it now, and beside <em>From the previous period</em> a second one that puts it back — because
+  you are allowed to change your mind. Both ask before they act. The one that puts it back appears only while the cycle
+  it came from is still open: on the closing day it is the last chance, and the day after it is gone.</p>
+
+<p><strong>A statement on every closing date.</strong> Even one with nothing on it. The date is the card's rhythm, and an
+  empty statement tells you where a purchase will land before you make it — and that the app is not simply silent about
+  that month.</p>
+
+<p><strong>Paying early.</strong> You do not have to wait for that row. Create an ordinary
+  <strong>transfer</strong>, pick the card in it, and it counts against whichever cycle its date falls in. A
+  transfer in JayCK Flow means <em>paying off a card</em> — money you hand to someone else is an
+  <strong>expense</strong>, so it lands in a category where you can see it.</p>
+<p><strong>When there is nothing left to pay</strong>, the row stays as a <strong>statement</strong>: zero to
+  pay, with the report intact. &ldquo;Paid&rdquo; and &ldquo;never happened&rdquo; are different facts, and a row
+  that vanished could not tell them apart. Overpay and the statement says so: the carry shows as a
+  <strong>credit</strong>, and it comes off the next cycle. The row itself never adds money to your balance — being
+  ahead on a card is not cash in your hand.</p>
+<p><strong>A card that already owes something.</strong> Cards start at zero, because the app only knows what you tell
+  it. If yours has a balance the day you add it, record that balance as one expense on the card &mdash; name it
+  something like &ldquo;opening balance&rdquo;, date it, and mark it to the card with <b>&#8599;</b>. From then on the
+  statement is the real figure, not just what you have entered since.</p>
+
+<p><strong>Cashback and refunds.</strong> Money coming back <em>onto</em> the card is a transfer to it. Enter the
+  cashback as income &mdash; from the bank, on the day it arrived &mdash; and a transfer of the same amount to the card.
+  The card owes that much less, and your balance is unchanged, which is what actually happened. A refund works the same
+  way, though if it is recent you may find it simpler to correct the purchase itself.</p>
+
+<p><strong>Verified, not suggested:</strong> an opening balance of $800 plus a $100 purchase shows $900 owed on the
+  closing date; a $65 cashback entered this way brings it to $835.</p>
+
+<p><strong>What the app will not do.</strong> It does not hold a card balance, a credit limit, a minimum payment
+  or interest. It has no way to know any of them, and guessing would put a number on your screen that nothing
+  can check. What it forecasts is what it can see: the purchases you marked and the payments you made.</p>
 
 <h2 id="savings">Savings</h2>
 <p>A savings goal is an <strong>earmark</strong>, not a second account. The money stays in your balance, but reserving it lowers your <strong>Available</strong> figure so you don't spend it twice. Each goal has a rule that decides what the app suggests setting aside:</p>
