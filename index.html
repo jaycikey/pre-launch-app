@@ -118,6 +118,18 @@
   .logo span{color:var(--muted);font-weight:500}
   .pill{font-size:13px;font-weight:600;color:var(--muted);background:var(--card);
     border:1px solid var(--hair);border-radius:100px;padding:6px 14px}
+  /* Live CTA in the nav. It exists for the long middle of the page, where the hero
+     button has scrolled away and the closing one is not yet in reach — previously
+     the only route to the store from there was scrolling back up. */
+  .pill-cta{text-decoration:none;
+    transition:opacity .3s var(--ease),transform .3s var(--ease),
+               visibility 0s,color .2s ease,border-color .2s ease}
+  .pill-cta:hover{color:var(--ink);border-color:var(--muted)}
+  /* Yields whenever a real in-page button is on screen, so the same offer is never
+     asked twice in one viewport. visibility (not just opacity) so a hidden link is
+     out of the tab order and out of the accessibility tree. */
+  .pill-cta[data-hidden="true"]{opacity:0;transform:translateY(-8px);visibility:hidden;
+    pointer-events:none;transition-delay:0s,0s,.3s,0s}
 
   /* ---------- buttons ---------- */
   .btn{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--bg);
@@ -321,6 +333,8 @@
     html{scroll-behavior:auto}
     .rise{opacity:1;transform:none;transition:none}
     .btn:hover,.day:hover{transform:none}
+    .pill-cta{transition:none}
+    .pill-cta[data-hidden="true"]{transform:none}
   }
 </style>
 <script type="application/ld+json">
@@ -353,7 +367,7 @@
 <nav>
   <div class="wrap">
     <a class="logo" href="/">JayCK <span>Flow</span></a>
-    <span class="pill">Now on the App Store</span>
+    <a class="pill pill-cta" id="nav-cta" data-hidden="true" href="https://apps.apple.com/app/jayck-flow/id6789696499">Get the app</a>
   </div>
 </nav>
 
@@ -697,6 +711,32 @@
   });
 
   render();
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  /* Show the nav CTA only when no in-page App Store button is visible.
+     Fails open: if IntersectionObserver is missing the link simply stays on, which
+     is the safe direction for a conversion path. */
+  var cta = document.getElementById("nav-cta");
+  if (!cta) return;
+  var btns = [].slice.call(
+    document.querySelectorAll('.btn[href*="apps.apple.com"]'));
+  if (!btns.length || !("IntersectionObserver" in window)) {
+    cta.setAttribute("data-hidden", "false");
+    return;
+  }
+  var onScreen = 0;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      var was = e.target.dataset.seen === "1";
+      if (e.isIntersecting && !was) { onScreen++; e.target.dataset.seen = "1"; }
+      else if (!e.isIntersecting && was) { onScreen--; e.target.dataset.seen = "0"; }
+    });
+    cta.setAttribute("data-hidden", onScreen > 0 ? "true" : "false");
+  }, { threshold: 0.35 });
+  btns.forEach(function(b){ io.observe(b); });
 })();
 </script>
 </body>

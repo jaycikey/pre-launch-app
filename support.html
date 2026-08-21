@@ -46,11 +46,18 @@
   body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
     background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.55}
   .wrap{max-width:760px;margin:0 auto;padding:0 24px}
-  nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+  /* Sticky on every page, not just the homepage. On a long document the logo is the
+     only route back — letting it scroll away leaves the footer as the sole way out. */
+  nav{position:sticky;top:0;z-index:50;background:rgba(247,247,250,.72);
+    backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:1px solid var(--hair)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 24px}
   .logo{font-size:19px;font-weight:700;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
   .logo span{color:var(--muted);font-weight:500}
-  .soon-pill{font-size:13px;font-weight:600;color:var(--muted);border:1px solid var(--hair);
-    border-radius:100px;padding:6px 14px;background:var(--card);white-space:nowrap}
+  .pill-cta{font-size:13px;font-weight:600;color:var(--muted);border:1px solid var(--hair);
+    border-radius:100px;padding:6px 14px;background:var(--card);white-space:nowrap;
+    text-decoration:none;transition:color .2s ease,border-color .2s ease}
+  .pill-cta:hover{color:var(--ink);border-color:var(--muted)}
   main{padding:36px 0 24px}
   .kicker{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}
   h1{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
@@ -84,12 +91,12 @@
 </head>
 <body>
 
-<div class="wrap">
-  <nav>
+<nav>
+  <div class="wrap">
     <a class="logo" href="/">JayCK <span>Flow</span></a>
-    <a class="soon-pill" href="https://apps.apple.com/app/jayck-flow/id6789696499" style="text-decoration:none">Now on the App Store</a>
-  </nav>
-</div>
+    <a class="pill-cta" href="https://apps.apple.com/app/jayck-flow/id6789696499">Get the app</a>
+  </div>
+</nav>
 
 <main class="wrap">
 <p class="kicker">We're here to help</p>
