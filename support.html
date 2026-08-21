@@ -51,7 +51,11 @@
   nav{position:sticky;top:0;z-index:50;background:rgba(247,247,250,.72);
     backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
     border-bottom:1px solid var(--hair)}
-  nav .wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 24px}
+  /* Deliberately wider than this page's 760px reading column: the header is
+     site-wide furniture, so it keeps the homepage's 1180px measure and the logo
+     lands in the same spot on every page. Only the nav — `main.wrap` stays 760px. */
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;
+    max-width:1180px;padding:14px 24px}
   .logo{font-size:19px;font-weight:700;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
   .logo span{color:var(--muted);font-weight:500}
   .pill-cta{font-size:13px;font-weight:600;color:var(--muted);border:1px solid var(--hair);
