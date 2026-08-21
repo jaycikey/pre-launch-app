@@ -1,0 +1,21 @@
+{
+  "name": "JayCK Flow",
+  "short_name": "Flow",
+  "description": "A financial calendar for iPhone and iPad that projects your running balance forward, so a shortfall is visible weeks before it lands.",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#140917",
+  "background_color": "#F7F7FA",
+  "display": "browser",
+  "start_url": "/"
+}
