@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>JayCK Flow — See tomorrow's balance today</title>
-<meta name="description" content="JayCK Flow is a money calendar for iPhone and iPad that shows your future balance before money decisions happen. Free on the App Store.">
+<meta name="description" content="JayCK Flow is a money calendar for iPhone and iPad that shows your future balance before money decisions happen — in the app and in Home Screen widgets. Free on the App Store.">
 <link rel="canonical" href="https://flow.jayck.dev/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="JayCK Flow">
 <meta property="og:url" content="https://flow.jayck.dev/">
 <meta property="og:title" content="JayCK Flow — See tomorrow&#x27;s balance today">
-<meta property="og:description" content="JayCK Flow is a money calendar for iPhone and iPad that shows your future balance before money decisions happen. Free on the App Store.">
+<meta property="og:description" content="JayCK Flow is a money calendar for iPhone and iPad that shows your future balance before money decisions happen — in the app and in Home Screen widgets. Free on the App Store.">
 <meta property="og:image" content="https://flow.jayck.dev/og.png">
 <meta property="og:image:secure_url" content="https://flow.jayck.dev/og.png">
 <meta property="og:image:type" content="image/png">
@@ -20,7 +20,7 @@
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="JayCK Flow — See tomorrow&#x27;s balance today">
-<meta name="twitter:description" content="JayCK Flow is a money calendar for iPhone and iPad that shows your future balance before money decisions happen. Free on the App Store.">
+<meta name="twitter:description" content="JayCK Flow is a money calendar for iPhone and iPad that shows your future balance before money decisions happen — in the app and in Home Screen widgets. Free on the App Store.">
 <meta name="twitter:image" content="https://flow.jayck.dev/og.png">
 <meta name="twitter:image:alt" content="JayCK Flow: a money calendar showing a projected balance sliding from green to red across the week">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -92,7 +92,7 @@
   /* ---------- structure ---------- */
   .wrap{max-width:var(--page);margin:0 auto;padding:0 var(--s-3)}
   .narrow{max-width:820px;margin:0 auto}
-  section{padding:var(--s-7) 0}
+  section{padding:var(--s-7) 0;scroll-margin-top:84px}
   section.tight{padding:var(--s-6) 0}
 
   /* ---------- 9. dark contrast section ---------- */
@@ -172,7 +172,7 @@
      carried negative margins while sitting directly in a `<section>` that has no
      `max-width`, so it was wider than the window. `max()` needs no viewport
      arithmetic to go wrong: below the page width it is simply the gutter. */
-  .rail{display:flex;gap:var(--s-3);overflow-x:auto;scroll-snap-type:x mandatory;
+  .rail{display:flex;align-items:flex-start;gap:var(--s-3);overflow-x:auto;scroll-snap-type:x mandatory;
     padding-block:var(--s-2) var(--s-4);
     padding-left:max(var(--s-3), calc((100vw - var(--page)) / 2 + var(--s-3)));
     padding-right:var(--s-3);
@@ -347,7 +347,7 @@
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "iOS",
   "installUrl": "https://apps.apple.com/app/jayck-flow/id6789696499",
-  "description": "A money calendar for iPhone and iPad that projects your running balance forward, so a shortfall is visible weeks before it lands.",
+  "description": "A money calendar for iPhone and iPad that projects your running balance forward, so a shortfall is visible weeks before it lands. Home Screen widgets show today, the balance, the weeks around you, and the whole month.",
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -480,6 +480,33 @@
   </div>
 </section>
 
+<!-- widgets — added with 0.2.5. Every claim here is walked: the owner's 82-line device
+     pass covered the four kinds, their settings, the taps, and the What-if freeze. The
+     mock uses demo data only (PRODUCT.md B). -->
+<section class="tight" style="padding-top:0">
+  <div class="wrap">
+    <div class="split flip rise">
+      <div>
+        <p class="eyebrow">On your Home Screen</p>
+        <h3 class="display t-mid" style="margin-top:var(--s-2)">The calendar comes to the Home&nbsp;Screen</h3>
+        <p class="lede" style="margin-top:var(--s-2);font-size:18px">Four widgets — today's plan, your balance, the weeks around today, and the whole month. Each has its own settings, and tapping a day opens the app right there.</p>
+        <p style="color:var(--muted);margin-top:var(--s-2)">One rule we kept on purpose: while you test a purchase in “What&nbsp;if?”, widgets don't move — the Home&nbsp;Screen only ever shows what's real. And a widget reads a snapshot saved on your device; it never goes online.</p>
+      </div>
+      <div class="giant" style="padding:var(--s-4);max-width:340px;margin:0 auto;width:100%">
+        <p class="eyebrow" style="color:var(--red-text)">Tuesday</p>
+        <p class="display t-big" style="line-height:1;margin-top:2px">27</p>
+        <div style="margin-top:16px;font-size:14.5px">
+          <p style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin:7px 0"><span><i style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:9px"></i>Paycheck</span><strong style="color:var(--green-text)">+$1,900</strong></p>
+          <p style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin:7px 0"><span><i style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red);margin-right:9px"></i>Rent</span><strong style="color:var(--red-text)">−$1,150</strong></p>
+          <p style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin:7px 0;color:var(--muted)"><span><span style="color:var(--green-text);font-weight:800;margin-right:7px">✓</span>Netflix</span><strong>−$18</strong></p>
+        </div>
+        <p style="text-align:right;margin-top:14px;font-weight:700;font-size:15px">$743</p>
+        <p class="fine" style="margin-top:10px;text-align:center;color:var(--muted)">The Day widget — one of four</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- 4. full-bleed band -->
 <section class="tight">
   <div class="bleed rise">
@@ -515,7 +542,7 @@
       <div class="rcard">
         <span class="dot" style="background:var(--blue)"></span>
         <h3>Money you're owed is watched too</h3>
-        <p>A bill you forget to tick makes the forecast pessimistic — you have more than it says. A payment that never arrives does the opposite: the app has already counted it, and now it's promising money you don't have. So income is tracked the same way bills are.</p>
+        <p>A bill you forget to tick makes the forecast pessimistic — you have more than it says. A payment that never arrives does the opposite. So income is watched the same way bills are.</p>
       </div>
     </div>
   </div>
@@ -527,7 +554,7 @@
     <div class="giant rise">
       <div class="corner">
         <p class="eyebrow">A limit we chose</p>
-        <p class="display t-mid" style="margin-top:var(--s-2)">This is a limit we chose and intend to keep. The moment an app starts asking what's on each card, it stops answering the only question that matters.</p>
+        <p class="display t-mid" style="margin-top:var(--s-2)">The moment an app starts asking what's on each card, it stops answering the only question that matters. We chose this limit — and we intend to keep it.</p>
       </div>
     </div>
   </div>
