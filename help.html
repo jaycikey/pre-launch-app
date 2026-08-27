@@ -130,6 +130,7 @@
   <a href="#views">Views</a>
   <a href="#money">Adding money</a>
   <a href="#whatif">What if?</a>
+  <a href="#widgets">Widgets</a>
   <a href="#menu">Menu</a>
   <a href="#cards">Cards</a>
   <a href="#savings">Savings</a>
@@ -213,7 +214,7 @@
   <div class="row"><div class="n">Type</div><div class="d"><strong>Expense</strong>, <strong>Income</strong>, or <strong>Transfer</strong> (money moving between your own accounts).</div></div>
   <div class="row"><div class="n">Amount · Date</div><div class="d">How much, and the day it lands.</div></div>
   <div class="row"><div class="n">Repeat</div><div class="d">Once, daily, weekly, every 2 weeks, monthly, yearly, or every N days. A repeating entry fills the calendar forward on its own — this is what turns one payday into a visible future.</div></div>
-  <div class="row"><div class="n">End date</div><div class="d">Optional. Stops a series on a date — a loan that finishes, a subscription you're cancelling.</div></div>
+  <div class="row"><div class="n">End date</div><div class="d">Optional. Stops a series on a date — a loan that finishes, a subscription you're cancelling. Set one by accident? The <strong>✕</strong> beside the field clears it, and the dates after it come back. The same ✕ clears the optional dates on debts and savings goals.</div></div>
   <div class="row"><div class="n">Category</div><div class="d">Feeds the category totals and Analytics. You can add your own in Settings.</div></div>
   <div class="row"><div class="n">Notes</div><div class="d">Optional free text.</div></div>
   <div class="row"><div class="n">Duplicate · Delete · Save</div><div class="d">Duplicate copies the entry for quick variations. Save applies; Delete removes.</div></div>
@@ -245,11 +246,24 @@
   <div class="row"><div class="n">Count transfers <em>in Outlook</em></div><div class="d">Includes recurring outgoing transfers (like credit-card repayments) as their own streams. Needs a few transfers sharing a name.</div></div>
 </div>
 
+<h2 id="widgets">Widgets</h2>
+<p>Four Home Screen widgets, added the usual way: press and hold the Home Screen, tap <strong>Edit&nbsp;→&nbsp;Add&nbsp;Widget</strong>, and search for <strong>JayCK Flow</strong>. Each is its own widget with its own settings — long-press a placed widget and choose <strong>Edit Widget</strong> to reach them.</p>
+<div class="ctrl">
+  <div class="row"><div class="n">Day <em>small</em></div><div class="d">Today: the date, up to three items, and the balance the day ends on. Setting: <strong>Only unfinished</strong> hides what is already settled.</div></div>
+  <div class="row"><div class="n">Balance <em>medium</em></div><div class="d">The app&rsquo;s balance card on your Home Screen: the figure, reserved money, the lowest point ahead, anything overdue or unconfirmed. Each line can be switched off — the balance itself always shows. The card wears the app&rsquo;s own colour: green when the balance is safe, amber when it may not be true yet, red when the projection goes below zero.</div></div>
+  <div class="row"><div class="n">Day &amp; Weeks <em>medium</em></div><div class="d">Today&rsquo;s list beside last week, this week and next — a three-week strip with the app&rsquo;s own day badges. Settings: <strong>Only unfinished</strong>, and day pills on or off.</div></div>
+  <div class="row"><div class="n">Month <em>large</em></div><div class="d">The whole month as the app draws it: day badges and the projected balance under every date. Setting: day pills on or off.</div></div>
+  <div class="row"><div class="n">Tapping</div><div class="d">The Day widget — and the day half of Day&nbsp;&amp;&nbsp;Weeks — opens the app on that day. The weeks strip and the Month widget open the month. Balance opens the app where you left it.</div></div>
+  <div class="row"><div class="n">While "What if?" is on</div><div class="d"><strong>Widgets do not move.</strong> The sandbox stays inside the app; your Home Screen keeps showing the real numbers until you tap Apply.</div></div>
+  <div class="row"><div class="n">Card purchases</div><div class="d">In a widget, a purchase charged to a card shows a green tick. On the Home Screen the question is <em>does this still need me?</em> — and a charged purchase does not. In the app the same row keeps its dashed strike, because there you can still open and change it.</div></div>
+</div>
+<p class="note"><strong>Private like everything else:</strong> a widget reads a snapshot the app saves on your device and never goes online. Before the app has been opened at least once, widgets say there is nothing to show yet — they never invent numbers. One current limit: press-and-hold on the <em>app icon</em> offers only the small size; add the medium and large widgets from the widget gallery.</p>
+
 <h2 id="menu">The menu (☰)</h2>
 <div class="ctrl">
   <div class="row"><div class="n">Transactions</div><div class="d">Every entry in one list, with search, a period filter (this month / 3 months / this year), status filters (all / done / planned) and a by-category grouping.</div></div>
-  <div class="row"><div class="n">Finances</div><div class="d">Three things: <a href="#savings">Savings</a>, <a href="#debts">Debts</a>, and an in-app "How it works" explainer.</div></div>
-  <div class="row"><div class="n">Analytics</div><div class="d">Income vs. expense and spending by category, over 1, 3, 6 or 12 months.</div></div>
+  <div class="row"><div class="n">Finances</div><div class="d"><a href="#cards">Cards</a>, <a href="#savings">Savings</a>, <a href="#debts">Debts</a>, and an in-app "How it works" explainer.</div></div>
+  <div class="row"><div class="n">Analytics</div><div class="d">Income vs. expense and spending by category, over 1, 3, 6 or 12 months. Two buttons above the chart choose what "spending" means: <strong>Left the account</strong> counts money that actually left, so card purchases appear only when you pay the card; <strong>What you spent on</strong> counts card purchases in their categories on the day you made them and sets the repayment transfer aside. Two honest views of the same money — neither ever counts it twice.</div></div>
   <div class="row"><div class="n">Settings</div><div class="d">Preferences, categories, notifications, backup. See <a href="#settings">below</a>.</div></div>
   <div class="row"><div class="n">Account &amp; sync</div><div class="d">Sign-in, subscription and encrypted sync. See <a href="#sync">below</a>.</div></div>
 </div>
@@ -273,6 +287,19 @@
     unticked until the money actually moves, like every other row. What is left moves to the next closing date on its
     own, together with anything you charge in between.</li>
 </ul>
+<p><strong>A repeating expense on a card.</strong> Marking a subscription to a card asks how far you mean it:
+  <strong>this event only</strong>, or <strong>this and following</strong> — from that month on, every occurrence
+  goes to the card by itself. Taking it off the card asks the same question. There is no &ldquo;all events&rdquo;
+  here, because a card charge cannot reach into months that are already settled — and un-marking the only charged
+  occurrence never asks at all: one tap, as before.</p>
+
+<p><strong>The list is yours to arrange.</strong> In <strong>Finances → Cards</strong>, drag cards into your own
+  order (the handle appears under <em>My order</em>), or sort by name or closing day — sorting is a view, your
+  order is kept. A card you no longer use can be <strong>hidden</strong> instead of deleted: it disappears from
+  every picker, while its history and statements stay exactly as they were and the calendar does not change by a
+  cent. If the card still owes something, the app names the amount and asks first. Hidden cards wait in their own
+  section at the bottom of the list — one switch brings a card back.</p>
+
 <p><strong>Moving the remainder yourself.</strong> The carry happens on its own once the closing date passes, and that
   is deliberate: an unpaid figure hanging there until its day is the consequence of not acting, and hiding it would be
   doing you a favour you did not ask for. But you do not have to wait. Beside <em>Carries to the next period</em> there
