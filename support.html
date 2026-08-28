@@ -48,9 +48,14 @@
   .wrap{max-width:760px;margin:0 auto;padding:0 24px}
   /* Sticky on every page, not just the homepage. On a long document the logo is the
      only route back — letting it scroll away leaves the footer as the sole way out. */
-  nav{position:sticky;top:0;z-index:50;background:rgba(247,247,250,.72);
+  /* Fixed and transparent at the top, gaining the translucent band and the
+     hairline only on scroll — the same behaviour as the homepage header. */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;background:transparent;
+    border-bottom:1px solid transparent;
+    transition:background .4s ease,border-color .4s ease}
+  nav[data-scrolled="true"]{background:rgba(242,242,247,.72);
     backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
-    border-bottom:1px solid var(--hair)}
+    border-bottom-color:var(--hair)}
   /* Deliberately wider than this page's 760px reading column: the header is
      site-wide furniture, so it keeps the homepage's 1180px measure and the logo
      lands in the same spot on every page. Only the nav — `main.wrap` stays 760px. */
@@ -62,30 +67,31 @@
     border-radius:100px;padding:8px 18px;background:var(--ink);white-space:nowrap;
     text-decoration:none;transition:opacity .2s ease}
   .pill-cta:hover{opacity:.82;text-decoration:none}
-  main{padding:36px 0 24px}
-  .kicker{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}
+  main.wrap{padding-top:clamp(128px,18vw,184px);padding-bottom:clamp(48px,7vw,88px)}
+  .kicker{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:18px}
   h1{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
-    font-size:clamp(30px,5.5vw,44px);font-weight:700;letter-spacing:-.025em;line-height:1.1}
-  .sub{margin-top:14px;max-width:560px;font-size:17px;color:var(--muted)}
+    font-size:clamp(40px,7vw,64px);font-weight:600;letter-spacing:-.04em;line-height:1.02}
+  .sub{margin-top:22px;max-width:600px;font-size:clamp(17px,2vw,20px);line-height:1.5;color:var(--muted)}
   .date{margin-top:10px;font-size:13px;color:var(--muted)}
-  h2{font-size:19px;font-weight:700;letter-spacing:-.015em;margin:34px 0 8px}
+  h2{font-size:clamp(23px,3vw,29px);font-weight:650;letter-spacing:-.025em;margin:clamp(52px,8vw,84px) 0 12px}
   p,li{font-size:16px;color:#3A3A3C}
   ul{padding-left:20px;margin:8px 0}
   li{margin:5px 0}
   a{color:var(--blue);text-decoration:none}
   a:hover{text-decoration:underline}
   strong{color:var(--ink)}
-  .card{background:var(--card);border-radius:var(--radius-md);padding:22px 24px;margin:14px 0}
-  .card h3{font-size:17px;font-weight:700;letter-spacing:-.015em;line-height:1.3;margin-bottom:6px;
-    display:flex;align-items:flex-start;gap:9px}
-  .card h3 .f-dot{flex:0 0 auto;width:10px;height:10px;border-radius:50%;margin-top:6px}
-  .card p{font-size:15px;color:var(--muted);margin:6px 0}
-  .card p strong{color:var(--ink)}
+  .faq{background:var(--card);border:1px solid var(--hair);border-radius:28px;
+    overflow:hidden;margin-top:22px}
+  .faq>section{padding:clamp(24px,3.5vw,32px) clamp(22px,3.5vw,32px)}
+  .faq>section + section{border-top:1px solid var(--hair)}
+  .faq h3{font-size:clamp(17px,2.2vw,19px);font-weight:650;letter-spacing:-.02em;line-height:1.3;margin-bottom:8px}
+  .faq p{font-size:15.5px;color:var(--muted);margin:7px 0;line-height:1.55}
+  .faq p strong{color:var(--ink)}
   .cta{display:inline-flex;align-items:center;background:var(--ink);color:#fff !important;border-radius:100px;
-    padding:13px 24px;font-size:16px;font-weight:600;letter-spacing:-.01em;margin-top:18px}
+    padding:16px 30px;font-size:17px;font-weight:600;letter-spacing:-.015em;margin-top:26px}
   .cta:hover{text-decoration:none;opacity:.92}
-  .note{background:var(--card);border-radius:var(--radius-md);padding:14px 18px;font-size:14px;color:var(--muted);margin-top:26px}
-  footer{border-top:1px solid var(--hair);margin-top:56px;padding:36px 0 48px;text-align:center}
+  .note{background:var(--card);border:1px solid var(--hair);border-radius:20px;padding:18px 22px;font-size:14px;color:var(--muted);margin-top:30px}
+  footer{border-top:1px solid var(--hair);margin-top:clamp(72px,10vw,120px);padding:clamp(48px,6vw,72px) 0;text-align:center}
   footer .f-line{font-size:15px;font-weight:600;letter-spacing:-.01em}
   footer .f-links{margin-top:10px;font-size:14px}
   footer .f-links a{color:var(--muted);margin:0 8px}
@@ -118,7 +124,7 @@
   .menu .menu-cta{margin-top:28px;font-size:17px;font-weight:600;letter-spacing:-.01em;
     background:var(--ink);color:#fff;border-radius:100px;padding:17px 28px;text-align:center}
   body[data-menu="open"]{overflow:hidden}
-  body[data-menu="open"] nav{background:var(--bg);padding-right:var(--sbw,0px)}
+  body[data-menu="open"] nav{background:var(--bg) !important;border-bottom-color:transparent !important;backdrop-filter:none;-webkit-backdrop-filter:none;padding-right:var(--sbw,0px)}
   body[data-menu="open"] .menu{padding-right:calc(24px + var(--sbw,0px))}
   body[data-menu="open"] .pill-cta{opacity:0;visibility:hidden;pointer-events:none}
   @media (max-width:1000px){
@@ -169,35 +175,32 @@
 
 <h2 style="margin-top:40px">Frequently asked</h2>
 
-<div class="card">
-  <h3><span class="f-dot" style="background:var(--red)"></span>I lost my sync passphrase. Can you recover it?</h3>
+<div class="faq">
+<section>
+  <h3>I lost my sync passphrase. Can you recover it?</h3>
   <p><strong>No — and that's by design.</strong> Your data is encrypted on your device with the passphrase before it reaches us; we only ever store an unreadable blob. Without the passphrase, the server copy cannot be decrypted by anyone, including us.</p>
   <p>Your data is still on any device where the app has it locally. From there you can keep working offline, or delete the account in-app and re-enable sync with a new passphrase — the app will upload a fresh encrypted copy.</p>
-</div>
-
-<div class="card">
-  <h3><span class="f-dot" style="background:var(--amber)"></span>How do I cancel the subscription?</h3>
+</section>
+<section>
+  <h3>How do I cancel the subscription?</h3>
   <p>Subscriptions are billed by Apple: iPhone Settings → your name → Subscriptions → JayCK Flow Premium → Cancel. It stays active until the end of the paid period. After it lapses, uploading pauses, but downloading your synced data keeps working.</p>
-</div>
-
-<div class="card">
-  <h3><span class="f-dot" style="background:var(--amber)"></span>Sync isn't working — what should I check?</h3>
+</section>
+<section>
+  <h3>Sync isn't working — what should I check?</h3>
   <p>1) You're signed in (Account &amp; sync). 2) The <em>same</em> passphrase is entered on every device — a wrong passphrase shows a clear error and never overwrites anything. 3) Uploading needs an active subscription. 4) You're online. Still stuck? Email us with what the sync status line says.</p>
-</div>
-
-<div class="card">
-  <h3><span class="f-dot" style="background:var(--green)"></span>How do I delete my account?</h3>
+</section>
+<section>
+  <h3>How do I delete my account?</h3>
   <p>In the app: Account &amp; sync → Delete account. It asks you to type your email to confirm, then permanently removes the account and your encrypted vault from our servers. Data on your device stays until you remove the app.</p>
-</div>
-
-<div class="card">
-  <h3><span class="f-dot" style="background:var(--green)"></span>Can I use the app without an account?</h3>
+</section>
+<section>
+  <h3>Can I use the app without an account?</h3>
   <p>Yes — fully. An account exists only for sync between devices. Without one, everything stays on your device and nothing is stored on our servers.</p>
-</div>
-
-<div class="card">
-  <h3><span class="f-dot" style="background:var(--green)"></span>How do I get my data out?</h3>
+</section>
+<section>
+  <h3>How do I get my data out?</h3>
   <p>The app can export your data locally at any time (Data section) — it's your file, in a readable format, no subscription required.</p>
+</section>
 </div>
 
 <p class="note">Security reminder: our emails contain only short codes — never links to click — and we will never ask for your password or sync passphrase.</p>
@@ -214,6 +217,10 @@
 <script>
 (function(){
   "use strict";
+  var nav = document.querySelector("nav");
+  function onScroll(){ nav.setAttribute("data-scrolled", (window.scrollY || 0) > 8 ? "true" : "false"); }
+  window.addEventListener("scroll", onScroll, { passive:true });
+  onScroll();
   var burger = document.getElementById("burger"), menu = document.getElementById("menu");
   if (!burger || !menu) return;
   function setMenu(open){

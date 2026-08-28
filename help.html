@@ -48,9 +48,14 @@
   .wrap{max-width:760px;margin:0 auto;padding:0 24px}
   /* Sticky on every page, not just the homepage. On a long document the logo is the
      only route back — letting it scroll away leaves the footer as the sole way out. */
-  nav{position:sticky;top:0;z-index:50;background:rgba(247,247,250,.72);
+  /* Fixed and transparent at the top, gaining the translucent band and the
+     hairline only on scroll — the same behaviour as the homepage header. */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;background:transparent;
+    border-bottom:1px solid transparent;
+    transition:background .4s ease,border-color .4s ease}
+  nav[data-scrolled="true"]{background:rgba(242,242,247,.72);
     backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
-    border-bottom:1px solid var(--hair)}
+    border-bottom-color:var(--hair)}
   /* Deliberately wider than this page's 760px reading column: the header is
      site-wide furniture, so it keeps the homepage's 1180px measure and the logo
      lands in the same spot on every page. Only the nav — `main.wrap` stays 760px. */
@@ -63,12 +68,12 @@
     text-decoration:none;transition:opacity .2s ease}
   .pill-cta:hover{opacity:.82;text-decoration:none}
   [id]{scroll-margin-top:76px}
-  main{padding:36px 0 24px}
-  .kicker{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}
+  main.wrap{padding-top:clamp(128px,18vw,184px);padding-bottom:clamp(48px,7vw,88px)}
+  .kicker{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:18px}
   h1{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
-    font-size:clamp(30px,5.5vw,44px);font-weight:700;letter-spacing:-.025em;line-height:1.1}
-  .sub{margin-top:14px;max-width:560px;font-size:17px;color:var(--muted)}
-  h2{font-size:22px;font-weight:700;letter-spacing:-.02em;margin:44px 0 6px;scroll-margin-top:76px}
+    font-size:clamp(40px,7vw,64px);font-weight:600;letter-spacing:-.04em;line-height:1.02}
+  .sub{margin-top:22px;max-width:600px;font-size:clamp(17px,2vw,20px);line-height:1.5;color:var(--muted)}
+  h2{font-size:clamp(23px,3vw,29px);font-weight:650;letter-spacing:-.025em;margin:clamp(52px,8vw,84px) 0 12px;scroll-margin-top:96px}
   h3{font-size:17px;font-weight:700;letter-spacing:-.015em;margin:22px 0 4px}
   p,li{font-size:16px;color:#3A3A3C}
   ul{padding-left:20px;margin:8px 0}
@@ -102,7 +107,7 @@
   .chip.b{background:var(--blue-soft);color:var(--blue-text)}
   .note{background:var(--card);border-radius:var(--radius-md);padding:14px 18px;font-size:14px;color:var(--muted);margin-top:18px}
   .note strong{color:var(--ink)}
-  footer{border-top:1px solid var(--hair);margin-top:56px;padding:36px 0 48px;text-align:center}
+  footer{border-top:1px solid var(--hair);margin-top:clamp(72px,10vw,120px);padding:clamp(48px,6vw,72px) 0;text-align:center}
   footer .f-line{font-size:15px;font-weight:600;letter-spacing:-.01em}
   footer .f-links{margin-top:10px;font-size:14px}
   footer .f-links a{color:var(--muted);margin:0 8px}
@@ -135,7 +140,7 @@
   .menu .menu-cta{margin-top:28px;font-size:17px;font-weight:600;letter-spacing:-.01em;
     background:var(--ink);color:#fff;border-radius:100px;padding:17px 28px;text-align:center}
   body[data-menu="open"]{overflow:hidden}
-  body[data-menu="open"] nav{background:var(--bg);padding-right:var(--sbw,0px)}
+  body[data-menu="open"] nav{background:var(--bg) !important;border-bottom-color:transparent !important;backdrop-filter:none;-webkit-backdrop-filter:none;padding-right:var(--sbw,0px)}
   body[data-menu="open"] .menu{padding-right:calc(24px + var(--sbw,0px))}
   body[data-menu="open"] .pill-cta{opacity:0;visibility:hidden;pointer-events:none}
   @media (max-width:1000px){
@@ -467,6 +472,10 @@
 <script>
 (function(){
   "use strict";
+  var nav = document.querySelector("nav");
+  function onScroll(){ nav.setAttribute("data-scrolled", (window.scrollY || 0) > 8 ? "true" : "false"); }
+  window.addEventListener("scroll", onScroll, { passive:true });
+  onScroll();
   var burger = document.getElementById("burger"), menu = document.getElementById("menu");
   if (!burger || !menu) return;
   function setMenu(open){
