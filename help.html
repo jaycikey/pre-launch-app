@@ -28,14 +28,13 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#F7F7FA" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#140917" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#FFFFFF">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
 <meta name="apple-itunes-app" content="app-id=6789696499">
 <style>
   :root{
-    --bg:#F2F2F7;--card:#FFFFFF;--ink:#1C1C1E;--muted:#8E8E93;--hair:#E5E5EA;
+    --bg:#FFFFFF;--card:#FFFFFF;--ink:#1C1C1E;--muted:#8E8E93;--hair:#E5E5EA;
     --green:#34C759;--green-soft:#E9F9EE;--green-text:#1C7A3A;
     --amber:#FF9500;--amber-soft:#FFEFCC;--amber-text:#9A6400;
     --red:#FF3B30;--red-soft:#FFECEB;--red-text:#B3261E;
@@ -53,15 +52,18 @@
   nav{position:fixed;top:0;left:0;right:0;z-index:50;background:transparent;
     border-bottom:1px solid transparent;
     transition:background .4s ease,border-color .4s ease}
-  nav[data-scrolled="true"]{background:rgba(242,242,247,.72);
+  nav[data-scrolled="true"]{background:rgba(255,255,255,.72);
     backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
     border-bottom-color:var(--hair)}
   /* Deliberately wider than this page's 760px reading column: the header is
      site-wide furniture, so it keeps the homepage's 1180px measure and the logo
      lands in the same spot on every page. Only the nav — `main.wrap` stays 760px. */
+  /* Identical geometry to the homepage header: 64px tall, 1320px measure,
+     40px gutter — the wordmark lands on the same pixel on every page. */
   nav .wrap{display:flex;align-items:center;justify-content:space-between;
-    max-width:1180px;padding:14px 24px}
-  .logo{font-size:19px;font-weight:700;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+    max-width:1320px;height:64px;padding:0 40px}
+  @media (max-width:1000px){ nav .wrap{padding:0 24px} }
+  .logo{font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1;color:var(--ink);text-decoration:none}
   .logo span{color:var(--muted);font-weight:500}
   .pill-cta{font-size:14px;font-weight:600;color:#fff;
     border-radius:100px;padding:8px 18px;background:var(--ink);white-space:nowrap;
@@ -85,11 +87,11 @@
   .card p{font-size:15px;color:var(--muted);margin:6px 0}
   .card p strong{color:var(--ink)}
   /* Jump links */
-  .toc{background:var(--card);border-radius:var(--radius-md);padding:18px 22px;margin:22px 0 6px;
+  .toc{background:var(--card);border:1px solid var(--hair);border-radius:var(--radius-md);padding:18px 22px;margin:22px 0 6px;
     display:flex;flex-wrap:wrap;gap:8px 18px}
   .toc a{font-size:15px;font-weight:600}
   /* Control reference rows: what it's called · where it lives · what it does */
-  .ctrl{background:var(--card);border-radius:var(--radius-md);padding:6px 4px;margin:14px 0}
+  .ctrl{background:var(--card);border:1px solid var(--hair);border-radius:var(--radius-md);padding:6px 4px;margin:14px 0}
   .ctrl .row{display:flex;gap:14px;padding:14px 20px;border-top:1px solid var(--hair)}
   .ctrl .row:first-child{border-top:none}
   .ctrl .n{flex:0 0 34%;font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
@@ -105,7 +107,7 @@
   .chip.a{background:var(--amber-soft);color:var(--amber-text)}
   .chip.r{background:var(--red-soft);color:var(--red-text)}
   .chip.b{background:var(--blue-soft);color:var(--blue-text)}
-  .note{background:var(--card);border-radius:var(--radius-md);padding:14px 18px;font-size:14px;color:var(--muted);margin-top:18px}
+  .note{background:var(--card);border:1px solid var(--hair);border-radius:var(--radius-md);padding:14px 18px;font-size:14px;color:var(--muted);margin-top:18px}
   .note strong{color:var(--ink)}
   footer{border-top:1px solid var(--hair);margin-top:clamp(72px,10vw,120px);padding:clamp(48px,6vw,72px) 0;text-align:center}
   footer .f-line{font-size:15px;font-weight:600;letter-spacing:-.01em}
