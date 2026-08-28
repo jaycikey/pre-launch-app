@@ -58,10 +58,10 @@
     max-width:1180px;padding:14px 24px}
   .logo{font-size:19px;font-weight:700;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
   .logo span{color:var(--muted);font-weight:500}
-  .pill-cta{font-size:13px;font-weight:600;color:var(--muted);border:1px solid var(--hair);
-    border-radius:100px;padding:6px 14px;background:var(--card);white-space:nowrap;
-    text-decoration:none;transition:color .2s ease,border-color .2s ease}
-  .pill-cta:hover{color:var(--ink);border-color:var(--muted)}
+  .pill-cta{font-size:14px;font-weight:600;color:#fff;
+    border-radius:100px;padding:8px 18px;background:var(--ink);white-space:nowrap;
+    text-decoration:none;transition:opacity .2s ease}
+  .pill-cta:hover{opacity:.82;text-decoration:none}
   main{padding:36px 0 24px}
   .kicker{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}
   h1{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
@@ -91,6 +91,43 @@
   footer .f-links a{color:var(--muted);margin:0 8px}
   footer .f-sub{font-size:13px;color:var(--muted);margin-top:10px}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+  /* ---------- site menu (shared with the homepage) ---------- */
+  nav .side{display:flex;align-items:center;gap:clamp(16px,2.5vw,36px)}
+  .nav-links{display:flex;align-items:center;gap:clamp(16px,2.5vw,36px)}
+  .nav-links a{font-size:15px;font-weight:500;color:var(--muted);letter-spacing:-.01em;
+    text-decoration:none;transition:color .2s ease}
+  .nav-links a:hover{color:var(--ink);text-decoration:none}
+  .burger{display:none;width:44px;height:44px;border:0;background:none;cursor:pointer;
+    align-items:center;justify-content:center;flex-direction:column;gap:5px;
+    flex:0 0 auto;position:relative;z-index:51}
+  .burger i{display:block;width:19px;height:2px;background:var(--ink);border-radius:2px;
+    transition:transform .3s ease,opacity .2s ease}
+  body[data-menu="open"] .burger i:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  body[data-menu="open"] .burger i:nth-child(2){opacity:0}
+  body[data-menu="open"] .burger i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .menu{position:fixed;inset:0;z-index:49;background:var(--bg);
+    padding:120px 24px 48px;display:flex;flex-direction:column;gap:14px;
+    opacity:0;visibility:hidden;transform:translateY(-10px);
+    transition:opacity .32s ease,transform .32s ease,visibility 0s .32s}
+  body[data-menu="open"] .menu{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+  .menu a{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
+    font-size:clamp(34px,7vw,52px);font-weight:600;letter-spacing:-.04em;line-height:1.25;
+    color:var(--ink);text-decoration:none}
+  .menu a:hover{text-decoration:none}
+  .menu .menu-cta{margin-top:28px;font-size:17px;font-weight:600;letter-spacing:-.01em;
+    background:var(--ink);color:#fff;border-radius:100px;padding:17px 28px;text-align:center}
+  body[data-menu="open"]{overflow:hidden}
+  body[data-menu="open"] nav{background:var(--bg);padding-right:var(--sbw,0px)}
+  body[data-menu="open"] .menu{padding-right:calc(24px + var(--sbw,0px))}
+  body[data-menu="open"] .pill-cta{opacity:0;visibility:hidden;pointer-events:none}
+  @media (max-width:1000px){
+    .nav-links{display:none}
+    .burger{display:flex}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .menu,.burger i{transition:none}
+  }
 </style>
 </head>
 <body>
@@ -98,9 +135,29 @@
 <nav>
   <div class="wrap">
     <a class="logo" href="/">JayCK <span>Flow</span></a>
-    <a class="pill-cta" href="https://apps.apple.com/app/jayck-flow/id6789696499">Get the app</a>
+    <div class="side">
+      <div class="nav-links">
+        <a href="/#how">How it works</a>
+        <a href="/#why">Why Flow</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/help">Help</a>
+      </div>
+      <a class="pill-cta" href="https://apps.apple.com/app/jayck-flow/id6789696499">Download</a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+        <i></i><i></i><i></i>
+      </button>
+    </div>
   </div>
 </nav>
+
+<div class="menu" id="menu">
+  <a href="/#how">How it works</a>
+  <a href="/#why">Why Flow</a>
+  <a href="/privacy">Privacy</a>
+  <a href="/help">Help</a>
+  <a href="/support">Support</a>
+  <a class="menu-cta" href="https://apps.apple.com/app/jayck-flow/id6789696499">Download on the App Store</a>
+</div>
 
 <main class="wrap">
 <p class="kicker">Private by design</p>
@@ -180,5 +237,30 @@ Email: <a href="mailto:support@jayck.dev">support@jayck.dev</a></p>
   </div>
 </footer>
 
+<script>
+(function(){
+  "use strict";
+  var burger = document.getElementById("burger"), menu = document.getElementById("menu");
+  if (!burger || !menu) return;
+  function setMenu(open){
+    var sbw = open ? window.innerWidth - document.documentElement.clientWidth : 0;
+    document.documentElement.style.setProperty("--sbw", (sbw > 0 ? sbw : 0) + "px");
+    document.body.setAttribute("data-menu", open ? "open" : "closed");
+    burger.setAttribute("aria-expanded", String(open));
+  }
+  setMenu(false);
+  burger.addEventListener("click", function(){
+    setMenu(document.body.getAttribute("data-menu") !== "open");
+  });
+  [].slice.call(menu.querySelectorAll("a")).forEach(function(a){
+    a.addEventListener("click", function(){ setMenu(false); });
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && document.body.getAttribute("data-menu") === "open"){
+      setMenu(false); burger.focus();
+    }
+  });
+})();
+</script>
 </body>
 </html>
