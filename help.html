@@ -193,6 +193,7 @@
   <a href="#screen">Main screen</a>
   <a href="#views">Views</a>
   <a href="#money">Adding money</a>
+  <a href="#gestures">Swipe a row</a>
   <a href="#whatif">What if?</a>
   <a href="#widgets">Widgets</a>
   <a href="#menu">Menu</a>
@@ -266,7 +267,7 @@
 <h2 id="views">The three views</h2>
 <div class="ctrl">
   <div class="row"><div class="n">Month</div><div class="d">The default. Scrolls continuously through months, so next month is one swipe away rather than a separate screen.</div></div>
-  <div class="row"><div class="n">Day</div><div class="d">Tap any date. Shows everything on that day, each with a done tick and an edit tap; also scrolls day by day.</div></div>
+  <div class="row"><div class="n">Day</div><div class="d">Tap any date. Shows everything on that day &mdash; tap a row to edit it, or <a href="#gestures">swipe it sideways</a> to act on it; also scrolls day by day.</div></div>
   <div class="row"><div class="n">Year</div><div class="d">Tap ‹ from the month view. Twelve mini-months at a glance for spotting rough patches; tap a month to open it.</div></div>
 </div>
 <p class="note">On iPad and Mac the app uses a two-column layout instead: the calendar on the right, and your balance, transactions and category totals in a permanent sidebar on the left.</p>
@@ -285,17 +286,31 @@
 </div>
 
 <h3>Marking things off</h3>
+<p>Every row carries <strong>one mark</strong> showing where it stands — planned, done, charged to a card, or hidden. The actions that change it live on the <a href="#gestures">swipe</a>.</p>
 <div class="ctrl">
-  <div class="row"><div class="n">Done tick</div><div class="d">In the day view. Marks the transaction as actually completed, which keeps "how many still pending" honest and drives the day badges. <strong>It matters just as much on income:</strong> a past payment the app has recorded is counted in your balance whether or not you confirmed it, so a paycheck that never arrived is money the forecast is promising you. Marking income received is what clears that.</div></div>
-  <div class="row"><div class="n">Eye — hide</div><div class="d">Takes the row <strong>off your balance for
+  <div class="row"><div class="n">Done</div><div class="d">The money actually moved. This is what keeps "how many still pending" honest and drives the day badges. <strong>It matters just as much on income:</strong> a past payment the app has recorded is counted in your balance whether or not you confirmed it, so a paycheck that never arrived is money the forecast is promising you. Marking income received is what clears that.</div></div>
+  <div class="row"><div class="n">Hidden</div><div class="d">Takes the row <strong>off your balance for
     good</strong>: money that was never yours to spend. It stays in your history and in its category, and its
     name and amount are struck through with a <strong>solid</strong> line. Offered on every row.</div></div>
-  <div class="row"><div class="n">↗ — on a card</div><div class="d">Only on an expense. Asks <strong>which
+  <div class="row"><div class="n">Charged to a card</div><div class="d">Only on an expense. Asks <strong>which
     card</strong>, then takes the purchase off today&rsquo;s balance and brings the money back on that
     card&rsquo;s payment day. Struck through with a <strong>dashed</strong> line, because it is not gone &mdash;
     it is later. A row can be hidden <em>or</em> on a card, never both, and neither is offered while the row is
-    marked completed.</div></div>
+    marked done.</div></div>
 </div>
+<p class="note">Behind on a stretch of days? Open the balance card, then <strong>Overdue</strong> &rarr; <strong>Mark up to today</strong>. It lists everything it is about to mark so you can untick what you are not sure about, and the whole batch can be taken back in one tap.</p>
+
+<h2 id="gestures">Swipe a row</h2>
+<p>Slide a transaction sideways and a block of actions opens on that side. Keep pulling and the outermost action grows to fill the row &mdash; let go there and it runs. Let go early and the panel simply stays open, so a half-swipe never does anything.</p>
+<p><strong>The direction carries the meaning.</strong> Swipe <strong>right</strong> to say <em>it happened</em>; swipe <strong>left</strong> to say <em>take it off my screen</em>.</p>
+<div class="ctrl">
+  <div class="row"><div class="n">Swipe right</div><div class="d"><strong>Done</strong> at the outer end, <strong>charge to a card</strong> inside it. A full swipe right marks the row done &mdash; the thing most rows need most days.</div></div>
+  <div class="row"><div class="n">Swipe left</div><div class="d"><strong>Hide</strong> opens, <strong>delete</strong> sits at the outer end. The reversible act is the one you reach first.</div></div>
+  <div class="row"><div class="n">Undo after a delete</div><div class="d">The row leaves a strip where it stood, carrying <strong>Restore</strong> and a bar counting down. Nothing is really gone until the bar empties, and leaving the screen and coming back does not restart it.</div></div>
+  <div class="row"><div class="n">On a record other rows point at</div><div class="d">A card, a debt or a savings goal asks <strong>first</strong> instead of deleting and offering an undo &mdash; other things depend on it, so a question is the safer shape.</div></div>
+</div>
+<p>The same idiom reaches the lists in Finances &mdash; categories, debts, goals and cards &mdash; and an action is only offered where the row can actually perform it.</p>
+<p class="note"><strong>Nothing is locked behind the gesture.</strong> Settings &rarr; <strong>Gestures</strong> lets you choose which actions sit on each side (up to two a side), and a master switch turns the whole idiom off &mdash; with it off, the buttons stay. Every action a swipe performs is reachable without swiping.</p>
 
 <h3>Editing a repeating transaction</h3>
 <p>Change or delete one and the app asks what you meant — <strong>This event only</strong>, <strong>This and following</strong>, or <strong>All events in the series</strong>. Nothing is guessed for you.</p>
