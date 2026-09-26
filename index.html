@@ -28,8 +28,10 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="color-scheme" content="light">
-<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" href="/css/site.css">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#140917" media="(prefers-color-scheme: dark)">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
 <meta name="apple-itunes-app" content="app-id=6789696499">
 <link rel="preload" as="image" type="image/webp" imagesrcset="/img/app-month@1x.webp 1x, /img/app-month.webp 2x">
@@ -46,40 +48,17 @@
      a day that is on track, needs attention, or forces a decision. Never as
      decoration, because in this product green is a claim about your money.
      ========================================================================= */
-  :root{
-    --ink:#1C1C1E;
-    --muted:#6E6E73;
-    --faint:#86868B;
-    --hair:#E3E3E6;
-    --bg:#FFFFFF;
-    --subtle:#F5F5F7;
-
-    --green:#34C759; --green-soft:#E9F9EE; --green-text:#1C7A3A;
-    --red:#FF3B30;   --red-soft:#FFECEB;   --red-text:#B3261E;
-    --blue:#007AFF;  --blue-soft:#E4F0FF;  --blue-text:#0060CC;
-
-    /* one spacing scale, used everywhere */
-    --s-1:8px; --s-2:16px; --s-3:24px; --s-4:40px; --s-5:64px;
-    --s-6:96px; --s-7:140px; --s-8:200px;
-
-    --r-ui:24px; --r-lg:32px; --r-xl:40px; --r-pill:999px;
-    --page:1320px;
-    --ease:cubic-bezier(.22,.61,.36,1);
-    --nav-h:64px;
-  }
-
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-  body{
-    background:var(--bg);color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size:17px;line-height:1.5;letter-spacing:-.01em;
-    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-    overflow-x:hidden;
-  }
-  a{color:inherit;text-decoration:none}
-  ::selection{background:#000;color:#fff}
-  :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+  /* Tokens, reset, focus, header, menu and footer now live in /css/site.css.
+     What stays here is what only this page has: the display scale, the sections
+     and the demo blocks. Two overrides of the shared base, both deliberate — this
+     page sets a tighter body measure than a document page, and it keeps smooth
+     scrolling for its in-page anchors. */
+  html{scroll-behavior:smooth}
+  body{font-size:17px;line-height:1.5;letter-spacing:-.01em;overflow-x:hidden}
+  /* 40px gutters, not the shared 24 — and now also clear of the notch, which
+     viewport-fit=cover has been promising to need since the day it was set. */
+  .wrap{padding-left:max(var(--s-4), env(safe-area-inset-left));
+        padding-right:max(var(--s-4), env(safe-area-inset-right))}
 
   /* ---------- type scale (spec §25) ---------- */
   .display{
@@ -91,10 +70,8 @@
   .t-section{font-size:clamp(38px,5.2vw,76px);line-height:1.02;letter-spacing:-.042em}
   .t-mid{font-size:clamp(26px,3.2vw,44px);line-height:1.08;letter-spacing:-.035em}
   .lede{font-size:clamp(18px,1.55vw,22px);line-height:1.5;letter-spacing:-.016em;color:var(--muted)}
-  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
-  .fine{font-size:14px;color:var(--faint)}
-  .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;
-    clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .fine{font-size:14px;color:var(--muted)}
   .mono-num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
 
   /* ---------- structure (spec §28: space is the design) ---------- */
@@ -105,64 +82,22 @@
   section.statement{padding-block:clamp(120px,18vw,260px)}
   .center{text-align:center}
 
-  .dark{background:#000;color:#fff;
-    --ink:#fff;--muted:#98989D;--faint:#86868B;--hair:#2A2A2C;--bg:#000;--subtle:#131315}
+  /* The two statement sections. They were pure #000; the brand's dark surface is
+     #140917 — "the logo's own canvas", NATIVE.md §6 — the colour of the icon, the
+     splash and the shared card. Same values as site.css's dark scheme, so a
+     dark-mode visitor sees one continuous surface, not a black band. */
+  .dark{background:var(--plum);color:#fff;
+    --ink:#fff;--muted:#98989F;--hair:#2E2230;--bg:#140917;--subtle:#1A0E1E;
+    --card:#1E1222;--blue-text:#6CB6FF}
 
-  /* ---------- header (spec §4) ---------- */
-  .hdr{position:fixed;top:0;left:0;right:0;z-index:100;
-    transition:background .4s var(--ease),border-color .4s var(--ease),backdrop-filter .4s var(--ease);
-    border-bottom:1px solid transparent}
-  .hdr[data-scrolled="true"]{
-    background:rgba(255,255,255,.72);border-bottom-color:var(--hair);
-    -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px)}
-  .hdr-in{max-width:var(--page);margin:0 auto;padding:0 var(--s-4);height:var(--nav-h);
-    display:flex;align-items:center;justify-content:space-between;gap:var(--s-3)}
-  .logo{font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1}
-  .logo span{color:var(--muted);font-weight:500}
-  .hdr-side{display:flex;align-items:center;gap:clamp(16px,2.5vw,40px)}
-  .nav-links{display:flex;align-items:center;gap:clamp(16px,2.5vw,40px)}
-  .nav-links a{font-size:15px;font-weight:500;color:var(--muted);letter-spacing:-.01em;
-    transition:color .2s var(--ease)}
-  .nav-links a:hover{color:var(--ink)}
-  /* The header CTA lives on every width — but only while no in-page App Store
-     button is on screen, so the same offer is never asked twice in one viewport.
-     visibility (not just opacity) keeps a hidden link out of the tab order. */
-  .nav-cta{display:inline-flex;align-items:center;background:var(--ink);
-    border-radius:var(--r-pill);padding:9px 20px;font-size:15px;font-weight:600;letter-spacing:-.01em;
-    transition:opacity .3s var(--ease),transform .3s var(--ease),visibility 0s}
-  .nav-cta,.nav-links .nav-cta,.hdr-side .nav-cta{color:#fff}
-  .nav-cta:hover{opacity:.82}
+  /* ---------- header: the one part site.css does not own ---------- */
+  /* The CTA lives on every width, but only while no in-page App Store button is
+     on screen, so the same offer is never asked twice in one viewport.
+     `visibility` (not just opacity) keeps a hidden link out of the tab order.
+     Everything else about this pill — shape, colour, 44px target — is .pill-cta. */
+  .nav-cta{transition:opacity .3s var(--ease),transform .3s var(--ease),visibility 0s}
   .nav-cta[data-hidden="true"]{opacity:0;transform:translateY(-8px);visibility:hidden;
     pointer-events:none;transition-delay:0s,0s,.3s}
-  .burger{display:none;width:44px;height:44px;border:0;background:none;cursor:pointer;
-    align-items:center;justify-content:center;flex-direction:column;gap:5px;
-    flex:0 0 auto;position:relative;z-index:101}
-  .burger i{display:block;width:19px;height:2px;background:var(--ink);border-radius:2px;
-    transition:transform .3s var(--ease),opacity .2s var(--ease)}
-  body[data-menu="open"] .burger i:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  body[data-menu="open"] .burger i:nth-child(2){opacity:0}
-  body[data-menu="open"] .burger i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-
-  /* fullscreen mobile menu */
-  .menu{position:fixed;inset:0;z-index:99;background:var(--bg);
-    padding:calc(var(--nav-h) + var(--s-5)) var(--s-4) var(--s-5);
-    display:flex;flex-direction:column;gap:var(--s-2);
-    opacity:0;visibility:hidden;transform:translateY(-10px);
-    transition:opacity .32s var(--ease),transform .32s var(--ease),visibility 0s .32s}
-  body[data-menu="open"] .menu{opacity:1;visibility:visible;transform:none;transition-delay:0s}
-  .menu a{font-size:clamp(34px,7vw,52px);font-weight:600;letter-spacing:-.04em;line-height:1.25;
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif}
-  .menu .menu-cta{margin-top:var(--s-4);font-size:17px;font-weight:600;letter-spacing:-.01em;
-    background:var(--ink);color:#fff;border-radius:var(--r-pill);padding:17px 28px;text-align:center}
-  body[data-menu="open"]{overflow:hidden}
-  /* while the menu is open the header goes solid and its pill yields to the
-     menu's own CTA — one offer on screen, and nothing shows through the band */
-  /* locking scroll removes the scrollbar and widens the viewport — compensate,
-     or the ✕ lands a scrollbar-width to the right of where the burger was */
-  body[data-menu="open"] .hdr{background:var(--bg);border-bottom-color:transparent;
-    -webkit-backdrop-filter:none;backdrop-filter:none;padding-right:var(--sbw,0px)}
-  body[data-menu="open"] .menu{padding-right:calc(var(--s-4) + var(--sbw,0px))}
-  body[data-menu="open"] .nav-cta{opacity:0;visibility:hidden;pointer-events:none}
 
   /* ---------- buttons ---------- */
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
@@ -178,10 +113,16 @@
   [data-reveal].in{opacity:1;transform:none}
   [data-reveal="scale"]{transform:translateY(24px) scale(.94)}
   [data-reveal="scale"].in{transform:none}
-  [data-delay="1"]{transition-delay:.09s}
-  [data-delay="2"]{transition-delay:.18s}
-  [data-delay="3"]{transition-delay:.30s}
-  [data-delay="4"]{transition-delay:.44s}
+  /* The stagger is kept — it is this page's one orchestrated moment and the
+     reason the hero lands as a sentence rather than a slab. What is not kept is
+     its length: [data-delay="4"] held the SECOND LINE OF A HEADLINE for 0.44s
+     after the first, and a reader who has arrived is then waiting on an
+     animation to finish saying something. Halved at the top end. Nothing is
+     withheld longer than a quarter of a second now. */
+  [data-delay="1"]{transition-delay:.06s}
+  [data-delay="2"]{transition-delay:.12s}
+  [data-delay="3"]{transition-delay:.18s}
+  [data-delay="4"]{transition-delay:.24s}
   [data-parallax]{will-change:transform}
 
   /* ---------- hero (spec §5) ---------- */
@@ -233,14 +174,14 @@
   .strip-row{display:grid;grid-template-columns:88px minmax(0,1fr) auto auto;
     gap:var(--s-3);align-items:center;background:var(--bg);
     padding:clamp(18px,2.2vw,26px) clamp(18px,2.4vw,32px)}
-  .strip-row .d{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+  .strip-row .d{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
   .strip-row .n{font-size:clamp(17px,1.7vw,21px);font-weight:600;letter-spacing:-.022em}
   .strip-row .a{font-size:clamp(16px,1.5vw,19px);font-weight:600;letter-spacing:-.02em;text-align:right}
   .strip-row .a.pos{color:var(--green-text)}
   .strip-row .a.neg{color:var(--ink)}
   .strip-row .b{font-size:clamp(16px,1.5vw,19px);font-weight:600;letter-spacing:-.025em;
     text-align:right;min-width:96px;color:var(--muted)}
-  .strip-cap{margin-top:var(--s-2);text-align:right;font-size:13px;color:var(--faint)}
+  .strip-cap{margin-top:var(--s-2);text-align:right;font-size:13px;color:var(--muted)}
 
   /* ---------- real product shot (demo data only) ---------- */
   .shot{max-width:380px;margin:0 auto}
@@ -250,7 +191,7 @@
     box-shadow:0 2px 4px rgba(0,0,0,.03),0 18px 40px -14px rgba(0,0,0,.10),
                0 56px 110px -40px rgba(0,0,0,.16)}
   .shot img{display:block;width:100%;height:auto}
-  .shot figcaption{margin-top:14px;text-align:center;font-size:13px;color:var(--faint)}
+  .shot figcaption{margin-top:14px;text-align:center;font-size:13px;color:var(--muted)}
 
   /* ---------- lowest balance figure (spec §11) ---------- */
   .figure{background:var(--subtle);border-radius:var(--r-xl);
@@ -260,8 +201,13 @@
     color:var(--red-text)}
   .figure-sub{margin-top:var(--s-2);font-size:clamp(18px,1.8vw,24px);color:var(--muted);letter-spacing:-.02em}
   .states{display:grid;gap:12px;margin-top:var(--s-5)}
-  .state{display:flex;align-items:baseline;gap:9px;font-size:16px;font-weight:500}
-  .state i{width:10px;height:10px;border-radius:50%;flex:0 0 auto;align-self:center}
+  /* The dot belongs to the FIRST line. `align-items:baseline` with the dot set to
+     `align-self:center` centred it on the whole row — fine while every row was one
+     line, and wrong the moment one wrapped. The red row has wrapped on a phone
+     since it was written, and adding the amber row made two of the three do it.
+     Start-aligned, with the dot nudged onto the first line's x-height. */
+  .state{display:flex;align-items:flex-start;gap:9px;font-size:16px;font-weight:500}
+  .state i{width:10px;height:10px;border-radius:50%;flex:0 0 auto;margin-top:.42em}
   .state b{font-weight:600}
   .state span{color:var(--muted)}
 
@@ -291,7 +237,7 @@
   .wif-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(6px,1vw,14px);
     margin-top:clamp(28px,3.4vw,44px)}
   .wif-col{text-align:center}
-  .wif-day{font-size:12px;font-weight:600;color:var(--faint);letter-spacing:.05em}
+  .wif-day{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.05em}
   .wif-bar{margin-top:10px;border-radius:12px;background:var(--green-soft);
     height:clamp(90px,13vw,168px);display:flex;align-items:flex-end;justify-content:center;
     padding-bottom:10px;position:relative;overflow:hidden;
@@ -306,10 +252,10 @@
   .wif-foot{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s-3);
     flex-wrap:wrap;margin-top:clamp(24px,3vw,36px);
     border-top:1px solid var(--hair);padding-top:clamp(20px,2.4vw,28px)}
-  .wif-foot .k{font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--faint)}
+  .wif-foot .k{font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
   .wif-foot .v{font-size:clamp(24px,3vw,38px);font-weight:600;letter-spacing:-.035em;
     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif}
-  .wif-note{margin-top:var(--s-3);font-size:14px;color:var(--faint);text-align:center}
+  .wif-note{margin-top:var(--s-3);font-size:14px;color:var(--muted);text-align:center}
 
   /* ---------- one balance merge (spec §15) ---------- */
   .merge{max-width:760px;margin:clamp(56px,7vw,96px) auto 0;position:relative}
@@ -329,9 +275,12 @@
     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif}
   .track-card p{margin-top:10px;font-size:15px;color:var(--muted)}
   .track-card.ghost{background:transparent;border:1px dashed var(--hair)}
-  .track-card.ghost .amt{color:var(--faint)}
-  .track-arrow{font-size:22px;color:var(--faint);line-height:1}
-  .track-verdict{margin-top:var(--s-4);text-align:center;font-size:15px;color:var(--muted)}
+  .track-card.ghost .amt{color:var(--muted)}
+  .track-arrow{font-size:22px;color:var(--muted);line-height:1}
+  /* 165 characters on one line at 1440px — the longest on the site, and it
+     explains the hardest idea on the page. Held to the diagram it belongs to. */
+  .track-verdict{margin-top:var(--s-4);margin-inline:auto;max-width:56ch;
+    text-align:center;font-size:15px;color:var(--muted)}
   .track-verdict b{color:var(--ink);font-weight:600}
 
   /* ---------- outflow branch (spec §17) ---------- */
@@ -348,8 +297,17 @@
   .owed-card .owed-line{margin-top:12px;font-size:clamp(17px,1.7vw,21px);font-weight:500;
     letter-spacing:-.022em;line-height:1.35;color:var(--muted)}
   .owed-card .owed-line b{font-weight:650;color:var(--ink)}
-  .owed-card.good .eyebrow{color:var(--green-text)}
-  .owed-card.bad .eyebrow{color:var(--red-text)}
+  /* These two eyebrows were green and red, and the classes were .good and .bad —
+     the colour was encoding "this error is in your favour / against you".
+     But the app's own rule (src/components/ui.tsx: isInc ? green : red) makes a
+     BILL red and INCOMING money green, and these two cards are about a bill and
+     an incoming payment. So the colours here ran exactly opposite to the product.
+     Under the day-status reading (green = on track) they were right; under the
+     amount reading they were backwards — and this product uses both readings, so
+     whichever one a visitor had learned, one of them fired in reverse.
+     The direction is already in the sentences, in bold: "you have MORE than it
+     says" / "money you DON'T have". Those say it without borrowing a colour that
+     means something else. */
 
   /* ---------- widgets ---------- */
   .widget{background:var(--bg);border:1px solid var(--hair);border-radius:var(--r-lg);
@@ -362,9 +320,13 @@
   /* ---------- privacy (spec §20) ---------- */
   .principles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
     gap:clamp(24px,3vw,48px);margin-top:clamp(56px,7vw,100px);text-align:left}
-  .principle .num{font-size:13px;font-weight:600;color:var(--faint);letter-spacing:.06em;
-    padding-bottom:14px;border-bottom:1px solid var(--hair);display:block}
-  .principle p{margin-top:18px;font-size:clamp(17px,1.5vw,20px);font-weight:500;
+  /* These four were numbered 01-04. They are a LIST, not a sequence: no bank
+     connection, no ads, data stays local, sync is optional. The numbering claimed
+     an order that does not exist. The rule above each one is what the numbers were
+     really doing — marking where one item ends and the next begins — so the rule
+     stays and the false claim goes. */
+  .principle{border-top:1px solid var(--hair);padding-top:18px}
+  .principle p{margin-top:0;font-size:clamp(17px,1.5vw,20px);font-weight:500;
     letter-spacing:-.02em;line-height:1.3}
   /* abstract data → device → encrypted → sync (spec §21). No locks, no servers. */
   .flowline{display:flex;align-items:center;justify-content:center;gap:clamp(10px,2vw,26px);
@@ -373,26 +335,17 @@
     color:var(--muted);border:1px solid var(--hair);border-radius:var(--r-pill);padding:10px 20px}
   .flowline s{width:clamp(18px,3vw,52px);height:1px;background:var(--hair);text-decoration:none}
 
-  /* ---------- final CTA + footer ---------- */
+  /* ---------- final CTA ---------- */
   .final .btn{margin-top:var(--s-5)}
-  footer{border-top:1px solid var(--hair);padding:var(--s-6) 0 var(--s-6);text-align:center}
-  .f-line{font-size:17px;font-weight:600;letter-spacing:-.02em}
-  .f-links{margin-top:14px;font-size:14px;color:var(--muted);display:flex;gap:10px;
-    justify-content:center;flex-wrap:wrap}
-  .f-links a{color:var(--muted)}
-  .f-links a:hover{color:var(--ink)}
-  .f-sub{margin-top:12px;font-size:13px;color:var(--faint)}
 
   /* ============================ breakpoints ============================ */
   @media(max-width:1000px){
-    .hdr-in{padding:0 var(--s-3)}
-    .nav-links{display:none}
-    .burger{display:flex}
     .principles{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
   @media(max-width:860px){
     :root{--s-5:48px;--s-6:72px;--s-7:96px;--s-8:120px}
-    .wrap{padding:0 var(--s-3)}
+    .wrap{padding-left:max(var(--s-3), env(safe-area-inset-left));
+          padding-right:max(var(--s-3), env(safe-area-inset-right))}
     .feature{grid-template-columns:1fr;gap:var(--s-4)}
     .feature.flip>*:first-child{order:0}
     .track2{grid-template-columns:1fr;gap:var(--s-2)}
@@ -453,6 +406,8 @@
 </head>
 <body>
 
+<a class="skip" href="#main">Skip to content</a>
+
 <!-- ============================ 01 · HEADER ============================ -->
 <header class="hdr" id="hdr" data-scrolled="false">
   <div class="hdr-in">
@@ -463,16 +418,43 @@
         <a href="#why">Why Flow</a>
         <a href="/privacy">Privacy</a>
         <a href="/help">Help</a>
+        <a href="/support">Support</a>
       </nav>
-      <a class="nav-cta" id="hdr-cta" data-hidden="true" href="https://apps.apple.com/app/jayck-flow/id6789696499">Download</a>
-      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <a class="pill-cta nav-cta" id="hdr-cta" data-hidden="true" href="https://apps.apple.com/app/jayck-flow/id6789696499">Download</a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu">
         <i></i><i></i><i></i>
       </button>
     </div>
   </div>
 </header>
 
-<div class="menu" id="menu">
+<!-- THE ONE THING THAT MADE THIS PAGE FAIL CLOSED. [data-reveal] starts at
+     opacity:0 and only a script ever adds .in — so with JavaScript disabled the
+     whole page rendered as the logo and nothing else. Measured: a 7 KB screenshot
+     against 97 KB. Everything below restores the page's final state, plus the
+     header pill, which is markup-hidden until a script decides otherwise. -->
+<noscript><style>
+  [data-reveal],[data-reveal="scale"]{opacity:1!important;transform:none!important}
+  [data-parallax]{transform:none!important}
+  /* The header pill stays hidden, and that is the page's own rule rather than a
+     workaround: it exists only to offer the App Store when no in-page button is
+     on screen, and with no script the hero's button is right there. Showing it
+     here would also push .hdr-side past 390px — the one offer twice, overflowing. */
+  .nav-cta{display:none}
+  /* With no burger, five links have to wrap — and a header fixed at 64px cannot
+     hold two rows, so it let them spill over the logo. Measured on the first
+     sandboxed render. Without script the header simply stops being fixed: it
+     grows to fit, scrolls away like any other block, and the hero drops the top
+     padding it was only holding for a floating bar. */
+  .hdr{position:static}
+  .hdr-in{height:auto;flex-wrap:wrap;row-gap:6px;padding-top:12px;padding-bottom:12px}
+  .hero{padding-top:clamp(32px,7vh,72px)}
+  .burger{display:none!important}
+  .nav-links{display:flex!important;flex-wrap:wrap;gap:0 var(--s-2)}
+  .nav-links a{min-height:36px;font-size:14px}
+</style></noscript>
+
+<div class="menu" id="site-menu">
   <a href="#how" data-menu-link>How it works</a>
   <a href="#why" data-menu-link>Why Flow</a>
   <a href="/privacy">Privacy</a>
@@ -481,7 +463,7 @@
   <a class="menu-cta" href="https://apps.apple.com/app/jayck-flow/id6789696499">Download on the App Store</a>
 </div>
 
-<main>
+<main id="main">
 
 <!-- ============================ 02 · HERO ============================ -->
 <section class="hero" aria-labelledby="hero-h">
@@ -594,6 +576,7 @@
         <p class="lede">Weeks in advance — while it is still a decision, not a surprise.</p>
         <div class="states">
           <p class="state"><i style="background:var(--green)"></i><b>Green</b><span>— on track</span></p>
+          <p class="state"><i style="background:var(--amber)"></i><b>Amber</b><span>— something that day is still unticked</span></p>
           <p class="state"><i style="background:var(--red)"></i><b>Red</b><span>— the projected balance goes below zero</span></p>
         </div>
       </div>
@@ -715,11 +698,11 @@
       Money you're owed is<br>part of the forecast.
     </h2>
     <div class="owed">
-      <div class="owed-card good" data-reveal data-delay="2" style="background:var(--bg)">
+      <div class="owed-card" data-reveal data-delay="2" style="background:var(--bg)">
         <p class="eyebrow">A bill you forget to tick</p>
         <p class="owed-line">makes the forecast pessimistic —<br>you have <b>more</b> than it says.</p>
       </div>
-      <div class="owed-card bad" data-reveal data-delay="3" style="background:var(--bg)">
+      <div class="owed-card" data-reveal data-delay="3" style="background:var(--bg)">
         <p class="eyebrow">A payment that never arrives</p>
         <p class="owed-line">does the opposite — the forecast<br>promises money you <b>don't</b> have.</p>
       </div>
@@ -792,16 +775,16 @@
 
     <div class="principles">
       <div class="principle" data-reveal data-delay="1">
-        <span class="num">01</span><p>No bank connection. No account needed to start.</p>
+        <p>No bank connection. No account needed to start.</p>
       </div>
       <div class="principle" data-reveal data-delay="2">
-        <span class="num">02</span><p>No ads, no tracking, no selling data.</p>
+        <p>No ads, no tracking, no selling data.</p>
       </div>
       <div class="principle" data-reveal data-delay="3">
-        <span class="num">03</span><p>Your data stays on your device — encrypted first if you sync.</p>
+        <p>Your data stays on your device — encrypted first if you sync.</p>
       </div>
       <div class="principle" data-reveal data-delay="4">
-        <span class="num">04</span><p>Optional encrypted sync across devices — a paid subscription.</p>
+        <p>Optional encrypted sync across devices — a paid subscription.</p>
       </div>
     </div>
 
@@ -1085,7 +1068,7 @@
   /* ------------------------------------------------------- header + menu -- */
   var hdr = document.getElementById("hdr");
   var burger = document.getElementById("burger");
-  var menu = document.getElementById("menu");
+  var menu = document.getElementById("site-menu");
 
   function setMenu(open){
     var sbw = open ? window.innerWidth - document.documentElement.clientWidth : 0;

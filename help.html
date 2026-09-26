@@ -28,167 +28,149 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="color-scheme" content="light">
-<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" href="/css/site.css">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#140917" media="(prefers-color-scheme: dark)">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
 <meta name="apple-itunes-app" content="app-id=6789696499">
 <style>
-  :root{
-    --bg:#FFFFFF;--card:#FFFFFF;--ink:#1C1C1E;--muted:#6E6E73;--hair:#E5E5EA;
-    --green:#34C759;--green-soft:#E9F9EE;--green-text:#1C7A3A;
-    --amber:#FF9500;--amber-soft:#FFEFCC;--amber-text:#9A6400;
-    --red:#FF3B30;--red-soft:#FFECEB;--red-text:#B3261E;
-    --blue:#0A6CFF;--blue-soft:#E4F0FF;--blue-text:#0060CC;--radius-lg:28px;--radius-md:18px;
+  /* ── /help only ─────────────────────────────────────────────────────────
+     22,142px tall on a phone, with a 14-link list at the very top and nothing
+     else: once you scrolled past screen one there was no way back but a scroll
+     to the top. Two answers, and both survive with JavaScript switched off.
+
+       ≥1024px — the list becomes a sticky rail beside the text. It is a real
+                 <nav> and a real list of anchors; sticky is one CSS property.
+       <1024px — the list stays where it was, and a plain "↑" ANCHOR sits in
+                 the corner. Not a button, not a scrollTo — <a href="#main">,
+                 which works with no script at all.
+
+     The rail's aria-current is the only part that needs JavaScript, and when it
+     is missing the rail is simply a list of links, which is what it was before. */
+  .doc-help{max-width:var(--read)}
+  .help-head{margin-bottom:var(--s-3)}
+  .toc{display:flex;flex-wrap:wrap;gap:var(--s-1) var(--s-3);
+    background:var(--subtle);border:1px solid var(--hair);border-radius:var(--r-sm);
+    padding:var(--s-2) var(--s-3);margin:var(--s-3) 0 var(--s-2)}
+  /* 23px tall before today — the primary navigation of the longest page. */
+  .toc a{display:inline-flex;align-items:center;min-height:44px;
+    font-size:16px;font-weight:600;color:var(--blue-text);text-decoration:none}
+  .toc a:hover{text-decoration:underline;text-underline-offset:3px}
+
+  @media (min-width:1024px){
+    .doc-help{display:grid;max-width:1020px;align-items:start;
+      grid-template-columns:216px minmax(0,var(--read));gap:clamp(32px,4vw,64px)}
+    .help-head{grid-column:1 / -1}
+    .toc{grid-column:1;position:sticky;top:calc(var(--nav-h) + var(--s-3));
+      display:block;margin:0;padding:var(--s-2) 0 var(--s-2) var(--s-2);
+      background:none;border:0;border-left:2px solid var(--hair);border-radius:0;
+      max-height:calc(100vh - var(--nav-h) - var(--s-5));overflow-y:auto}
+    /* 44px here too, not just on the phone. Fourteen items x 44 = 616px, and a
+       900px-tall window leaves 788 below the header — so the full brief-level
+       target fits without the rail ever needing to scroll. Checked before
+       choosing the number. */
+    .toc a{display:flex;align-items:center;min-height:44px;padding:0;
+      font-size:15px;font-weight:500;color:var(--muted);line-height:1.3}
+    .toc a:hover{color:var(--ink);text-decoration:none}
+    .toc a[aria-current="true"]{color:var(--ink);font-weight:650}
+    .help-body{grid-column:2}
   }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
-  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
-    background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.55}
-  .wrap{max-width:760px;margin:0 auto;padding:0 24px}
-  /* Sticky on every page, not just the homepage. On a long document the logo is the
-     only route back — letting it scroll away leaves the footer as the sole way out. */
-  /* Fixed and transparent at the top, gaining the translucent band and the
-     hairline only on scroll — the same behaviour as the homepage header. */
-  nav{position:fixed;top:0;left:0;right:0;z-index:50;background:transparent;
-    border-bottom:1px solid transparent;
-    transition:background .4s ease,border-color .4s ease}
-  nav[data-scrolled="true"]{background:rgba(255,255,255,.72);
-    backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
-    border-bottom-color:var(--hair)}
-  /* Deliberately wider than this page's 760px reading column: the header is
-     site-wide furniture, so it keeps the homepage's 1180px measure and the logo
-     lands in the same spot on every page. Only the nav — `main.wrap` stays 760px. */
-  /* Identical geometry to the homepage header: 64px tall, 1320px measure,
-     40px gutter — the wordmark lands on the same pixel on every page. */
-  nav .wrap{display:flex;align-items:center;justify-content:space-between;
-    max-width:1320px;height:64px;padding:0 40px}
-  @media (max-width:1000px){ nav .wrap{padding:0 24px} }
-  .logo{font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1;color:var(--ink);text-decoration:none}
-  .logo span{color:var(--muted);font-weight:500}
-  .pill-cta{font-size:14px;font-weight:600;color:#fff;
-    border-radius:100px;padding:8px 18px;background:var(--ink);white-space:nowrap;
-    text-decoration:none;transition:opacity .2s ease}
-  .pill-cta:hover{opacity:.82;text-decoration:none}
-  [id]{scroll-margin-top:76px}
-  main.wrap{padding-top:clamp(128px,18vw,184px);padding-bottom:clamp(48px,7vw,88px)}
-  .kicker{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:18px}
-  h1{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
-    font-size:clamp(40px,7vw,64px);font-weight:600;letter-spacing:-.04em;line-height:1.02}
-  .sub{margin-top:22px;max-width:600px;font-size:clamp(17px,2vw,20px);line-height:1.5;color:var(--muted)}
-  h2{font-size:clamp(23px,3vw,29px);font-weight:650;letter-spacing:-.025em;margin:clamp(52px,8vw,84px) 0 12px;scroll-margin-top:96px}
-  h3{font-size:17px;font-weight:700;letter-spacing:-.015em;margin:22px 0 4px}
-  p,li{font-size:16px;color:#3A3A3C}
-  ul{padding-left:20px;margin:8px 0}
-  li{margin:5px 0}
-  a{color:var(--blue);text-decoration:none}
-  a:hover{text-decoration:underline}
-  strong{color:var(--ink)}
-  .card{background:var(--card);border-radius:var(--radius-md);padding:22px 24px;margin:14px 0}
-  .card p{font-size:15px;color:var(--muted);margin:6px 0}
+
+  /* The corner anchor. Visible by default, so a page with no JavaScript keeps
+     it; site.js sets data-scrolled on the header, and the sibling selector then
+     hides it while you are already at the top. No script, no hiding — which is
+     the right way round. */
+  .totop{position:fixed;z-index:90;
+    right:calc(var(--s-2) + env(safe-area-inset-right));
+    bottom:calc(var(--s-2) + env(safe-area-inset-bottom));
+    width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+    border-radius:var(--r-pill);background:var(--card);border:1px solid var(--hair);
+    color:var(--muted);font-size:19px;line-height:1;text-decoration:none;
+    box-shadow:0 8px 24px -12px rgba(0,0,0,.35);
+    transition:opacity .25s var(--ease),visibility 0s}
+  .totop:hover{color:var(--ink)}
+  .hdr[data-scrolled="false"] ~ .totop{opacity:0;visibility:hidden;transition-delay:0s,.25s}
+  @media (min-width:1024px){ .totop{display:none} }
+
+  /* ── page components ──────────────────────────────────────────────────── */
+  .card{background:var(--subtle);border:1px solid var(--hair);
+    border-radius:var(--r-sm);padding:20px 24px;margin:var(--s-2) 0}
+  .card p{font-size:17px;color:var(--muted);margin:6px 0}
   .card p strong{color:var(--ink)}
-  /* Jump links */
-  .toc{background:var(--card);border:1px solid var(--hair);border-radius:var(--radius-md);padding:18px 22px;margin:22px 0 6px;
-    display:flex;flex-wrap:wrap;gap:8px 18px}
-  .toc a{font-size:15px;font-weight:600}
-  /* Control reference rows: what it's called · where it lives · what it does */
-  .ctrl{background:var(--card);border:1px solid var(--hair);border-radius:var(--radius-md);padding:6px 4px;margin:14px 0}
-  .ctrl .row{display:flex;gap:14px;padding:14px 20px;border-top:1px solid var(--hair)}
+
+  /* what it is called · where it lives · what it does */
+  .ctrl{background:var(--card);border:1px solid var(--hair);border-radius:var(--r-sm);
+    padding:4px;margin:var(--s-2) 0}
+  .ctrl .row{display:flex;gap:var(--s-2);padding:14px 20px;border-top:1px solid var(--hair)}
   .ctrl .row:first-child{border-top:none}
-  .ctrl .n{flex:0 0 34%;font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
-  .ctrl .n em{display:block;font-style:normal;font-weight:500;font-size:13px;color:var(--muted);margin-top:2px}
-  .ctrl .d{flex:1;font-size:15px;color:#3A3A3C}
+  .ctrl .n{flex:0 0 34%;font-size:17px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+  .ctrl .n em{display:block;font-style:normal;font-weight:500;font-size:14px;
+    color:var(--muted);margin-top:2px}
+  .ctrl .d{flex:1;font-size:17px;color:var(--body)}
   @media (max-width:560px){
     .ctrl .row{flex-direction:column;gap:4px}
     .ctrl .n{flex:none}
   }
-  .chip{display:inline-block;border-radius:100px;padding:1px 9px;font-size:13px;font-weight:700;
-    vertical-align:baseline;white-space:nowrap}
+
+  /* The semantic three, as inline chips. --amber-text used to be #9A6400,
+     which is 5.00:1 on white and 4.40:1 on --amber-soft — and --amber-soft is
+     the only background it is ever on. site.css darkened it one step. */
+  .chip{display:inline-block;border-radius:var(--r-pill);padding:1px 9px;
+    font-size:14px;font-weight:700;vertical-align:baseline;white-space:nowrap}
   .chip.g{background:var(--green-soft);color:var(--green-text)}
   .chip.a{background:var(--amber-soft);color:var(--amber-text)}
   .chip.r{background:var(--red-soft);color:var(--red-text)}
   .chip.b{background:var(--blue-soft);color:var(--blue-text)}
-  .note{background:var(--card);border:1px solid var(--hair);border-radius:var(--radius-md);padding:14px 18px;font-size:14px;color:var(--muted);margin-top:18px}
-  .note strong{color:var(--ink)}
-  footer{border-top:1px solid var(--hair);margin-top:clamp(72px,10vw,120px);padding:clamp(48px,6vw,72px) 0;text-align:center}
-  footer .f-line{font-size:15px;font-weight:600;letter-spacing:-.01em}
-  footer .f-links{margin-top:10px;font-size:14px}
-  footer .f-links a{color:var(--muted);margin:0 8px}
-  footer .f-sub{font-size:13px;color:var(--muted);margin-top:10px}
-  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto}}
-
-  /* ---------- site menu (shared with the homepage) ---------- */
-  nav .side{display:flex;align-items:center;gap:clamp(16px,2.5vw,36px)}
-  .nav-links{display:flex;align-items:center;gap:clamp(16px,2.5vw,36px)}
-  .nav-links a{font-size:15px;font-weight:500;color:var(--muted);letter-spacing:-.01em;
-    text-decoration:none;transition:color .2s ease}
-  .nav-links a:hover{color:var(--ink);text-decoration:none}
-  .burger{display:none;width:44px;height:44px;border:0;background:none;cursor:pointer;
-    align-items:center;justify-content:center;flex-direction:column;gap:5px;
-    flex:0 0 auto;position:relative;z-index:51}
-  .burger i{display:block;width:19px;height:2px;background:var(--ink);border-radius:2px;
-    transition:transform .3s ease,opacity .2s ease}
-  body[data-menu="open"] .burger i:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  body[data-menu="open"] .burger i:nth-child(2){opacity:0}
-  body[data-menu="open"] .burger i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  .menu{position:fixed;inset:0;z-index:49;background:var(--bg);
-    padding:120px 24px 48px;display:flex;flex-direction:column;gap:14px;
-    opacity:0;visibility:hidden;transform:translateY(-10px);
-    transition:opacity .32s ease,transform .32s ease,visibility 0s .32s}
-  body[data-menu="open"] .menu{opacity:1;visibility:visible;transform:none;transition-delay:0s}
-  .menu a{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
-    font-size:clamp(34px,7vw,52px);font-weight:600;letter-spacing:-.04em;line-height:1.25;
-    color:var(--ink);text-decoration:none}
-  .menu a:hover{text-decoration:none}
-  .menu .menu-cta{margin-top:28px;font-size:17px;font-weight:600;letter-spacing:-.01em;
-    background:var(--ink);color:#fff;border-radius:100px;padding:17px 28px;text-align:center}
-  body[data-menu="open"]{overflow:hidden}
-  body[data-menu="open"] nav{background:var(--bg) !important;border-bottom-color:transparent !important;backdrop-filter:none;-webkit-backdrop-filter:none;padding-right:var(--sbw,0px)}
-  body[data-menu="open"] .menu{padding-right:calc(24px + var(--sbw,0px))}
-  body[data-menu="open"] .pill-cta{opacity:0;visibility:hidden;pointer-events:none}
-  @media (max-width:1000px){
-    .nav-links{display:none}
-    .burger{display:flex}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .menu,.burger i{transition:none}
-  }
 </style>
-</head>
-<body>
+<a class="skip" href="#main">Skip to content</a>
 
-<nav>
-  <div class="wrap">
+<header class="hdr">
+  <div class="hdr-in">
     <a class="logo" href="/">JayCK <span>Flow</span></a>
-    <div class="side">
-      <div class="nav-links">
+    <div class="hdr-side">
+      <nav class="nav-links" aria-label="Main">
         <a href="/#how">How it works</a>
         <a href="/#why">Why Flow</a>
         <a href="/privacy">Privacy</a>
-        <a href="/help">Help</a>
-      </div>
+        <a href="/help" aria-current="page">Help</a>
+        <a href="/support">Support</a>
+      </nav>
       <a class="pill-cta" href="https://apps.apple.com/app/jayck-flow/id6789696499">Download</a>
-      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu">
         <i></i><i></i><i></i>
       </button>
     </div>
   </div>
-</nav>
+</header>
 
-<div class="menu" id="menu">
+<!-- Without JavaScript the burger cannot open, so it goes away and the links
+     lay out as an ordinary wrapped row. The menu below is then unreachable and
+     harmless: every link in it is also here or in the footer. -->
+<noscript><style>
+  .burger{display:none!important}
+  .nav-links{display:flex!important;flex-wrap:wrap;gap:0 var(--s-2)}
+  .nav-links a{min-height:36px;font-size:14px}
+  @media (max-width:560px){ .hdr-side .pill-cta{display:inline-flex} .logo{font-size:17px} }
+</style></noscript>
+
+<div class="menu" id="site-menu">
   <a href="/#how">How it works</a>
   <a href="/#why">Why Flow</a>
   <a href="/privacy">Privacy</a>
-  <a href="/help">Help</a>
+  <a href="/help" aria-current="page">Help</a>
   <a href="/support">Support</a>
-  <a class="menu-cta" href="https://apps.apple.com/app/jayck-flow/id6789696499">Download on the App Store</a>
+  <a class="menu-cta" href="https://apps.apple.com/app/jayck-flow/id6789696499">Download on the App&nbsp;Store</a>
 </div>
 
-<main class="wrap">
+<main class="doc doc-help" id="main">
+<div class="help-head">
 <p class="kicker">Guide</p>
 <h1>How JayCK Flow works</h1>
 <p class="sub">Every screen and every button — what it's called, where it lives, and what it does. The app is a forecast, not a ledger: you tell it what's coming, and it shows you the balance you'll actually have on any future day.</p>
+</div>
 
-<div class="toc">
+<nav class="toc" id="toc" aria-label="On this page">
   <a href="#oneaccount">One account</a>
   <a href="#screen">Main screen</a>
   <a href="#views">Views</a>
@@ -203,8 +185,9 @@
   <a href="#settings">Settings</a>
   <a href="#sync">Account &amp; sync</a>
   <a href="#firstrun">First run &amp; starting over</a>
-</div>
+</nav>
 
+<div class="help-body">
 <!-- Practical, not persuasive: the landing page argues WHY one account; this answers
      the two questions that otherwise arrive as support mail — "where do I add my credit
      card?" and "why doesn't my savings show a balance?" -->
@@ -476,7 +459,10 @@
 <p>Want to run through it again? <strong>Settings → Reset &amp; start over</strong> clears your data and restarts the flow. Export a backup first if there's any chance you'll want the old data back.</p>
 
 <p class="note"><strong>Still stuck?</strong> The app has a short "How it works" explainer under Finances, and a real person answers <a href="mailto:support@jayck.dev">support@jayck.dev</a> — see the <a href="/support">support page</a> for common questions.</p>
+</div>
 </main>
+
+<a class="totop" href="#main" aria-label="Back to top">↑</a>
 
 <footer>
   <div class="wrap">
@@ -486,33 +472,59 @@
   </div>
 </footer>
 
+<script src="/js/site.js" defer></script>
 <script>
+/* The rail's only job that CSS cannot do: say which section you are in.
+   If this never runs, the rail is a plain list of links — which is exactly what
+   it was yesterday, so nothing is lost and nothing depends on it.
+
+   THIS USED TO BE AN IntersectionObserver WITH rootMargin "-88px 0px -70% 0px",
+   and it was wrong in a way only measurement showed: of six sections jumped to
+   directly, three highlighted and three stayed blank. A clever band that works
+   for half its inputs is worse than a dull rule that works for all of them, so:
+   walk the sections and take the LAST one whose heading has passed the line
+   under the fixed header. No band, no percentages, no callback ordering. */
 (function(){
   "use strict";
-  var nav = document.querySelector("nav");
-  function onScroll(){ nav.setAttribute("data-scrolled", (window.scrollY || 0) > 8 ? "true" : "false"); }
-  window.addEventListener("scroll", onScroll, { passive:true });
-  onScroll();
-  var burger = document.getElementById("burger"), menu = document.getElementById("menu");
-  if (!burger || !menu) return;
-  function setMenu(open){
-    var sbw = open ? window.innerWidth - document.documentElement.clientWidth : 0;
-    document.documentElement.style.setProperty("--sbw", (sbw > 0 ? sbw : 0) + "px");
-    document.body.setAttribute("data-menu", open ? "open" : "closed");
-    burger.setAttribute("aria-expanded", String(open));
-  }
-  setMenu(false);
-  burger.addEventListener("click", function(){
-    setMenu(document.body.getAttribute("data-menu") !== "open");
+  var toc = document.getElementById("toc");
+  if (!toc) return;
+
+  var links = [], nodes = [];
+  [].slice.call(toc.querySelectorAll('a[href^="#"]')).forEach(function(a){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) { links.push(a); nodes.push(el); }
   });
-  [].slice.call(menu.querySelectorAll("a")).forEach(function(a){
-    a.addEventListener("click", function(){ setMenu(false); });
-  });
-  document.addEventListener("keydown", function(e){
-    if (e.key === "Escape" && document.body.getAttribute("data-menu") === "open"){
-      setMenu(false); burger.focus();
+  if (!nodes.length) return;
+
+  var LINE = 120;            // just below the 64px header
+  var last = null, t = 0;
+
+  function paint(){
+    var current = null;
+    for (var i = 0; i < nodes.length; i++){
+      if (nodes[i].getBoundingClientRect().top <= LINE) current = links[i];
     }
-  });
+    /* At the very top of the page nothing has passed the line yet, and the
+       honest answer there is "no section", not "the first one". */
+    if (current === last) return;
+    if (last) last.removeAttribute("aria-current");
+    if (current) current.setAttribute("aria-current", "true");
+    last = current;
+  }
+  /* Throttled by the clock, not by a pending flag behind requestAnimationFrame.
+     A flag that is only ever cleared inside an rAF callback deadlocks the moment
+     rAF is starved — a background tab, a throttled renderer — and the rail then
+     silently stops following the page forever. Fourteen getBoundingClientRect
+     calls at most ten times a second is cheaper than that risk. */
+  function onScroll(){
+    var now = Date.now();
+    if (now - t < 100) return;
+    t = now;
+    paint();
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+  paint();
 })();
 </script>
 </body>

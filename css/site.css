@@ -1,0 +1,311 @@
+/* ============================================================================
+   JayCK Flow — site.css
+
+   THE ONE HOME FOR EVERY FACT THE FIVE PAGES SHARE: tokens, the header, the
+   footer, focus, and the reading rules for a document page.
+
+   ── WHY THIS FILE EXISTS (2026-09-25) ──────────────────────────────────────
+   Until today every page carried its own inline copy of all of this, and the
+   copies had drifted apart without anyone deciding to: `--hair` was #E3E3E6 on
+   the homepage and #E5E5EA on the other four, the radius scale had two
+   different names AND two different values, only the homepage had a spacing
+   scale, only the homepage had a focus style, and the accent blue was #007AFF
+   on one page and #0A6CFF on four. None of that was a decision. It was five
+   copies of one stylesheet ageing at different rates.
+
+   A <link> is not a build step. One file, cached once, fixed once.
+
+   ── WHERE THESE VALUES COME FROM ───────────────────────────────────────────
+   They are the APP's values (`src/index.css`), not new ones. The site and the
+   product should not hold two opinions about what green means. The only colour
+   here that the app does not define is the plum, and that has its own home:
+   NATIVE.md §6 — "#140917 matches the logo's own canvas, sampled by the icon
+   script". It is the splash colour, the icon canvas and the OG cards, which is
+   exactly why it is this site's dark surface: a visitor who arrives from a
+   shared card lands on the colour they just looked at.
+   ========================================================================= */
+
+:root{
+  color-scheme: light dark;
+
+  /* ---- ink ---------------------------------------------------------------
+     THREE greys, not four. #86868B used to carry the eyebrows, the fine print
+     and the figcaptions at 3.62:1 on white and 3.33:1 on --subtle — below the
+     4.5:1 floor in both places, and one of the things it carried was the line
+     "Free to use · Cross-device sync is a subscription" directly under the
+     primary CTA. The price disclosure was the least legible text on the page.
+     There is no third grey now: the smallest text uses --muted, 5.07:1.
+     (#74747A and #717176 were tried and rejected — they clear 4.5:1 on white
+     and fail it on --subtle, which is where half these labels actually sit.) */
+  --ink:#1C1C1E;          /* app --c-label          17.01:1 on white */
+  --muted:#6E6E73;        /* app --c-label2 analogue 5.07:1 on white */
+  --body:#3A3A3C;         /* long-form body copy    11.58:1 — was an untokenised one-off */
+  --hair:#E5E5EA;         /* app --c-sep — ONE value, was two */
+  --bg:#FFFFFF;
+  --card:#FFFFFF;
+  --subtle:#F7F7FA;       /* app --c-bg: the site's tint is the app's page colour */
+  --plum:#140917;         /* the mark's canvas — NATIVE.md §6 */
+
+  /* ---- accent ------------------------------------------------------------
+     TWO tokens, and the split is the point. --blue is the brand value and is
+     used for fills, the switch, the focus ring and graphics, where WCAG's bar
+     is 3:1 and #007AFF passes at 4.02:1. --blue-text is for anything that is
+     TEXT, where the bar is 4.5:1 and #007AFF does not pass.
+
+     #0060CC is not a different blue — it is #007AFF at 80% lightness, same hue
+     (211°). That distinction is this project's own precedent, written in
+     src/index.css about --c-indigo: "the same colour made legible rather than
+     a different colour that happens to pass". #0A6CFF, which four pages were
+     using, is the other thing: a 216° blue that clears the bar by arriving
+     from somewhere else. Retired. */
+  --blue:#007AFF;         /* app --c-blue       — fills and graphics only */
+  --blue-text:#0060CC;    /* 5.92:1 on white    — anything readable */
+  --blue-soft:#E4F0FF;
+
+  /* ---- the semantic three ------------------------------------------------
+     THESE MEAN SOMETHING. Green = the projected balance is on track. Amber =
+     it may not be true yet — something is unticked or unreconciled. Red = it
+     goes below zero. They are never decoration, and they are never a fourth
+     thing. The app's own three (src/index.css --c-green / --c-orange / --c-red)
+     plus the text-safe variant of each.
+
+     --amber-text was #9A6400, which is 5.00:1 on white and 4.40:1 on
+     --amber-soft, and --amber-soft is where it is always used. Darkened one
+     step to clear the background it actually sits on. */
+  --green:#34C759;  --green-soft:#E9F9EE;  --green-text:#1C7A3A;  /* 5.39:1 */
+  --amber:#FF9500;  --amber-soft:#FFEFCC;  --amber-text:#8A5A00;  /* 5.21:1 on the chip */
+  --red:#FF3B30;    --red-soft:#FFECEB;    --red-text:#B3261E;    /* 6.54:1 */
+
+  /* ---- space, one scale, everywhere -------------------------------------- */
+  --s-1:8px; --s-2:16px; --s-3:24px; --s-4:40px; --s-5:64px;
+  --s-6:96px; --s-7:140px; --s-8:200px;
+
+  /* ---- radius, one scale, everywhere ------------------------------------- */
+  --r-sm:18px; --r-ui:24px; --r-lg:32px; --r-xl:40px; --r-pill:999px;
+
+  --page:1320px;          /* the header's measure — the wordmark lands on the
+                             same pixel on all five pages */
+  /* The reading column, measured rather than chosen. box-sizing means the
+     gutters come out of this, so 700 gives ~72 characters a line at 18px —
+     inside the "under ~75" target. 760 measured 79ch and was one character
+     over, which is the kind of miss you only find by counting. */
+  --read:700px;
+  --nav-h:64px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+
+  /* iOS draws under the notch because every page sets viewport-fit=cover.
+     Until today nothing padded for it. */
+  --gut-l:max(var(--s-3), env(safe-area-inset-left));
+  --gut-r:max(var(--s-3), env(safe-area-inset-right));
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    /* The app's own dark values (src/index.css), with one deliberate change:
+       the PAGE is the plum, not the app's #000. The app is a tool you live in
+       and black is right there; the site is the mark's front door, and the
+       plum is the colour of the icon, the splash and the shared card. */
+    --ink:#FFFFFF;
+    --muted:#98989F;        /* app --c-label2 */
+    --body:#D8D6DA;
+    --hair:#2E2230;
+    --bg:#140917;
+    --card:#1E1222;
+    --subtle:#1A0E1E;
+    --blue:#0A84FF;         /* app dark --c-blue */
+    --blue-text:#6CB6FF;    /* app dark --c-blue-text */
+    --blue-soft:#12283A;
+    --green:#30D158;  --green-soft:#16301F;  --green-text:#74E69B;
+    --amber:#FF9F0A;  --amber-soft:#3A2E12;  --amber-text:#E6B450;
+    --red:#FF453A;    --red-soft:#2E1A18;    --red-text:#FF9A92;
+  }
+}
+
+/* ========================================================================== */
+/* base                                                                        */
+/* ========================================================================== */
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  line-height:1.55;
+}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--ink);color:var(--bg)}
+
+/* One focus style, on every page. It used to exist on the homepage only, so on
+   the other four a keyboard user got whatever the browser felt like — which in
+   Safari, for links, is nothing at all. */
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+
+/* The keyboard route past the header. Visible only when focused. */
+.skip{position:absolute;left:var(--s-2);top:-999px;z-index:200;
+  background:var(--ink);color:var(--bg);border-radius:var(--r-sm);
+  padding:12px 20px;font-size:15px;font-weight:600}
+.skip:focus{top:var(--s-2)}
+
+.wrap{max-width:var(--page);margin:0 auto;padding-left:var(--gut-l);padding-right:var(--gut-r)}
+
+/* ========================================================================== */
+/* header — identical furniture on all five pages                              */
+/* ========================================================================== */
+.hdr{position:fixed;top:0;left:0;right:0;z-index:100;background:transparent;
+  border-bottom:1px solid transparent;
+  padding-top:env(safe-area-inset-top);
+  transition:background .4s var(--ease),border-color .4s var(--ease)}
+.hdr[data-scrolled="true"]{background:color-mix(in srgb, var(--bg) 72%, transparent);
+  border-bottom-color:var(--hair);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px)}
+.hdr-in{max-width:var(--page);margin:0 auto;height:var(--nav-h);
+  padding-left:var(--gut-l);padding-right:var(--gut-r);
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s-2)}
+
+/* gap, not a space. `display:inline-flex` (added here to give the wordmark a
+   44px tap target) turns "JayCK" and <span>Flow</span> into flex items and
+   COLLAPSES the whitespace text node between them — the logo rendered
+   "JayCKFlow" the first time this was measured. */
+.logo{display:inline-flex;align-items:center;gap:.28em;min-height:44px;
+  font-size:19px;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+.logo span{color:var(--muted);font-weight:500}
+
+.hdr-side{display:flex;align-items:center;gap:clamp(16px,2.5vw,36px)}
+.nav-links{display:flex;align-items:center;gap:clamp(16px,2.5vw,36px)}
+.nav-links a{display:inline-flex;align-items:center;min-height:44px;
+  font-size:15px;font-weight:500;color:var(--muted);letter-spacing:-.01em;
+  transition:color .2s var(--ease)}
+.nav-links a:hover{color:var(--ink)}
+/* A five-page site where no page said which one you were on. */
+.nav-links a[aria-current="page"]{color:var(--ink);font-weight:600}
+
+.pill-cta{display:inline-flex;align-items:center;min-height:44px;
+  background:var(--ink);color:var(--bg);border-radius:var(--r-pill);
+  padding:9px 20px;font-size:15px;font-weight:600;letter-spacing:-.01em;
+  white-space:nowrap;transition:opacity .25s var(--ease)}
+.pill-cta:hover{opacity:.82}
+
+.burger{display:none;width:44px;height:44px;border:0;background:none;cursor:pointer;
+  align-items:center;justify-content:center;flex-direction:column;gap:5px;
+  flex:0 0 auto;position:relative;z-index:101}
+.burger i{display:block;width:19px;height:2px;background:var(--ink);border-radius:2px;
+  transition:transform .3s var(--ease),opacity .2s var(--ease)}
+body[data-menu="open"] .burger i:nth-child(1){transform:translateY(7px) rotate(45deg)}
+body[data-menu="open"] .burger i:nth-child(2){opacity:0}
+body[data-menu="open"] .burger i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+@media (max-width:1000px){
+  .nav-links{display:none}
+  .burger{display:flex}
+}
+/* BELOW 560px THE PILL GOES INTO THE MENU. It used not to, and the header was
+   then logo + a 123px pill + a 44px burger inside 390px of iPhone: measured
+   scrollWidth 412 against a 390 viewport on /help, /privacy, /terms and
+   /support, and 412 against 195 at 200% browser zoom, which is a WCAG 1.4.10
+   reflow failure. The menu already carries the same Download link. */
+@media (max-width:560px){
+  .hdr-side .pill-cta{display:none}
+}
+
+/* fullscreen menu */
+.menu{position:fixed;inset:0;z-index:99;background:var(--bg);
+  padding:calc(var(--nav-h) + var(--s-5) + env(safe-area-inset-top)) var(--gut-r)
+          calc(var(--s-5) + env(safe-area-inset-bottom)) var(--gut-l);
+  display:flex;flex-direction:column;gap:var(--s-2);overflow-y:auto;
+  opacity:0;visibility:hidden;transform:translateY(-10px);
+  transition:opacity .32s var(--ease),transform .32s var(--ease),visibility 0s .32s}
+body[data-menu="open"] .menu{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.menu a{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
+  font-size:clamp(30px,6.4vw,48px);font-weight:600;letter-spacing:-.04em;line-height:1.25;
+  color:var(--ink)}
+.menu a[aria-current="page"]{color:var(--muted)}
+.menu .menu-cta{margin-top:var(--s-4);font-size:17px;font-weight:600;letter-spacing:-.01em;
+  background:var(--ink);color:var(--bg);border-radius:var(--r-pill);padding:17px 28px;text-align:center}
+body[data-menu="open"]{overflow:hidden}
+/* Locking scroll removes the scrollbar and widens the viewport — compensate, or
+   the ✕ lands a scrollbar-width to the right of where the burger was. */
+body[data-menu="open"] .hdr{background:var(--bg);border-bottom-color:transparent;
+  -webkit-backdrop-filter:none;backdrop-filter:none;padding-right:var(--sbw,0px)}
+body[data-menu="open"] .menu{padding-right:calc(var(--gut-r) + var(--sbw,0px))}
+body[data-menu="open"] .pill-cta{opacity:0;visibility:hidden;pointer-events:none}
+
+/* ========================================================================== */
+/* footer — byte-identical on all five pages, and it was already the one piece  */
+/* of this site that never drifted. Only the tap targets change.               */
+/* ========================================================================== */
+footer{border-top:1px solid var(--hair);margin-top:clamp(72px,10vw,120px);
+  padding:clamp(48px,6vw,72px) 0 calc(clamp(48px,6vw,72px) + env(safe-area-inset-bottom));
+  text-align:center}
+footer .f-line{font-size:15px;font-weight:600;letter-spacing:-.01em}
+/* `align-items:center` is load-bearing, not tidying. The separators between
+   these links are literal "·" text nodes in the markup, so in a flex row each
+   becomes its own anonymous flex item — and with the links grown to a 44px tap
+   target, the dots stretched to the top of the row and floated above the words.
+   Measured on /support the first time this footer rendered. */
+footer .f-links{margin-top:var(--s-1);display:flex;flex-wrap:wrap;
+  align-items:center;justify-content:center;gap:0 6px;color:var(--muted)}
+/* 17px tall before today. Padding only — nothing moves visually except the
+   space around the words, and a thumb can now land on them. */
+footer .f-links a{display:inline-flex;align-items:center;min-height:44px;
+  padding:0 4px;font-size:14px;color:var(--muted)}
+footer .f-links a:hover{color:var(--ink)}
+footer .f-links a[aria-current="page"]{color:var(--ink);font-weight:600}
+footer .f-sub{font-size:13px;color:var(--muted);margin-top:var(--s-1)}
+
+/* ========================================================================== */
+/* document pages — /help /privacy /terms /support                             */
+/* ========================================================================== */
+/* MEASURE. The column was already 760px and already right; the type inside it
+   was 15–17px, which put long-form copy at ~89 characters a line (45 blocks on
+   /help, up to 102ch). The homepage sets the same 760px column at 18–22px and
+   lands near 68ch. So the fix is the type, not the column — and on the pages
+   people have to actually read, bigger type is the better half of the trade. */
+.doc{max-width:var(--read);margin:0 auto;
+  padding-left:var(--gut-l);padding-right:var(--gut-r);
+  padding-top:clamp(112px,16vw,168px);padding-bottom:clamp(48px,7vw,88px)}
+.doc .kicker{font-size:12px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--muted);margin-bottom:var(--s-2)}
+.doc h1{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",sans-serif;
+  font-size:clamp(40px,7vw,64px);font-weight:600;letter-spacing:-.04em;line-height:1.02}
+.doc .sub{margin-top:var(--s-3);max-width:600px;
+  font-size:clamp(18px,2vw,21px);line-height:1.5;color:var(--muted)}
+.doc .date{margin-top:10px;font-size:14px;color:var(--muted)}
+.doc h2{font-size:clamp(24px,3vw,30px);font-weight:650;letter-spacing:-.025em;
+  margin:clamp(52px,8vw,84px) 0 var(--s-2)}
+.doc h3{font-size:clamp(18px,2.2vw,21px);font-weight:650;letter-spacing:-.02em;
+  margin:var(--s-4) 0 var(--s-1)}
+.doc p,.doc li{font-size:18px;line-height:1.6;color:var(--body)}
+/* An email address is one unbreakable 17-character word. At 200% zoom the
+   /support FAQ card leaves it 97px of room and it pushed the document to a
+   226px scrollWidth inside a 195px viewport — a reflow failure with no
+   element wider than the viewport, which is why the overflow probe found
+   nothing to name. Break the word, not the page. */
+.doc{overflow-wrap:anywhere}
+.doc h1,.doc h2,.doc h3{overflow-wrap:normal}
+.doc p+p{margin-top:var(--s-2)}
+.doc ul,.doc ol{padding-left:22px;margin:var(--s-2) 0}
+.doc li{margin:7px 0}
+.doc a{color:var(--blue-text);text-decoration:underline;text-underline-offset:3px}
+.doc a:hover{text-decoration-thickness:2px}
+.doc strong{color:var(--ink);font-weight:650}
+.doc .cta{display:inline-flex;align-items:center;min-height:48px;
+  background:var(--ink);color:var(--bg);border-radius:var(--r-pill);
+  padding:13px 26px;font-size:17px;font-weight:600;letter-spacing:-.01em;
+  margin-top:var(--s-3);text-decoration:none}
+.doc .cta:hover{opacity:.92;text-decoration:none}
+/* 16px measured 82ch on /support's security note — smaller type in the same
+   column buys more characters, not fewer. One step up puts it under the bar. */
+.doc .note{background:var(--subtle);border:1px solid var(--hair);border-radius:var(--r-sm);
+  padding:16px 20px;font-size:17px;color:var(--muted);margin-top:var(--s-3)}
+.doc .note p,.doc .note li{font-size:17px;color:var(--muted)}
+
+/* ========================================================================== */
+/* motion                                                                      */
+/* ========================================================================== */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+}
