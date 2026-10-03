@@ -192,6 +192,14 @@
                0 56px 110px -40px rgba(0,0,0,.16)}
   .shot img{display:block;width:100%;height:auto}
   .shot figcaption{margin-top:14px;text-align:center;font-size:13px;color:var(--muted)}
+  /* Real screens (2026-10-03, M6's last gap): the Home Screen pair, and the strip of eight store frames. */
+  .two-up{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-3);align-items:start}
+  .two-up .shot{max-width:none;margin:0}
+  .screens{display:flex;gap:var(--s-3);overflow-x:auto;scroll-snap-type:x mandatory;margin-top:var(--s-5);
+    padding:4px var(--s-2) var(--s-3);-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+  .screens .shot{flex:0 0 min(272px,74vw);max-width:none;margin:0;scroll-snap-align:start}
+  .screens .shot figcaption{min-height:2.6em}
+  @media (max-width:560px){.two-up{gap:var(--s-2)}}
 
   /* ---------- lowest balance figure (spec §11) ---------- */
   .figure{background:var(--subtle);border-radius:var(--r-xl);
@@ -755,17 +763,25 @@
           device, never the network.
         </p>
       </div>
-      <div data-reveal="scale" data-delay="1">
-        <div data-parallax="0.04"><div class="widget">
-          <p class="eyebrow" style="color:var(--red-text)">Thursday</p>
-          <p class="display" style="font-size:clamp(44px,6vw,64px);line-height:1;margin-top:4px">27</p>
-          <div style="margin-top:18px">
-            <p class="widget-line"><span><i style="background:var(--red)"></i>Card payment</span><strong style="color:var(--red-text)">−$180</strong></p>
-            <p class="widget-line" style="color:var(--muted)"><span><span style="color:var(--green-text);font-weight:800;margin-right:9px">✓</span>Netflix</span><strong>−$18</strong></p>
+      <div class="two-up" data-reveal="scale" data-delay="1">
+        <figure class="shot">
+          <div class="shot-frame">
+            <picture>
+              <source type="image/webp" srcset="/img/screens/widgets1@1x.webp 1x, /img/screens/widgets1.webp 2x">
+              <img src="/img/screens/widgets1.png" width="760" height="1651" loading="lazy" decoding="async" alt="An iPhone Home Screen with JayCK Flow widgets among real app icons: the Day widget with the day's plan, and the Balance widget with the projected balance.">
+            </picture>
           </div>
-          <p style="text-align:right;margin-top:18px;font-weight:600;font-size:17px;letter-spacing:-.03em;color:var(--red-text)" class="mono-num">−$10</p>
-          <p class="fine" style="margin-top:12px;text-align:center">The Day widget — one of four</p>
-        </div></div>
+          <figcaption>The Day and Balance widgets</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="shot-frame">
+            <picture>
+              <source type="image/webp" srcset="/img/screens/widgets2@1x.webp 1x, /img/screens/widgets2.webp 2x">
+              <img src="/img/screens/widgets2.png" width="760" height="1651" loading="lazy" decoding="async" alt="A second Home Screen page: the Week widget with the days around today, and the Month widget with the whole month coloured by balance.">
+            </picture>
+          </div>
+          <figcaption>The Week and Month widgets</figcaption>
+        </figure>
       </div>
     </div>
   </div>
@@ -817,6 +833,95 @@
       <b data-reveal data-delay="1">Device</b><s data-reveal data-delay="2"></s>
       <b data-reveal data-delay="2">Encrypted</b><s data-reveal data-delay="3"></s>
       <b data-reveal data-delay="3">Sync</b>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 13 · SCREENS ============================ -->
+<section aria-labelledby="scr-h">
+  <div class="wrap">
+    <div class="col center">
+      <p class="eyebrow" data-reveal>The app, screen by screen</p>
+      <h2 class="display t-section" id="scr-h" data-reveal data-delay="1" style="margin-top:var(--s-3)">
+        Every screen does<br>one thing.
+      </h2>
+      <p class="lede" data-reveal data-delay="2" style="margin:var(--s-4) auto 0;max-width:600px">
+        The same demo numbers as the store screenshots. Swipe through.
+      </p>
+    </div>
+    <div class="screens" data-reveal data-delay="2" aria-label="Screens of the app">
+      <figure class="shot">
+          <div class="shot-frame">
+            <picture>
+              <source type="image/webp" srcset="/img/screens/calendar@1x.webp 1x, /img/screens/calendar.webp 2x">
+              <img src="/img/screens/calendar.png" width="760" height="1651" loading="lazy" decoding="async" alt="The month view: every day carries its projected balance, settled days ticked green, a tight stretch at the end of the month in red, the balance card above with Reserved, Lowest point and Overdue.">
+            </picture>
+          </div>
+          <figcaption>Not a money problem. A timing problem.</figcaption>
+        </figure>
+      <figure class="shot">
+          <div class="shot-frame">
+            <picture>
+              <source type="image/webp" srcset="/img/screens/whatif@1x.webp 1x, /img/screens/whatif.webp 2x">
+              <img src="/img/screens/whatif.png" width="760" height="1651" loading="lazy" decoding="async" alt="What if? open over the calendar: a $450 sofa added, every day after it recoloured, the edge glowing in safe mode.">
+            </picture>
+          </div>
+          <figcaption>Test a purchase before the money leaves.</figcaption>
+        </figure>
+      <figure class="shot">
+          <div class="shot-frame">
+            <picture>
+              <source type="image/webp" srcset="/img/screens/outlook@1x.webp 1x, /img/screens/outlook.webp 2x">
+              <img src="/img/screens/outlook.png" width="760" height="1651" loading="lazy" decoding="async" alt="The Outlook: six months ahead as a plant-like forecast, the low points marked, risk bands folded.">
+            </picture>
+          </div>
+          <figcaption>See the tight day weeks before it arrives.</figcaption>
+        </figure>
+      <figure class="shot">
+          <div class="shot-frame">
+            <picture>
+              <source type="image/webp" srcset="/img/screens/gestures@1x.webp 1x, /img/screens/gestures.webp 2x">
+              <img src="/img/screens/gestures.png" width="760" height="1651" loading="lazy" decoding="async" alt="A transaction row swiped open to Hide and Delete, with a Deleted · Restore strip above it.">
+            </picture>
+          </div>
+          <figcaption>Every row answers to a swipe.</figcaption>
+        </figure>
+      <figure class="shot">
+          <div class="shot-frame">
+            <picture>
+              <source type="image/webp" srcset="/img/screens/analytics@1x.webp 1x, /img/screens/analytics.webp 2x">
+              <img src="/img/screens/analytics.png" width="760" height="1651" loading="lazy" decoding="async" alt="Analytics: the balance curve day by day, with an honest Sep 1–21 vs Aug 1–21 comparison and the month marked so far.">
+            </picture>
+          </div>
+          <figcaption>Where it went, month by month.</figcaption>
+        </figure>
+      <figure class="shot">
+          <div class="shot-frame">
+            <picture>
+              <source type="image/webp" srcset="/img/screens/savings@1x.webp 1x, /img/screens/savings.webp 2x">
+              <img src="/img/screens/savings.png" width="760" height="1651" loading="lazy" decoding="async" alt="Savings: $775 set aside, goals with progress bars and their pace, about $100 a month.">
+            </picture>
+          </div>
+          <figcaption>Savings goals, at your pace.</figcaption>
+        </figure>
+      <figure class="shot">
+          <div class="shot-frame">
+            <picture>
+              <source type="image/webp" srcset="/img/screens/debts@1x.webp 1x, /img/screens/debts.webp 2x">
+              <img src="/img/screens/debts.png" width="760" height="1651" loading="lazy" decoding="async" alt="Debts: total owed $10,070, debt-free in 20 months, total interest shown.">
+            </picture>
+          </div>
+          <figcaption>Debt-free has a date.</figcaption>
+        </figure>
+      <figure class="shot">
+          <div class="shot-frame">
+            <picture>
+              <source type="image/webp" srcset="/img/screens/backup@1x.webp 1x, /img/screens/backup.webp 2x">
+              <img src="/img/screens/backup.png" width="760" height="1651" loading="lazy" decoding="async" alt="Data & backup: everything local, export and import, no bank login.">
+            </picture>
+          </div>
+          <figcaption>No bank login. Works offline.</figcaption>
+        </figure>
     </div>
   </div>
 </section>
