@@ -971,9 +971,20 @@
      One scenario for the mini month and the What-if bars: the
      lowest-balance figure and the What-if bars are all the same thirty-one days.
      $18 on the 27th is computed, not drawn. */
-  var START = 180, DAYS = 31, OFFSET = 5;
-  var BUY_DAY = 18, BUY = -299;
-  var EVENTS = {
+  var UK = document.documentElement.lang === "uk";
+  /* The page counts in the language's country's currency — his ruling of 2026-10-03 (LANDING-STANDARD.md §1). The
+     Ukrainian story is the same thirty-one days in hryvnia, in the spirit of the store set's ledger: the lowest point
+     is −₴179 on the 27th (−$10 in English), the headphones take it to −₴4,979 (−$309). */
+  var START = UK ? 3000 : 180, DAYS = 31, OFFSET = 5;
+  var BUY_DAY = 18, BUY = UK ? -4800 : -299;
+  var EVENTS = UK ? {
+    1:[["Paycheck",38000]], 3:[["Rent",-18500]], 5:[["Utilities",-2100]],
+    8:[["Groceries",-1600]], 10:[["Subscriptions",-650]], 14:[["Groceries",-1700]],
+    16:[["Freelance",9500]], 20:[["Car insurance",-6200]], 22:[["Groceries",-1750]],
+    24:[["Car repair",-14800]], 26:[["Groceries",-1200]],
+    27:[["Card payment",-1850],["Netflix",-329]],
+    29:[["Paycheck",38000]]
+  } : {
     1:[["Paycheck",2400]], 3:[["Rent",-1150]], 5:[["Utilities",-120]],
     8:[["Groceries",-95]], 10:[["Subscriptions",-42]], 14:[["Groceries",-105]],
     16:[["Freelance",600]], 20:[["Car insurance",-380]], 22:[["Groceries",-110]],
@@ -997,10 +1008,9 @@
      marks overdue rows only, and this demo has none. */
   function statusOf(b){ return b < 0 ? "r" : "g"; }
   function money(n){
-    var s = "$" + Math.abs(Math.round(n)).toLocaleString("en-US");
+    var s = (UK ? "₴" : "$") + Math.abs(Math.round(n)).toLocaleString("en-US");   // the app's own grouping, either way
     return n < 0 ? "−" + s : s;
   }
-  var UK = document.documentElement.lang === "uk";
   function ordinal(n){
     if (UK) return n + "-го";
     var t = ["th","st","nd","rd"], v = n % 100;
