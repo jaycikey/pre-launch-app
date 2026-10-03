@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Довідка — JayCK Flow</title>
+<meta name="description" content="Довідка з кожного екрана й кнопки в JayCK Flow: календар, картка балансу, «Що, якщо?», заощадження, борги, синхронізація й налаштування.">
+<link rel="canonical" href="https://flow.jayck.dev/uk/help">
+<link rel="alternate" hreflang="en" href="https://flow.jayck.dev/uk/help">
+<link rel="alternate" hreflang="uk" href="https://flow.jayck.dev/uk/help">
+<link rel="alternate" hreflang="x-default" href="https://flow.jayck.dev/uk/help">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="JayCK Flow">
+<meta property="og:url" content="https://flow.jayck.dev/uk/help">
+<meta property="og:title" content="Довідка — JayCK Flow">
+<meta property="og:description" content="Довідка з кожного екрана й кнопки в JayCK Flow: календар, картка балансу, «Що, якщо?», заощадження, борги, синхронізація й налаштування.">
+<meta property="og:image" content="https://flow.jayck.dev/og-brand.png">
+<meta property="og:image:secure_url" content="https://flow.jayck.dev/og-brand.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Знак JayCK Flow: пташка, що утворює літеру J, синя на майже чорному тлі">
+<meta property="og:locale" content="uk_UA">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Довідка — JayCK Flow">
+<meta name="twitter:description" content="Довідка з кожного екрана й кнопки в JayCK Flow: календар, картка балансу, «Що, якщо?», заощадження, борги, синхронізація й налаштування.">
+<meta name="twitter:image" content="https://flow.jayck.dev/og-brand.png">
+<meta name="twitter:image:alt" content="Знак JayCK Flow: пташка, що утворює літеру J, синя на майже чорному тлі">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/css/site.css">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#140917" media="(prefers-color-scheme: dark)">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<meta name="apple-itunes-app" content="app-id=6789696499">
+<style>
+  /* ── /help only ─────────────────────────────────────────────────────────
+     22,142px tall on a phone, with a 14-link list at the very top and nothing
+     else: once you scrolled past screen one there was no way back but a scroll
+     to the top. Two answers, and both survive with JavaScript switched off.
+
+       ≥1024px — the list becomes a sticky rail beside the text. It is a real
+                 <nav> and a real list of anchors; sticky is one CSS property.
+       <1024px — the list stays where it was, and a plain "↑" ANCHOR sits in
+                 the corner. Not a button, not a scrollTo — <a href="#main">,
+                 which works with no script at all.
+
+     The rail's aria-current is the only part that needs JavaScript, and when it
+     is missing the rail is simply a list of links, which is what it was before. */
+  .doc-help{max-width:var(--read)}
+  .help-head{margin-bottom:var(--s-3)}
+  .toc{display:flex;flex-wrap:wrap;gap:var(--s-1) var(--s-3);
+    background:var(--subtle);border:1px solid var(--hair);border-radius:var(--r-sm);
+    padding:var(--s-2) var(--s-3);margin:var(--s-3) 0 var(--s-2)}
+  /* 23px tall before today — the primary navigation of the longest page. */
+  .toc a{display:inline-flex;align-items:center;min-height:44px;
+    font-size:16px;font-weight:600;color:var(--blue-text);text-decoration:none}
+  .toc a:hover{text-decoration:underline;text-underline-offset:3px}
+
+  @media (min-width:1024px){
+    .doc-help{display:grid;max-width:1020px;align-items:start;
+      grid-template-columns:216px minmax(0,var(--read));gap:clamp(32px,4vw,64px)}
+    .help-head{grid-column:1 / -1}
+    .toc{grid-column:1;position:sticky;top:calc(var(--nav-h) + var(--s-3));
+      display:block;margin:0;padding:var(--s-2) 0 var(--s-2) var(--s-2);
+      background:none;border:0;border-left:2px solid var(--hair);border-radius:0;
+      max-height:calc(100vh - var(--nav-h) - var(--s-5));overflow-y:auto}
+    /* 44px here too, not just on the phone. Fourteen items x 44 = 616px, and a
+       900px-tall window leaves 788 below the header — so the full brief-level
+       target fits without the rail ever needing to scroll. Checked before
+       choosing the number. */
+    .toc a{display:flex;align-items:center;min-height:44px;padding:0;
+      font-size:15px;font-weight:500;color:var(--muted);line-height:1.3}
+    .toc a:hover{color:var(--ink);text-decoration:none}
+    .toc a[aria-current="true"]{color:var(--ink);font-weight:650}
+    .help-body{grid-column:2}
+  }
+
+  /* The corner anchor. Visible by default, so a page with no JavaScript keeps
+     it; site.js sets data-scrolled on the header, and the sibling selector then
+     hides it while you are already at the top. No script, no hiding — which is
+     the right way round. */
+  .totop{position:fixed;z-index:90;
+    right:calc(var(--s-2) + env(safe-area-inset-right));
+    bottom:calc(var(--s-2) + env(safe-area-inset-bottom));
+    width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+    border-radius:var(--r-pill);background:var(--card);border:1px solid var(--hair);
+    color:var(--muted);font-size:19px;line-height:1;text-decoration:none;
+    box-shadow:0 8px 24px -12px rgba(0,0,0,.35);
+    transition:opacity .25s var(--ease),visibility 0s}
+  .totop:hover{color:var(--ink)}
+  .hdr[data-scrolled="false"] ~ .totop{opacity:0;visibility:hidden;transition-delay:0s,.25s}
+  @media (min-width:1024px){ .totop{display:none} }
+
+  /* ── page components ──────────────────────────────────────────────────── */
+  .card{background:var(--subtle);border:1px solid var(--hair);
+    border-radius:var(--r-sm);padding:20px 24px;margin:var(--s-2) 0}
+  .card p{font-size:17px;color:var(--muted);margin:6px 0}
+  .card p strong{color:var(--ink)}
+
+  /* what it is called · where it lives · what it does */
+  .ctrl{background:var(--card);border:1px solid var(--hair);border-radius:var(--r-sm);
+    padding:4px;margin:var(--s-2) 0}
+  .ctrl .row{display:flex;gap:var(--s-2);padding:14px 20px;border-top:1px solid var(--hair)}
+  .ctrl .row:first-child{border-top:none}
+  .ctrl .n{flex:0 0 34%;font-size:17px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+  .ctrl .n em{display:block;font-style:normal;font-weight:500;font-size:14px;
+    color:var(--muted);margin-top:2px}
+  .ctrl .d{flex:1;font-size:17px;color:var(--body)}
+  @media (max-width:560px){
+    .ctrl .row{flex-direction:column;gap:4px}
+    .ctrl .n{flex:none}
+  }
+
+  /* The semantic three, as inline chips. --amber-text used to be #9A6400,
+     which is 5.00:1 on white and 4.40:1 on --amber-soft — and --amber-soft is
+     the only background it is ever on. site.css darkened it one step. */
+  .chip{display:inline-block;border-radius:var(--r-pill);padding:1px 9px;
+    font-size:14px;font-weight:700;vertical-align:baseline;white-space:nowrap}
+  .chip.g{background:var(--green-soft);color:var(--green-text)}
+  .chip.a{background:var(--amber-soft);color:var(--amber-text)}
+  .chip.r{background:var(--red-soft);color:var(--red-text)}
+  .chip.b{background:var(--blue-soft);color:var(--blue-text)}
+</style>
+<a class="skip" href="#main">Перейти до вмісту</a>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="logo" href="/uk">JayCK <span>Flow</span></a>
+    <div class="hdr-side">
+      <nav class="nav-links" aria-label="Головна">
+        <a href="/uk#how">Як це працює</a>
+        <a href="/uk#why">Чому Flow</a>
+        <a href="/uk/privacy">Приватність</a>
+        <a href="/uk/help" aria-current="page">Довідка</a>
+        <a href="/uk/support">Підтримка</a>
+      </nav>
+      <a class="pill-cta" href="https://apps.apple.com/app/jayck-flow/id6789696499">Завантажити</a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Меню">
+        <i></i><i></i><i></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Without JavaScript the burger cannot open, so it goes away and the links
+     lay out as an ordinary wrapped row. The menu below is then unreachable and
+     harmless: every link in it is also here or in the footer. -->
+<noscript><style>
+  .burger{display:none!important}
+  .nav-links{display:flex!important;flex-wrap:wrap;gap:0 var(--s-2)}
+  .nav-links a{min-height:36px;font-size:14px}
+  @media (max-width:560px){ .hdr-side .pill-cta{display:inline-flex} .logo{font-size:17px} }
+</style></noscript>
+
+<div class="menu" id="site-menu">
+  <a href="/uk#how">Як це працює</a>
+  <a href="/uk#why">Чому Flow</a>
+  <a href="/uk/privacy">Приватність</a>
+  <a href="/uk/help" aria-current="page">Довідка</a>
+  <a href="/uk/support">Підтримка</a>
+  <a class="menu-cta" href="https://apps.apple.com/app/jayck-flow/id6789696499">Завантажити в App&nbsp;Store</a>
+</div>
+
+<main class="doc doc-help" id="main">
+<div class="help-head">
+<p class="kicker">Довідка</p>
+<h1>Як працює JayCK Flow</h1>
+<p class="sub">Кожен екран і кожна кнопка — як називається, де живе і що робить. Застосунок — це прогноз, а не бухгалтерська книга: ти кажеш йому, що буде, а він показує баланс, який у тебе справді буде в будь-який майбутній день.</p>
+</div>
+
+<nav class="toc" id="toc" aria-label="На цій сторінці">
+  <a href="#oneaccount">Один рахунок</a>
+  <a href="#screen">Головний екран</a>
+  <a href="#views">Вигляди</a>
+  <a href="#money">Додавання грошей</a>
+  <a href="#gestures">Свайп по рядку</a>
+  <a href="#whatif">Що, якщо?</a>
+  <a href="#widgets">Віджети</a>
+  <a href="#menu">Меню</a>
+  <a href="#cards">Картки</a>
+  <a href="#savings">Заощадження</a>
+  <a href="#debts">Борги</a>
+  <a href="#settings">Налаштування</a>
+  <a href="#sync">Акаунт і синк</a>
+  <a href="#firstrun">Перший запуск і початок заново</a>
+</nav>
+
+<div class="help-body">
+<!-- Practical, not persuasive: the landing page argues WHY one account; this answers
+     the two questions that otherwise arrive as support mail — "where do I add my credit
+     card?" and "why doesn't my savings show a balance?" -->
+<h2 id="oneaccount">Один рахунок, і що стається з усім іншим</h2>
+<p>JayCK Flow веде один баланс: гроші, які ти справді можеш витратити просто зараз — готівка й дебет як один пул. Він ніколи не питає, що на кредитці чи на ощадному рахунку, і їх нема куди додати. Це навмисно: прогноз працює лише тоді, коли є одне число, яке можна прогнозувати.</p>
+<p>Усе інше — це <em>напрямок, куди течуть гроші</em>, записаний у день, коли вони йдуть:</p>
+<ul>
+  <li><strong>Кредитна картка.</strong> Запиши <strong>покупку в день, коли купуєш</strong>, познач її кнопкою
+    <strong>↗</strong> і вибери картку. Покупка йде з балансу того дня, а гроші повертаються на <strong>дату закриття</strong>картки одним розрахованим рядком, який можна відкрити, перевірити й оплатити — частково або повністю. Те, що лишилося, переїжджає на наступну дату закриття. Це замінює стару пораду пропускати покупку й записувати лише оплату: для балансу вона працювала, але губила,
+    <em>на що</em>пішли гроші, бо витрата, датована днем оплати, не належить жодній категорії.</li>
+  <li><strong>Заощадження.</strong> Переказ у заощадження — звичайна витрата в день, коли ти його робиш. Цілі заощаджень живуть у меню і ведуть те, що ти відклав — це позначка на цьому балансі, а не другий рахунок зі своїм підсумком.</li>
+  <li><strong>Борги.</strong> Та сама ідея: ти ведеш платежі, які йдуть, а план погашення показує, як баланс падає з часом.</li>
+  <li><strong>Гроші, які ніколи не були твоїми.</strong> Якщо вони не торкнулися твого рахунку — хтось інший це оплатив — додай і увімкни <strong>око</strong>. Запис лишається в історії та у своїй категорії, але назавжди поза балансом. Це не те саме, що покупка карткою, яка теж іде з балансу сьогодні, але <em>повертається</em> у день оплати картки: приховані рядки перекреслені суцільною лінією, покупки карткою — пунктирною.</li>
+</ul>
+<p>Коротко: якщо це міняє гроші в кишені — постав на день, коли вони міняються. Якщо ні — познач так, щоб воно не могло зрушити прогноз.</p>
+
+<h2 id="screen">Головний екран</h2>
+<p>Три смуги зверху вниз: панель інструментів, картка балансу і сам календар.</p>
+
+<h3>Панель інструментів</h3>
+<div class="ctrl">
+  <div class="row"><div class="n">‹ 2026 <em>угорі ліворуч</em></div><div class="d">Віддаляє. З вигляду місяця відкриває <strong>рік</strong>; з дня повертає до місяця того дня. У вигляді року просто показує рік.</div></div>
+  <div class="row"><div class="n">Хмарка з рискою <em>угорі по центру</em></div><div class="d">Зʼявляється лише коли синхронізація на паузі — сесія завершилася або підписка закінчилася. Індикатор без дотику; банер під ним пояснює, що робити.</div></div>
+  <div class="row"><div class="n">Що, якщо? <em>угорі праворуч</em></div><div class="d">Входить у пісочницю. Див. <a href="#whatif">Що, якщо?</a> нижче.</div></div>
+  <div class="row"><div class="n">☰ Меню <em>у самому правому верхньому куті</em></div><div class="d">Транзакції, Фінанси, Аналітика, Налаштування та Акаунт і синк живуть тут.</div></div>
+</div>
+
+<h3>Картка балансу</h3>
+<div class="ctrl">
+  <div class="row"><div class="n">Баланс зараз</div><div class="d">Твій баланс сьогодні: якірний баланс плюс усе, що сталося відтоді.</div></div>
+  <div class="row"><div class="n">Іконка олівця</div><div class="d">Відкриває <strong>Якір</strong> — стартовий баланс і дату, з якої він діє. Прогноз будується вперед від цієї точки, тож щоб врахувати старіші транзакції, постав дату якоря раніше за них.</div></div>
+  <div class="row"><div class="n">Іконка звірки</div><div class="d">Відкриває <strong>Звірити баланс</strong>: введи, скільки насправді на рахунку зараз, і прогноз перезапуститься від сьогодні. Користуйся, коли реальне життя відійшло від плану. Поки ти вводиш, він сам рахує різницю — <em>«Ми очікували 1 240. Це на 340 менше, ніж було.»</em> Він називає різницю і на цьому зупиняється: що за цією різницею <strong>стоїть</strong> — знати тобі, а не нам здогадуватися.</div></div>
+  <div class="row"><div class="n">Відкладено · Доступно</div><div class="d">Показується лише коли цілі заощаджень тримають резерв. Відкладені гроші лишаються в балансі, але вважаються зайнятими, тож <strong>Доступно</strong> — це те, що ти справді можеш витратити.</div></div>
+  <div class="row"><div class="n"><span class="chip a">Прострочено</span></div><div class="d">Минулі витрати, які ти так і не позначив виконаними, з їхньою сумою. Показується лише коли такі є.</div></div>
+  <div class="row"><div class="n"><span class="chip b">Не підтверджено</span></div><div class="d">Минулі <strong>надходження</strong> , які ти так і не позначив отриманими. Тримається окремо від «Прострочено» і ніколи з ним не сумується, бо це різні новини з різними власниками: одне — тобі закрити, інше — комусь іншому сплатити, а спільна цифра сховала б обидва. Навмисно не названо простроченим: платіж, який не прийшов, не запізнився через тебе.</div></div>
+  <div class="row"><div class="n">Колір картки</div><div class="d">Картка відходить від зеленого, поки показується будь-що з двох вище. Обидва кажуть одне й те саме про баланс, надрукований на ній: <strong>він може ще не бути правдою.</strong></div></div>
+  <div class="row"><div class="n">Найнижча точка</div><div class="d">Найнижче, куди за прогнозом впаде баланс, і дата, коли це станеться. Це число, заради якого існує весь застосунок — зелена крапка означає, що він лишається в безпеці, червона — що ти опускаєшся нижче свого буфера.</div></div>
+</div>
+
+<h3>Сітка календаря</h3>
+<div class="ctrl">
+  <div class="row"><div class="n">Клітинка дня</div><div class="d">Дата, транзакції на ній і <strong>прогнозований баланс</strong> після цього дня. Торкнись, щоб відкрити день.</div></div>
+  <div class="row"><div class="n">Колір дня</div><div class="d">Червона дата означає, що прогнозований баланс того дня нижче нуля (або нижче буфера). Чорна — усе гаразд.</div></div>
+  <div class="row"><div class="n"><span class="chip a">2/4</span> бейдж</div><div class="d">Відмічено проти запланованого на цей день, коли лишився лише один напрямок для підтвердження. <span class="chip a">Жовтий</span> для грошей, що йдуть, <span class="chip b">синій</span> для грошей, що приходять.</div></div>
+  <div class="row"><div class="n"><span class="chip b">+1</span> <span class="chip a">−3</span> бейдж</div><div class="d">Коли обидва напрямки ще не підтверджені, місця для дробів нема, тож бейдж показує, що <strong>лишилося</strong>: <span class="chip b">+1</span> надходження і <span class="chip a">−3</span> витрата. Він ніколи не показує нуль — повністю підтверджений напрямок просто зникає.</div></div>
+  <div class="row"><div class="n"><span class="chip r">Червоний</span> бейдж</div><div class="d">Минулий день, на якому ти щось не позначив. Тут колір замінює напрямок, бо непідтверджений минулий рядок означає, що баланс вище може не бути правдою — і це однаково так, чи рахунок пішов, чи платіж не прийшов. <strong>+</strong> і <strong>−</strong> далі розрізняють ці два випадки.</div></div>
+  <div class="row"><div class="n"><span class="chip g">✓</span> бейдж</div><div class="d">Усе на цей день позначено — і надходження, і витрати.</div></div>
+  <div class="row"><div class="n">Маленьке число, ліве поле</div><div class="d">Номер тижня ISO. Стає червоним, коли в тому тижні є ризиковий день.</div></div>
+  <div class="row"><div class="n">Сьогодні</div><div class="d">Сьогоднішня дата обведена. Пігулка <strong>Сьогодні</strong> унизу праворуч повертає до неї звідусіль.</div></div>
+  <div class="row"><div class="n">+ <em>унизу праворуч</em></div><div class="d">Додає транзакцію на вибраний день.</div></div>
+</div>
+
+<h2 id="views">Три вигляди</h2>
+<div class="ctrl">
+  <div class="row"><div class="n">Місяць</div><div class="d">Типовий. Гортається безперервно крізь місяці, тож наступний місяць — за один свайп, а не окремий екран.</div></div>
+  <div class="row"><div class="n">День</div><div class="d">Торкнись будь-якої дати. Показує все на цей день — торкнись рядка, щоб змінити, або <a href="#gestures">свайпни його вбік</a> , щоб виконати дію; також гортається день за днем.</div></div>
+  <div class="row"><div class="n">Рік</div><div class="d">Торкнись ‹ у вигляді місяця. Дванадцять міні-місяців одним поглядом, щоб побачити важкі ділянки; торкнись місяця, щоб відкрити.</div></div>
+</div>
+<p class="note">На iPad та Mac застосунок натомість використовує макет у дві колонки: календар праворуч, а баланс, транзакції й підсумки категорій — у постійній бічній панелі ліворуч.</p>
+
+<h2 id="money">Додавання й редагування грошей</h2>
+<p>Торкнись <strong>+</strong>або будь-якої наявної транзакції. Той самий редактор обслуговує обидва випадки.</p>
+<div class="ctrl">
+  <div class="row"><div class="n">Назва</div><div class="d">Що це — «Оренда», «Spotify», «Зарплата».</div></div>
+  <div class="row"><div class="n">Тип</div><div class="d"><strong>Витрата</strong>, <strong>Дохід</strong>, або <strong>Переказ</strong> (гроші, що рухаються між твоїми власними рахунками).</div></div>
+  <div class="row"><div class="n">Сума · Дата</div><div class="d">Скільки, і в який день воно лягає.</div></div>
+  <div class="row"><div class="n">Повтор</div><div class="d">Один раз, щодня, щотижня, кожні 2 тижні, щомісяця, щороку або кожні N днів. Повторюваний запис сам заповнює календар уперед — саме це перетворює одну зарплату на видиме майбутнє.</div></div>
+  <div class="row"><div class="n">Дата завершення</div><div class="d">Необовʼязково. Зупиняє серію на даті — кредит, що закінчується, підписка, яку скасовуєш. Поставив випадково? <strong>✕</strong> біля поля очищає її, і дати після неї повертаються. Той самий ✕ очищає необовʼязкові дати в боргах і цілях заощаджень.</div></div>
+  <div class="row"><div class="n">Категорія</div><div class="d">Живить підсумки категорій і Аналітику. Свої можна додати в Налаштуваннях.</div></div>
+  <div class="row"><div class="n">Нотатки</div><div class="d">Необовʼязковий вільний текст.</div></div>
+  <div class="row"><div class="n">Дублювати · Видалити · Зберегти</div><div class="d">Дублювати копіює запис для швидких варіацій. Зберегти застосовує; Видалити прибирає.</div></div>
+</div>
+
+<h3>Позначання виконаного</h3>
+<p>Кожен рядок несе <strong>одну позначку</strong> , яка показує, де він стоїть — заплановано, виконано, на картці чи приховано. Дії, що її змінюють, живуть на <a href="#gestures">свайпі</a>.</p>
+<div class="ctrl">
+  <div class="row"><div class="n">Виконано</div><div class="d">Гроші справді рухнулися. Саме це тримає чесним «скільки ще в очікуванні» і керує бейджами днів. <strong>Для доходу це важить так само:</strong> минулий платіж, який застосунок записав, рахується в балансі незалежно від того, чи ти його підтвердив, тож зарплата, яка так і не прийшла — це гроші, які прогноз тобі обіцяє. Позначення доходу отриманим це й прибирає.</div></div>
+  <div class="row"><div class="n">Приховано</div><div class="d">Забирає рядок <strong>з балансу назавжди</strong>: гроші, які ніколи не були твоїми для витрат. Запис лишається в історії та у своїй категорії, а назва й сума перекреслені <strong>суцільною</strong> лінією. Є на кожному рядку.</div></div>
+  <div class="row"><div class="n">На картці</div><div class="d">Лише для витрати. Питає, <strong>яка картка</strong>, потім забирає покупку з сьогоднішнього балансу і повертає гроші в день оплати тієї картки. Перекреслено <strong>пунктирною</strong> лінією, бо вони не зникли — вони пізніше. Рядок може бути прихований <em>або</em> на картці, ніколи обидва, і жодне не пропонується, поки рядок позначено виконаним.</div></div>
+</div>
+<p class="note">Відстав на кілька днів? Відкрий картку балансу, тоді <strong>Прострочено</strong> &rarr; <strong>Позначити до сьогодні</strong>. Він перелічує все, що збирається позначити, щоб ти зняв галочку з того, у чому не впевнений, і всю партію можна повернути одним дотиком.</p>
+
+<h2 id="gestures">Свайп по рядку</h2>
+<p>Посунь транзакцію вбік — і з того боку відкриється блок дій. Тягни далі, і крайня дія виросте на весь рядок — відпусти там, і вона виконається. Відпусти раніше — панель просто лишиться відкритою, тож половинний свайп ніколи нічого не робить.</p>
+<p><strong>Напрямок несе зміст.</strong> Свайп <strong>праворуч</strong> каже <em>це сталося</em>; свайп <strong>ліворуч</strong> каже <em>прибери це з мого екрана</em>.</p>
+<div class="ctrl">
+  <div class="row"><div class="n">Свайп праворуч</div><div class="d"><strong>Виконано</strong> на зовнішньому кінці, <strong>на картку</strong> ближче. Повний свайп праворуч позначає рядок виконаним — те, що більшості рядків потрібно найчастіше.</div></div>
+  <div class="row"><div class="n">Свайп ліворуч</div><div class="d"><strong>Приховати</strong> відкривається, <strong>видалити</strong> сидить на зовнішньому кінці. Оборотна дія — та, до якої дотягуєшся першою.</div></div>
+  <div class="row"><div class="n">Скасувати після видалення</div><div class="d">Рядок лишає смужку там, де стояв, з <strong>Відновити</strong> і смугою зворотного відліку. Ніщо не зникає насправді, поки смуга не спорожніє, а вихід з екрана й повернення її не перезапускають.</div></div>
+  <div class="row"><div class="n">На записі, на який вказують інші рядки</div><div class="d">Картка, борг або ціль заощаджень <strong>спершу питає</strong> замість того, щоб видалити й запропонувати скасування — від них залежить інше, тож питання — безпечніша форма.</div></div>
+</div>
+<p>Та сама ідіома доходить до списків у Фінансах — категорій, боргів, цілей і карток — а дія пропонується лише там, де рядок справді може її виконати.</p>
+<p class="note"><strong>Ніщо не замкнено за жестом.</strong> Налаштування → <strong>Жести</strong> дає вибрати, які дії сидять з кожного боку (до двох на бік), а головний перемикач вимикає всю ідіому — з вимкненим кнопки лишаються. Кожна дія, яку виконує свайп, доступна без свайпу.</p>
+
+<h3>Редагування повторюваної транзакції</h3>
+<p>Зміни або видали одну — і застосунок спитає, що ти мав на увазі — <strong>Лише цю подію</strong>, <strong>Цю і наступні</strong>, або <strong>Усі події серії</strong>. Нічого не вгадується за тебе.</p>
+
+<h2 id="whatif">Що, якщо?</h2>
+<p>Пісочниця. Торкнись <strong>Що, якщо?</strong> — і застосунок входить у <strong>Безпечний режим</strong>: додавай, змінюй або видаляй що завгодно і дивись, як кожен майбутній день перефарбовується — у твої дані нічого не пишеться і нічого не синхронізується, поки ти не вирішиш.</p>
+<div class="ctrl">
+  <div class="row"><div class="n">Застосувати</div><div class="d">Залишає зміни по-справжньому.</div></div>
+  <div class="row"><div class="n">Відкинути</div><div class="d">Викидає весь експеримент і відновлює рівно те, що було.</div></div>
+  <div class="row"><div class="n">Прогноз</div><div class="d">Підсумок наперед на <strong>3 або 6 місяців</strong>: баланс на кінець місяця, найнижча точка і список найближчих ризикових днів.</div></div>
+  <div class="row"><div class="n">Прогноз змінних витрат <em>у Прогнозі</em></div><div class="d">Оцінює твої нерегулярні щоденні витрати з твоєї ж історії і ставить передбачені витрати на майбутні дати. Це оцінка, вона точнішає з накопиченням історії і відкидається, коли ти виходиш із пісочниці.</div></div>
+  <div class="row"><div class="n">Рахувати перекази <em>у Прогнозі</em></div><div class="d">Включає регулярні вихідні перекази (як-от погашення кредитки) окремими потоками. Потрібно кілька переказів з однаковою назвою.</div></div>
+</div>
+
+<h2 id="widgets">Віджети</h2>
+<p>Чотири віджети на головному екрані, додаються як завжди: затисни головний екран, торкнись <strong>Редагувати&nbsp;→&nbsp;Додати&nbsp;віджет</strong>і знайди <strong>JayCK Flow</strong>. Кожен — окремий віджет зі своїми налаштуваннями — затисни розміщений віджет і вибери <strong>Редагувати віджет</strong> , щоб до них дістатися.</p>
+<div class="ctrl">
+  <div class="row"><div class="n">День <em>малий</em></div><div class="d">Сьогодні: дата, до трьох записів і баланс, яким закінчується день. Налаштування: <strong>Лише незавершене</strong> ховає те, що вже закрито.</div></div>
+  <div class="row"><div class="n">Баланс <em>середній</em></div><div class="d">Картка балансу застосунку на головному екрані: цифра, відкладені гроші, найнижча точка попереду, усе прострочене чи непідтверджене. Кожен рядок можна вимкнути — сам баланс показується завжди. Картка носить власний колір застосунку: зелений, коли баланс у безпеці, жовтий, коли він може ще не бути правдою, червоний, коли прогноз іде нижче нуля.</div></div>
+  <div class="row"><div class="n">День і тижні <em>середній</em></div><div class="d">Сьогоднішній список поруч із минулим тижнем, цим і наступним — смуга з трьох тижнів із бейджами днів самого застосунку. Налаштування: <strong>Лише незавершене</strong>, і пігулки днів увімкнені або ні.</div></div>
+  <div class="row"><div class="n">Місяць <em>великий</em></div><div class="d">Весь місяць, як його малює застосунок: бейджі днів і прогнозований баланс під кожною датою. Налаштування: пігулки днів увімкнені або ні.</div></div>
+  <div class="row"><div class="n">Дотик</div><div class="d">Віджет «День» — і денна половина «Дня і тижнів» — відкриває застосунок на тому дні. Смуга тижнів і віджет «Місяць» відкривають місяць. «Баланс» відкриває застосунок там, де ти його лишив.</div></div>
+  <div class="row"><div class="n">Поки увімкнено «Що, якщо?»</div><div class="d"><strong>Віджети не рухаються.</strong> Пісочниця лишається всередині застосунку; головний екран показує справжні числа, поки ти не торкнешся «Застосувати».</div></div>
+  <div class="row"><div class="n">Покупки карткою</div><div class="d">У віджеті покупка на картці показується зеленою галочкою. На головному екрані питання таке: <em>чи це ще потребує мене?</em> — а покупка на картці не потребує. У застосунку той самий рядок зберігає пунктирне перекреслення, бо там його ще можна відкрити й змінити.</div></div>
+</div>
+<p class="note"><strong>Приватно, як і все інше:</strong> віджет читає знімок, який застосунок зберігає на твоєму пристрої, і ніколи не виходить у мережу. Поки застосунок не відкрили хоча б раз, віджети кажуть, що показувати ще нічого — вони ніколи не вигадують чисел. Одне поточне обмеження: затискання <em>іконки застосунку</em> пропонує лише малий розмір; середній і великий віджети додаються з галереї віджетів.</p>
+
+<h2 id="menu">Меню (☰)</h2>
+<div class="ctrl">
+  <div class="row"><div class="n">Транзакції</div><div class="d">Кожен запис в одному списку, з пошуком, фільтром періоду (цей місяць / 3 місяці / цей рік), фільтрами стану (усі / виконані / заплановані) і групуванням за категоріями.</div></div>
+  <div class="row"><div class="n">Фінанси</div><div class="d"><a href="#cards">Картки</a>, <a href="#savings">Заощадження</a>, <a href="#debts">Борги</a>, і пояснення «Як це працює» всередині застосунку.</div></div>
+  <div class="row"><div class="n">Аналітика</div><div class="d">Дохід проти витрат і витрати за категоріями за 1, 3, 6 або 12 місяців. Дві кнопки над графіком вибирають, що означає «витрати»: <strong>Пішло з рахунку</strong> рахує гроші, які справді пішли, тож покупки карткою зʼявляються лише коли ти оплачуєш картку; <strong>На що витратив</strong> рахує покупки карткою в їхніх категоріях у день покупки, а переказ на погашення відкладає вбік. Два чесні погляди на ті самі гроші — жоден ніколи не рахує їх двічі.</div></div>
+  <div class="row"><div class="n">Налаштування</div><div class="d">Параметри, категорії, сповіщення, резервна копія. Див. <a href="#settings">нижче</a>.</div></div>
+  <div class="row"><div class="n">Акаунт і синк</div><div class="d">Вхід, підписка і зашифрована синхронізація. Див. <a href="#sync">нижче</a>.</div></div>
+</div>
+
+<h2 id="cards">Кредитні картки</h2>
+<p>Картка — це <strong>затримка</strong>, а не другий рахунок. Баланс у тебе один; картка лише зсуває, коли гроші з нього йдуть.</p>
+<p>Додай картки в <strong>Фінанси → Картки</strong>. Картці потрібна назва і її <strong>дату закриття</strong> — вибери дату, і це число місяця стане повторюваним. Картка, що закривається 31-го, оплачується 30 квітня і 28 лютого, як це робить банк, не пропускаючи жодного місяця.</p>
+<p>Далі, для покупки, яку ти поклав на цю картку:</p>
+<ul>
+  <li>Додай витрату <strong>у день, коли купив</strong>, у її справжній категорії.</li>
+  <li>Торкнись <strong>↗</strong> на рядку і вибери картку. Покупка йде з сьогоднішнього балансу.</li>
+  <li>На дату закриття картки один <strong>розрахований рядок</strong> зʼявляється для цієї картки, позначений пунктирним краєм, бо його зробив застосунок, а не ти. Він каже, скільки покупок покриває.</li>
+  <li>Відкрий його, щоб побачити виписку: <strong>що прийшло з попереднього періоду</strong>, що нараховано, що ти переказав, і <strong>що переходить на наступний</strong> — чотири рядки, які сходяться, тож цифру можна перевірити, а не прийняти на віру. Нижче — покупки й платежі, що за нею стоять.</li>
+  <li>Плати будь-яку суму, <strong>на будь-яку дату на свій вибір</strong> — платіж це план, а не квитанція, тож він лишається непозначеним, поки гроші справді не рухнуться, як і кожен інший рядок. Те, що лишилося, саме переходить на наступну дату закриття разом з усім, що ти нарахуєш між ними.</li>
+</ul>
+<p><strong>Повторювана витрата на картці.</strong> Позначення підписки на картку питає, як далеко ти це маєш на увазі:
+  <strong>лише цю подію</strong>, або <strong>цю і наступні</strong> — від того місяця кожне повторення саме йде на картку. Зняття з картки питає те саме. Тут немає «усіх подій», бо нарахування на картку не може сягати в уже закриті місяці — а зняття єдиного нарахованого повторення не питає взагалі: один дотик, як і раніше.</p>
+
+<p><strong>Список — твій, упорядковуй як хочеш.</strong> У <strong>Фінанси → Картки</strong>, перетягуй картки у свій порядок (ручка зʼявляється під <em>Мій порядок</em>), або сортуй за назвою чи днем закриття — сортування це вигляд, твій порядок зберігається. Картку, якою більше не користуєшся, можна <strong>приховати</strong> замість видалити: вона зникає з усіх вибирачів, а її історія і виписки лишаються рівно такими, як були, і календар не змінюється ні на цент. Якщо картка ще щось винна, застосунок називає суму і спершу питає. Приховані картки чекають у своїй секції внизу списку — один перемикач повертає картку.</p>
+
+<p><strong>Перенести залишок самому.</strong> Перенесення стається саме, щойно мине дата закриття, і це навмисно: несплачена цифра, що висить там до свого дня — наслідок бездіяльності, і ховати її означало б робити тобі послугу, якої ти не просив. Але чекати не обовʼязково. Поруч із <em>Переходить на наступний період</em> є стрілка, яка переносить його зараз, а поруч із <em>З попереднього періоду</em> — друга, яка повертає назад — бо передумати дозволено. Обидві питають, перш ніж діяти. Та, що повертає, зʼявляється лише поки цикл, звідки він прийшов, ще відкритий: у день закриття це останній шанс, а наступного дня її вже нема.</p>
+
+<p><strong>Виписка на кожну дату закриття.</strong> Навіть порожня. Дата — це ритм картки, і порожня виписка каже, куди ляже покупка, ще до того, як ти її зробиш — і що застосунок не просто мовчить про той місяць.</p>
+
+<p><strong>Платити раніше.</strong> Чекати на той рядок не обовʼязково. Створи звичайний
+  <strong>переказ</strong>, вибери в ньому картку, і він зарахується в той цикл, у який потрапляє його дата. Переказ у JayCK Flow означає <em>погашення картки</em> — гроші, які ти віддаєш комусь іншому, це
+  <strong>витрата</strong>, тож вона лягає в категорію, де її видно.</p>
+<p><strong>Коли платити більше нічого</strong>, рядок лишається як <strong>виписка</strong>: нуль до сплати, звіт цілий. «Сплачено» і «ніколи не було» — різні факти, і рядок, що зник, не зміг би їх розрізнити. Переплатиш — виписка так і скаже: перенесення показується як
+  <strong>кредит</strong>і йде в рахунок наступного циклу. Сам рядок ніколи не додає грошей до балансу — бути попереду по картці не означає мати готівку в руці.</p>
+<p><strong>Картка, яка вже щось винна.</strong> Картки починаються з нуля, бо застосунок знає лише те, що ти йому кажеш. Якщо твоя має залишок у день додавання, запиши цей залишок однією витратою на картку — назви її, наприклад, «початковий залишок», постав дату й познач на картку кнопкою <b>&#8599;</b>. Відтоді виписка — справжня цифра, а не лише те, що ти ввів після.</p>
+
+<p><strong>Кешбек і повернення.</strong> Гроші, що повертаються <em>на</em> картку — це переказ на неї. Введи кешбек як дохід — від банку, в день, коли він прийшов — і переказ тієї ж суми на картку. Картка винна на стільки менше, а твій баланс не змінився, що і сталося насправді. Повернення працює так само, хоча якщо воно недавнє, може бути простіше виправити саму покупку.</p>
+
+<p><strong>Перевірено, а не припущено:</strong> початковий залишок $800 плюс покупка $100 показують $900 боргу на дату закриття; кешбек $65, введений так, зводить його до $835.</p>
+
+<p><strong>Чого застосунок не робитиме.</strong> Він не тримає баланс картки, кредитний ліміт, мінімальний платіж чи відсотки. Він не має як їх знати, а вгадування поставило б на екран число, яке ніщо не може перевірити. Він прогнозує те, що бачить: покупки, які ти позначив, і платежі, які ти зробив.</p>
+
+<h2 id="savings">Заощадження</h2>
+<p>Ціль заощадження — це <strong>позначка</strong>, а не другий рахунок. Гроші лишаються в балансі, але резервування зменшує цифру <strong>Доступно</strong> , щоб ти не витратив їх двічі. У кожної цілі є правило, яке вирішує, що застосунок пропонує відкласти:</p>
+<div class="ctrl">
+  <div class="row"><div class="n">Фіксована сума</div><div class="d">Та сама сума щомісяця.</div></div>
+  <div class="row"><div class="n">% від доходу</div><div class="d">Частка того, що ти справді заробляєш. Підказує одразу після запису доходу.</div></div>
+  <div class="row"><div class="n">Ціль до дати</div><div class="d">Назви суму і дедлайн; застосунок вирахує місячну частку, потрібну, щоб дійти.</div></div>
+  <div class="row"><div class="n">Резервний фонд</div><div class="d">Ціль = N місяців твоїх середніх витрат, накопичується місячним внеском.</div></div>
+  <div class="row"><div class="n">Округлення</div><div class="d">Округлює кожну виконану витрату вгору до вибраної бази і резервує решту — автоматично, поки ти відмічаєш виконане.</div></div>
+  <div class="row"><div class="n">52 тижні</div><div class="d">Класичний челендж: тиждень 1 відкладає одну одиницю, тиждень 2 — дві, і так далі.</div></div>
+  <div class="row"><div class="n">Відклади підвищення</div><div class="d">Резервує лише те, що ти заробив <strong>понад</strong> базовий дохід, тож хороший місяць будує ціль, а не стиль життя.</div></div>
+</div>
+<p><strong>Відкласти</strong> відкладає гроші (можна ввести свою суму), <strong>Зняти</strong> вивільняє їх, коли ти справді використовуєш ціль, а <strong>Пропустити</strong> відхиляє пропозицію до наступного періоду. Резервування ніколи не створює транзакцію — гроші нікуди не «йдуть», просто падає твоє «безпечно витратити».</p>
+
+<h2 id="debts">Борги</h2>
+<p>Кожен борг — це залишок, річна ставка і мінімальний місячний платіж. З них застосунок будує план погашення.</p>
+<div class="ctrl">
+  <div class="row"><div class="n">Стратегія: Лавина</div><div class="d">Спершу найвища ставка — математично найдешевше.</div></div>
+  <div class="row"><div class="n">Стратегія: Сніжка</div><div class="d">Спершу найменший залишок — швидкі перемоги, кращий темп.</div></div>
+  <div class="row"><div class="n">Додатково / місяць</div><div class="d">Усе, що можеш покласти понад мінімуми. <strong>Використати надлишок</strong> підставляє цифру, яку твій прогноз справді витримає.</div></div>
+  <div class="row"><div class="n">Без боргів через · Загальні відсотки · Порядок погашення</div><div class="d">Результат плану: коли закінчиш, скільки це коштує і який борг атакувати першим.</div></div>
+  <div class="row"><div class="n">Показувати платежі в календарі</div><div class="d">Накладає заплановані місячні платежі на прогноз, тож найнижча точка відбиває, що погашення боргів справді робить із твоїм грошовим потоком. Це проєкції, а не справжні транзакції.</div></div>
+  <div class="row"><div class="n">Записати платіж</div><div class="d">Коли ти справді платиш: зменшує залишок боргу <strong>і</strong> записує справжню виконану витрату на сьогодні. План перераховується звідти.</div></div>
+</div>
+
+<h2 id="settings">Налаштування</h2>
+<h3>Параметри</h3>
+<ul>
+  <li><strong>Валюта</strong>, <strong>Мова</strong> (англійська / українська), <strong>Вигляд</strong> (системний, світлий, темний), <strong>Перший день тижня</strong>.</li>
+  <li><strong>Дохід показувати як</strong> — медіана або середнє, використовується скрізь, де застосунок міркує про твій типовий дохід.</li>
+  <li><strong>Ціль заощадження (% доходу)</strong> — типова частка за підказкою про заощадження; 0 вимикає її.</li>
+  <li><strong>Нагадування про звірку</strong> — як часто нагадувати звірити прогноз зі справжнім балансом.</li>
+</ul>
+<h3>Якір і категорії</h3>
+<p><strong>Якір</strong> — той самий редактор стартового балансу, який відкриває олівець на картці балансу. <strong>Категорії</strong> дає додати свої, перейменувати їх і сховати вбудовані, якими не користуєшся; видалення категорії переносить її транзакції в «Інше».</p>
+<h3>Сповіщення</h3>
+<p>Майбутні транзакції, нагадування про звірку і підказка про заощадження, кожне вмикається окремо. Можна задати завчасність (того ж ранку, за 1 день, за 3 дні), час доби, які транзакції рахувати (усі, лише витрати, лише несплачені) і мінімальну суму, щоб дрібниці мовчали. Нагадування плануються на твоєму пристрої і спрацьовують офлайн.</p>
+<h3>Дані й резервна копія</h3>
+<div class="ctrl">
+  <div class="row"><div class="n">Експорт у файл (.json)</div><div class="d">Записує читабельну копію всього на твій пристрій. Підписка не потрібна — це твої дані.</div></div>
+  <div class="row"><div class="n">Імпорт із файлу</div><div class="d">Відновлює резервну копію. Замінює поточні дані на цьому пристрої (а якщо увімкнена синхронізація — розходиться далі).</div></div>
+  <div class="row"><div class="n">Скинути й почати заново</div><div class="d">Видаляє всі твої дані і перезапускає налаштування. Якщо синхронізація увімкнена, стирання сягає і синхронізованого сховища — підтвердження так і каже і радить спершу експортувати.</div></div>
+</div>
+
+<h2 id="sync">Акаунт і синк</h2>
+<p>Застосунок повністю працює без акаунта. Акаунт існує лише для того, щоб кілька пристроїв ішли в ногу.</p>
+<div class="ctrl">
+  <div class="row"><div class="n">Увійти / створити акаунт</div><div class="d">Через email або через Apple чи Google.</div></div>
+  <div class="row"><div class="n">Пароль-фраза</div><div class="d">Дані шифруються на пристрої цією пароль-фразою ще до того, як покинуть його, тож сервер тримає лише нечитабельний блоб. Пароль-фраза на кожному пристрої має бути <strong>та сама</strong> . Вона ніколи не надсилається нам і <strong>не може бути відновлена</strong> — неправильна показує чітку помилку й ніколи нічого не перезаписує.</div></div>
+  <div class="row"><div class="n">Синхронізувати зараз</div><div class="d">Примусовий раунд. Інакше синхронізація йде сама після правок і коли застосунок відкривається знову.</div></div>
+  <div class="row"><div class="n">Рядок стану</div><div class="d"><strong>Синхронізовано</strong> · <strong>Офлайн</strong> (зміни збережені локально і підуть угору, коли ти повернешся в мережу) · <strong>Лише завантаження</strong> (підписка закінчилася: дані далі завантажуються, вивантаження відновиться, коли поновиш) · <strong>Синхронізація не вдалася</strong> з причиною.</div></div>
+  <div class="row"><div class="n">Відновити покупки</div><div class="d">Повторно застосовує підписку, куплену з тим самим Apple ID.</div></div>
+  <div class="row"><div class="n">Видалити акаунт</div><div class="d">Просить ввести email, а тоді назавжди видаляє акаунт і зашифроване сховище з серверів. Дані, що вже є на пристрої, лишаються.</div></div>
+</div>
+<p class="note">Редагування завжди працює офлайн. Синхронізація — зручний шар над застосунком, який насамперед офлайновий, і ніколи не вимога для користування.</p>
+
+<h2 id="firstrun">Перший запуск і початок заново</h2>
+<p>На свіжій інсталяції застосунок проводить тебе через побудову власного календаря: баланс сьогодні, останній дохід і чи він повторюється, один регулярний рахунок — і тоді показує твій місяць із твоїми числами. Зразкових даних немає ніде; все, що ти бачиш, — твоє. Можна піти коротким шляхом («Пропустити поки що»), відповісти на єдине питання про баланс і почати з порожнього календаря.</p>
+<p>Хочеш пройти це ще раз? <strong>Налаштування → Скинути й почати заново</strong> очищає дані і перезапускає процес. Спершу експортуй резервну копію, якщо є хоч якийсь шанс, що старі дані знадобляться.</p>
+
+<p class="note"><strong>Досі не виходить?</strong> У застосунку є коротке пояснення «Як це працює» у Фінансах, а на листи відповідає жива людина <a href="mailto:support@jayck.dev">support@jayck.dev</a> — див. <a href="/uk/support">сторінку підтримки</a> для частих питань.</p>
+</div>
+</main>
+
+<a class="totop" href="#main" aria-label="Нагору">↑</a>
+
+<footer>
+  <div class="wrap">
+    <p class="f-line">JayCK Flow — календар для твоїх грошей.</p>
+    <p class="f-links"><a href="/uk/help" aria-current="page">Довідка</a>·<a href="/uk/privacy">Приватність</a>·<a href="/uk/terms">Умови</a>·<a href="/uk/press">Преса</a>·<a href="/uk/support">Підтримка</a>·<a href="/uk/help" lang="en" hreflang="en">English</a>·<a href="mailto:support@jayck.dev">support@jayck.dev</a></p>
+    <p class="f-sub">В App Store · Зроблено Jaycikey LLC · © 2026</p>
+  </div>
+</footer>
+
+<script src="/js/site.js" defer></script>
+<script>
+/* The rail's only job that CSS cannot do: say which section you are in.
+   If this never runs, the rail is a plain list of links — which is exactly what
+   it was yesterday, so nothing is lost and nothing depends on it.
+
+   THIS USED TO BE AN IntersectionObserver WITH rootMargin "-88px 0px -70% 0px",
+   and it was wrong in a way only measurement showed: of six sections jumped to
+   directly, three highlighted and three stayed blank. A clever band that works
+   for half its inputs is worse than a dull rule that works for all of them, so:
+   walk the sections and take the LAST one whose heading has passed the line
+   under the fixed header. No band, no percentages, no callback ordering. */
+(function(){
+  "use strict";
+  var toc = document.getElementById("toc");
+  if (!toc) return;
+
+  var links = [], nodes = [];
+  [].slice.call(toc.querySelectorAll('a[href^="#"]')).forEach(function(a){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) { links.push(a); nodes.push(el); }
+  });
+  if (!nodes.length) return;
+
+  var LINE = 120;            // just below the 64px header
+  var last = null, t = 0;
+
+  function paint(){
+    var current = null;
+    for (var i = 0; i < nodes.length; i++){
+      if (nodes[i].getBoundingClientRect().top <= LINE) current = links[i];
+    }
+    /* At the very top of the page nothing has passed the line yet, and the
+       honest answer there is "no section", not "the first one". */
+    if (current === last) return;
+    if (last) last.removeAttribute("aria-current");
+    if (current) current.setAttribute("aria-current", "true");
+    last = current;
+  }
+  /* Throttled by the clock, not by a pending flag behind requestAnimationFrame.
+     A flag that is only ever cleared inside an rAF callback deadlocks the moment
+     rAF is starved — a background tab, a throttled renderer — and the rail then
+     silently stops following the page forever. Fourteen getBoundingClientRect
+     calls at most ten times a second is cheaper than that risk. */
+  function onScroll(){
+    var now = Date.now();
+    if (now - t < 100) return;
+    t = now;
+    paint();
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+  paint();
+})();
+</script>
+</body>
+</html>

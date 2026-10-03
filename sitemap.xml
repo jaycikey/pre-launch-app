@@ -30,4 +30,34 @@
     <lastmod>2026-10-03</lastmod>
     <priority>0.5</priority>
   </url>
+  <url>
+    <loc>https://flow.jayck.dev/uk</loc>
+    <lastmod>2026-10-03</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://flow.jayck.dev/uk/help</loc>
+    <lastmod>2026-10-03</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://flow.jayck.dev/uk/support</loc>
+    <lastmod>2026-10-03</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://flow.jayck.dev/uk/privacy</loc>
+    <lastmod>2026-10-03</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://flow.jayck.dev/uk/terms</loc>
+    <lastmod>2026-10-03</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://flow.jayck.dev/uk/press</loc>
+    <lastmod>2026-10-03</lastmod>
+    <priority>0.5</priority>
+  </url>
 </urlset>
