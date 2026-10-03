@@ -212,14 +212,18 @@
     font-size:clamp(72px,12vw,150px);font-weight:600;letter-spacing:-.05em;line-height:.92;
     color:var(--red-text)}
   .figure-sub{margin-top:var(--s-2);font-size:clamp(18px,1.8vw,24px);color:var(--muted);letter-spacing:-.02em}
-  .states{display:grid;gap:12px;margin-top:var(--s-5)}
+  /* One grid for the three rows — dot, label, text — so the label column is as wide as the longest label and the
+     three descriptions start on one line. In English the labels differ by two letters and the stagger passed; in
+     Ukrainian (Зелений · Жовтий · Червоний) his eye caught it (2026-10-03). `display:contents` hands each row's three
+     parts to the grid; a wrapped description stays in its column. */
+  .states{display:grid;grid-template-columns:auto auto 1fr;column-gap:9px;row-gap:12px;align-items:start;margin-top:var(--s-5)}
   /* The dot belongs to the FIRST line. `align-items:baseline` with the dot set to
      `align-self:center` centred it on the whole row — fine while every row was one
      line, and wrong the moment one wrapped. The red row has wrapped on a phone
      since it was written, and adding the amber row made two of the three do it.
      Start-aligned, with the dot nudged onto the first line's x-height. */
-  .state{display:flex;align-items:flex-start;gap:9px;font-size:16px;font-weight:500}
-  .state i{width:10px;height:10px;border-radius:50%;flex:0 0 auto;margin-top:.42em}
+  .state{display:contents;font-size:16px;font-weight:500}
+  .state i{width:10px;height:10px;border-radius:50%;margin-top:.42em}
   .state b{font-weight:600}
   .state span{color:var(--muted)}
 
@@ -521,7 +525,7 @@
       <div class="shot-frame">
         <picture>
           <source type="image/webp" srcset="/img/uk/app-month@1x.webp 1x, /img/uk/app-month.webp 2x">
-          <img src="/img/uk/app-month.png" width="1206" height="1558" fetchpriority="high" decoding="async"
+          <img src="/img/uk/app-month.png" width="1320" height="1305" fetchpriority="high" decoding="async"
                alt="Місяць у JayCK Flow: кожен день несе свій прогнозований баланс — зелені галочки на проведених днях, жовте 0/1 на одному простроченому рахунку, а 30-те й 31-ше червоні, де прогноз падає нижче нуля; найнижчий день позначено маленькою синьою стрілкою.">
         </picture>
       </div>
