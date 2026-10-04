@@ -3,6 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<script>
+  /* A reload does not jump after the page has drawn its top. Safari puts a reload's scroll position back only once
+     the page has finished loading, so the reader saw the top, the hero beginning to arrive, then a jump to wherever
+     they had been: «при оновлені інколи скрол може повзти до першої фото» (his recording, 2026-10-04). Safari reads
+     this choice at that late moment, so there a reload starts at the top. Chrome decides before the page runs and
+     restores before anything is drawn; it is left as it was. Back and Forward keep the browser's own memory:
+     leaving the page hands the choice back. */
+  (function(){
+    try {
+      var nav = performance.getEntriesByType("navigation")[0];
+      if (!nav || nav.type !== "reload" || !("scrollRestoration" in history)) return;
+      history.scrollRestoration = "manual";
+      addEventListener("pagehide", function(){ history.scrollRestoration = "auto"; });
+    } catch (e) {}
+  })();
+</script>
 <title>JayCK Flow — See tomorrow's balance today</title>
 <meta name="description" content="JayCK Flow is a money calendar for iPhone and iPad that shows your future balance before money decisions happen — in the app and in Home Screen widgets. Free on the App Store.">
 <link rel="canonical" href="https://flow.jayck.dev/">
@@ -293,7 +309,10 @@
   .photo-gap{margin-top:clamp(48px,6vw,88px)}
   .sub-gap{margin-top:clamp(80px,10vw,140px)}
   .feature .photo-fig{max-width:480px;margin:0 auto}
-  [data-reveal="photo"]{transform:scale(.96);transition:opacity 1.2s var(--ease),transform 1.6s var(--glide)}
+  /* A photograph arrives as a block does, rising and fading in, only further and on the page's glide, because it is
+     the largest thing on the screen. It used to only grow by 4 %, and stood still while every block rose (his note,
+     2026-10-04). When it is revealed is the script's PHOTO_LINE. */
+  [data-reveal="photo"]{transform:translateY(56px) scale(.98);transition:opacity 1s var(--ease),transform 1.4s var(--glide)}
   .principles.two{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:var(--s-5)}
 
   /* One grid for the three rows — dot, label, text — so the label column is as wide as the longest label and the
@@ -1114,6 +1133,12 @@
 
   /* ------------------------------------------------------------ <Reveal> -- */
   var revealables = [].slice.call(document.querySelectorAll("[data-reveal]"));
+  /* A photograph is revealed once its top rises above this line, the lower fifth of the screen kept clear. At the
+     blocks' 8 % a photograph on a phone is still under Safari's toolbar, and the safety net below showed anything
+     within a fifth of a screen under the fold, so the photographs had arrived before anyone saw them: «Фото постійно
+     стоять на сторінці, а не зʼявляються як інші блоки» (his note, 2026-10-04). */
+  var PHOTO_LINE = .8;
+  function isPhoto(el){ return el.getAttribute("data-reveal") === "photo"; }
   function revealAll(){ revealables.forEach(function(el){ show(el); }); }
   function show(el){
     if (el.classList.contains("in")) return;
@@ -1123,23 +1148,26 @@
   if (reduce || !hasIO) {
     revealAll();
   } else {
-    var revealIO = new IntersectionObserver(function(entries){
+    var onSeen = function(entries, io){
       entries.forEach(function(e){
         if (!e.isIntersecting) return;
         show(e.target);
-        revealIO.unobserve(e.target);
+        io.unobserve(e.target);
       });
-    }, { threshold: .08 });
-    revealables.forEach(function(el){ revealIO.observe(el); });
+    };
+    var revealIO = new IntersectionObserver(onSeen, { threshold: .08 });
+    var photoIO = new IntersectionObserver(onSeen, { rootMargin: "0px 0px -" + Math.round((1 - PHOTO_LINE) * 100) + "% 0px" });
+    revealables.forEach(function(el){ (isPhoto(el) ? photoIO : revealIO).observe(el); });
 
     /* Belt to the braces: anything that never fires an intersection (a pinned
-       stage, a short viewport) is shown on load rather than left invisible. */
+       stage, a short viewport) is shown on load rather than left invisible.
+       A photograph only once it is above its line: it always fires one. */
     window.addEventListener("load", function(){
       setTimeout(function(){
         revealables.forEach(function(el){
           if (el.classList.contains("in")) return;
           var r = el.getBoundingClientRect();
-          if (r.top < innerHeight * 1.2 && r.bottom > -200) show(el);
+          if (r.top < innerHeight * (isPhoto(el) ? PHOTO_LINE : 1.2) && r.bottom > -200) show(el);
         });
       }, 500);
     });
