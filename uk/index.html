@@ -196,13 +196,65 @@
                0 56px 110px -40px rgba(0,0,0,.16)}
   .shot img{display:block;width:100%;height:auto}
   .shot figcaption{margin-top:14px;text-align:center;font-size:13px;color:var(--muted)}
-  /* Real screens (2026-10-03, M6's last gap): the Home Screen pair, and the strip of eight store frames. */
+  /* Real screens (2026-10-03, M6's last gap): the Home Screen pair. The strip of eight store frames became the
+     experience below (M22, the same evening). */
   .two-up{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-3);align-items:start}
   .two-up .shot{max-width:none;margin:0}
-  .screens{display:flex;gap:var(--s-3);overflow-x:auto;scroll-snap-type:x mandatory;margin-top:var(--s-5);
-    padding:4px var(--s-2) var(--s-3);-webkit-overflow-scrolling:touch;scrollbar-width:thin}
-  .screens .shot{flex:0 0 min(272px,74vw);max-width:none;margin:0;scroll-snap-align:start}
-  .screens .shot figcaption{min-height:2.6em}
+  /* ---------- product experience (M22 — PRODUCT-EXPERIENCE.md; his brief LANDING-STANDARD.md §5) ----------
+     One stage, one device, five screens stacked in one grid cell so the stage never changes height; the active
+     screen is the visible one. The field takes the screen's own state colour (data-tone). The timer is a CSS
+     animation on the active tab's segment: pausing is a class on the block, and reduced motion — which has no
+     animation — never advances on its own. */
+  .xp{padding-block:clamp(40px,6vw,96px) clamp(64px,9vw,140px)}
+  .xp-stage{position:relative;display:grid;border-radius:var(--r-xl);background:var(--green-soft);touch-action:pan-y;
+    padding:clamp(24px,4vw,56px) clamp(20px,4vw,56px);transition:background-color .4s var(--ease),color .4s var(--ease)}
+  .xp-stage[data-tone="red"]{background:var(--red-soft)}
+  .xp-stage[data-tone="neutral"]{background:var(--subtle)}
+  .xp-stage[data-tone="blue"]{background:var(--blue-soft)}
+  /* the fifth screen is dark in both colour schemes, and a different dark from the dark scheme's page */
+  .xp-stage[data-tone="dark"]{background:#1C1C1E;color:#fff}
+  .xp-stage[data-tone="dark"] .lede,.xp-stage[data-tone="dark"] .eyebrow,.xp-stage[data-tone="dark"] .fine{color:#98989F}
+  .xp-stage[data-tone="dark"] .btn{background:#fff;color:#000}
+  .xp-screen{grid-area:1/1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center}
+  .xp-title{font-size:clamp(30px,3.6vw,52px);line-height:1.04;letter-spacing:-.035em;margin-top:var(--s-2)}
+  .xp-text{margin-top:var(--s-3);max-width:34ch}
+  .xp-cta{margin-top:var(--s-4);display:flex;align-items:center;gap:var(--s-3);flex-wrap:wrap}
+  .xp-device{position:relative;margin:0;justify-self:center;width:min(380px,100%)}
+  .xp-phone{background:#1A1B1E;border-radius:clamp(30px,11.5%,46px);padding:clamp(7px,2.2%,10px);
+    box-shadow:0 44px 110px -30px rgba(24,60,110,.28),0 10px 34px -12px rgba(24,60,110,.18),inset 0 0 0 2px #3A3C40}
+  .xp-phone img{display:block;width:100%;height:auto;border-radius:clamp(24px,10%,40px)}
+  .xp-chip{position:absolute;left:-6%;bottom:18%;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;
+    border-radius:var(--r-pill);background:var(--card);border:1px solid var(--hair);box-shadow:0 10px 30px -10px rgba(0,0,0,.25);
+    font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--ink);white-space:nowrap}
+  .xp-chip b{color:var(--red-text)}
+  .xp.js .xp-screen{visibility:hidden;opacity:0;transition:opacity .4s var(--ease),visibility 0s .4s}
+  .xp.js .xp-screen.is-active{visibility:visible;opacity:1;transition:opacity .4s var(--ease),visibility 0s}
+  .xp.js .xp-copy{transform:translateY(16px);transition:transform .3s var(--ease)}
+  .xp.js .xp-screen.is-active .xp-copy{transform:none}
+  .xp.js .xp-chip{opacity:0;transform:translateX(24px);transition:opacity .3s var(--ease) .4s,transform .3s var(--ease) .4s}
+  .xp.js .xp-screen.is-active .xp-chip{opacity:1;transform:none}
+  .xp.js .xp-screen[data-tone="dark"] .xp-device{opacity:.5;transform:scale(.96);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+  .xp-nav{display:none;align-items:center;gap:var(--s-2);margin-top:var(--s-3)}
+  .xp.js .xp-nav{display:flex}
+  .xp-tabs{flex:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+  .xp-tabs [role="tab"]{appearance:none;background:none;border:0;padding:10px 4px 6px;cursor:pointer;font:inherit;color:var(--muted);
+    font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-align:left;border-radius:8px;min-width:0}
+  .xp-tabs [role="tab"] span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .xp-tabs [role="tab"][aria-selected="true"]{color:var(--ink)}
+  .xp-seg{display:block;height:3px;border-radius:2px;background:var(--hair);overflow:hidden;margin-bottom:8px}
+  .xp-seg b{display:block;height:100%;width:0;background:var(--ink)}
+  .xp.js [role="tab"].is-past .xp-seg b{width:100%}
+  .xp.js [role="tab"][aria-selected="true"] .xp-seg b{animation:xp-fill var(--ms,8000ms) linear forwards}
+  .xp.js.is-paused [role="tab"][aria-selected="true"] .xp-seg b{animation-play-state:paused}
+  .xp.js.is-done [role="tab"] .xp-seg b{width:100%;animation:none}
+  @keyframes xp-fill{from{width:0}to{width:100%}}
+  .xp-arrow,.xp-play{flex:0 0 auto;width:44px;height:44px;border-radius:50%;border:1px solid var(--hair);background:var(--card);color:var(--ink);
+    display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font:inherit;padding:0}
+  .xp-arrow:disabled{opacity:.35;cursor:default}
+  .xp-play .i-play,.xp-play[aria-pressed="true"] .i-pause,.xp.is-done .xp-play .i-pause{display:none}
+  .xp-play[aria-pressed="true"] .i-play,.xp.is-done .xp-play .i-play{display:block}
+  .xp [role="tab"]:focus-visible,.xp-arrow:focus-visible,.xp-play:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  .xp-now{display:none;margin-top:var(--s-2);text-align:center}
   @media (max-width:560px){.two-up{gap:var(--s-2)}}
 
   /* ---------- lowest balance figure (spec §11) ---------- */
@@ -360,6 +412,16 @@
     .principles{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
   @media(max-width:860px){
+    .xp-screen{grid-template-columns:1fr;gap:var(--s-3)}
+    .xp-device{order:-1;width:min(62vw,320px);max-height:min(62vh,520px);overflow:hidden;
+      -webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent)}
+    .xp-stage{padding:clamp(20px,4vw,32px) clamp(16px,4vw,32px)}
+    .xp-title{font-size:clamp(26px,6.4vw,34px)}
+    .xp-text{max-width:none}
+    .xp-chip{left:auto;right:-2%;bottom:30%;font-size:13px;padding:8px 12px}
+    .xp-tabs [role="tab"] span{display:none}
+    .xp-tabs [role="tab"]{padding:12px 2px 8px}
+    .xp.js .xp-now{display:block}
     :root{--s-5:48px;--s-6:72px;--s-7:96px;--s-8:120px}
     .wrap{padding-left:max(var(--s-3), env(safe-area-inset-left));
           padding-right:max(var(--s-3), env(safe-area-inset-right))}
@@ -413,6 +475,9 @@
     .btn:hover,.nav-cta:hover{transform:none}
     .switch .track,.switch .track::after,.buy-chip,.merge-tag,
     .wif-bar,.wif-fill,.wif-val,.mini i{transition:none}
+    .xp.js [role="tab"][aria-selected="true"] .xp-seg b{animation:none;width:100%}
+    .xp-stage,.xp.js .xp-screen,.xp.js .xp-copy,.xp.js .xp-chip,.xp.js .xp-screen[data-tone="dark"] .xp-device{transition:none}
+    .xp.js .xp-copy{transform:none}
   }
 </style>
 <script type="application/ld+json">
@@ -536,6 +601,111 @@
   <p class="hero-def wrap center" data-reveal>
     <b>JayCK Flow — грошовий календар.</b> Постав дохід, рахунки й плани на часову лінію — і знай свій майбутній баланс до того, як вирішиш.
   </p>
+</section>
+
+<!-- ============================ 02b · EXPERIENCE (M22) ============================ -->
+<!-- One month, one story: five screens on one device (PRODUCT-EXPERIENCE.md; his brief LANDING-STANDARD.md §5).
+     The markup is the data — a screen is an <article> with its words, its frame, its tone and its time (data-ms); the
+     tab list mirrors it one to one. Without JavaScript the five screens read stacked and the controls stay hidden
+     (LANDING-STANDARD.md §1); with it, one screen shows at a time and the timer is the segment's CSS animation. -->
+<section class="xp" id="xp" aria-roledescription="carousel" aria-label="Як працює JayCK Flow, у п'яти екранах" data-xp
+         data-l-pause="Пауза" data-l-play="Продовжити" data-l-again="Переглянути знову" data-l-status="Екран {n} з {total} — {label}">
+  <div class="wrap">
+    <h2 class="visually-hidden">Як працює JayCK Flow, у п'яти екранах</h2>
+    <div class="xp-stage" data-tone="green">
+      <article class="xp-screen is-active" id="xp-s1" role="tabpanel" aria-labelledby="xp-t1" data-ms="8000" data-tone="green">
+        <div class="xp-copy">
+          <p class="eyebrow xp-label">Місяць</p>
+          <h3 class="display xp-title">Кожен день уже має баланс.</h3>
+          <p class="lede xp-text">Зарплати, рахунки й плани на своїх датах — і день, коли стає тісно, червоним, за тижні наперед.</p>
+        </div>
+        <figure class="xp-device">
+          <div class="xp-phone">
+            <picture>
+              <source type="image/webp" srcset="/img/uk/screens/calendar@1x.webp 380w, /img/uk/screens/calendar.webp 760w" sizes="(min-width:861px) 380px, 62vw">
+              <img src="/img/uk/screens/calendar.png" width="760" height="1651" decoding="async" alt="Вигляд місяця: кожен день несе прогнозований баланс, проведені дні відмічені зеленим, тісний відрізок посеред місяця червоний, вище картка балансу з «Зарезервовано», «Найнижча точка» і «Прострочено».">
+            </picture>
+          </div>
+        </figure>
+      </article>
+      <article class="xp-screen" id="xp-s2" role="tabpanel" aria-labelledby="xp-t2" data-ms="8000" data-tone="red">
+        <div class="xp-copy">
+          <p class="eyebrow xp-label">Що, якщо?</p>
+          <h3 class="display xp-title">Перевір покупку, перш ніж гроші підуть.</h3>
+          <p class="lede xp-text">Додай її. Кожен день після перефарбовується. Залиш або відпусти — нічого не зберігається, поки ти не скажеш.</p>
+        </div>
+        <figure class="xp-device">
+          <div class="xp-phone">
+            <picture>
+              <source type="image/webp" srcset="/img/uk/screens/whatif@1x.webp 380w, /img/uk/screens/whatif.webp 760w" sizes="(min-width:861px) 380px, 62vw">
+              <img src="/img/uk/screens/whatif.png" width="760" height="1651" loading="lazy" decoding="async" alt="«Що, якщо?» над календарем: додано диван за ₴18,500, кожен день після нього перефарбовано, внизу позначка «Режим пісочниці».">
+            </picture>
+          </div>
+          <span class="xp-chip" aria-hidden="true"><b>−₴18,500</b> Диван</span>
+        </figure>
+      </article>
+      <article class="xp-screen" id="xp-s3" role="tabpanel" aria-labelledby="xp-t3" data-ms="8000" data-tone="neutral">
+        <div class="xp-copy">
+          <p class="eyebrow xp-label">Горизонт</p>
+          <h3 class="display xp-title">У кожного місяця є найнижчий день. Тепер ти знаєш який.</h3>
+          <p class="lede xp-text">Шість місяців наперед, найнижча точка кожного місяця названа — поки це ще рішення, а не несподіванка.</p>
+        </div>
+        <figure class="xp-device">
+          <div class="xp-phone">
+            <picture>
+              <source type="image/webp" srcset="/img/uk/screens/outlook@1x.webp 380w, /img/uk/screens/outlook.webp 760w" sizes="(min-width:861px) 380px, 62vw">
+              <img src="/img/uk/screens/outlook.png" width="760" height="1651" loading="lazy" decoding="async" alt="Прогноз: шість місяців наперед, найнижчі точки позначені, смуги ризику згорнуті.">
+            </picture>
+          </div>
+        </figure>
+      </article>
+      <article class="xp-screen" id="xp-s4" role="tabpanel" aria-labelledby="xp-t4" data-ms="8000" data-tone="blue">
+        <div class="xp-copy">
+          <p class="eyebrow xp-label">Головний екран</p>
+          <h3 class="display xp-title">Календар зустрічає тебе на головному екрані.</h3>
+          <p class="lede xp-text">План на сьогодні, твій баланс і тижні довкола — без відкривання застосунку.</p>
+        </div>
+        <figure class="xp-device">
+          <div class="xp-phone">
+            <picture>
+              <source type="image/webp" srcset="/img/uk/screens/widgets2@1x.webp 380w, /img/uk/screens/widgets2.webp 760w" sizes="(min-width:861px) 380px, 62vw">
+              <img src="/img/uk/screens/widgets2.png" width="760" height="1651" loading="lazy" decoding="async" alt="Друга сторінка головного екрана серед справжніх іконок: віджет «Баланс» із прогнозованим балансом, відкладеним, найнижчою точкою і простроченим, і віджет «День» із планом на день.">
+            </picture>
+          </div>
+        </figure>
+      </article>
+      <article class="xp-screen" id="xp-s5" role="tabpanel" aria-labelledby="xp-t5" data-ms="10000" data-tone="dark">
+        <div class="xp-copy">
+          <p class="eyebrow xp-label">Твоє</p>
+          <h3 class="display xp-title">Без входу в банк. Працює офлайн. Твоє.</h3>
+          <p class="lede xp-text">Локально за замовчуванням. Синхронізація, коли ти її ввімкнеш, зашифрована наскрізно парольною фразою, якої ми не можемо прочитати.</p>
+          <p class="xp-cta"><a class="btn" href="https://apps.apple.com/app/jayck-flow/id6789696499">Завантажити в App&nbsp;Store</a><span class="fine">Безплатно</span></p>
+        </div>
+        <figure class="xp-device">
+          <div class="xp-phone">
+            <picture>
+              <source type="image/webp" srcset="/img/uk/screens/backup@1x.webp 380w, /img/uk/screens/backup.webp 760w" sizes="(min-width:861px) 380px, 62vw">
+              <img src="/img/uk/screens/backup.png" width="760" height="1651" loading="lazy" decoding="async" alt="Дані й резервна копія: усе локально, експорт та імпорт, без входу в банк.">
+            </picture>
+          </div>
+        </figure>
+      </article>
+    </div>
+    <div class="xp-nav" hidden>
+      <button type="button" class="xp-arrow" data-xp-prev aria-label="Попередній екран"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="xp-tabs" role="tablist" aria-label="Як працює JayCK Flow, у п'яти екранах">
+        <button type="button" role="tab" id="xp-t1" aria-controls="xp-s1" aria-selected="true" tabindex="0"><i class="xp-seg"><b></b></i><span>Місяць</span></button>
+        <button type="button" role="tab" id="xp-t2" aria-controls="xp-s2" aria-selected="false" tabindex="-1"><i class="xp-seg"><b></b></i><span>Що, якщо?</span></button>
+        <button type="button" role="tab" id="xp-t3" aria-controls="xp-s3" aria-selected="false" tabindex="-1"><i class="xp-seg"><b></b></i><span>Горизонт</span></button>
+        <button type="button" role="tab" id="xp-t4" aria-controls="xp-s4" aria-selected="false" tabindex="-1"><i class="xp-seg"><b></b></i><span>Головний екран</span></button>
+        <button type="button" role="tab" id="xp-t5" aria-controls="xp-s5" aria-selected="false" tabindex="-1"><i class="xp-seg"><b></b></i><span>Твоє</span></button>
+      </div>
+      <button type="button" class="xp-play" data-xp-play aria-pressed="false" aria-label="Пауза"><svg class="i-pause" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><svg class="i-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg></button>
+      <button type="button" class="xp-arrow" data-xp-next aria-label="Наступний екран"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+    <p class="xp-now eyebrow" aria-hidden="true"></p>
+    <p class="xp-status visually-hidden" aria-live="polite"></p>
+  </div>
 </section>
 
 <!-- ============================ 03 · FUTURE FIRST ============================ -->
@@ -833,95 +1003,6 @@
       <b data-reveal data-delay="1">Пристрій</b><s data-reveal data-delay="2"></s>
       <b data-reveal data-delay="2">Зашифровано</b><s data-reveal data-delay="3"></s>
       <b data-reveal data-delay="3">Синк</b>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ 13 · SCREENS ============================ -->
-<section aria-labelledby="scr-h">
-  <div class="wrap">
-    <div class="col center">
-      <p class="eyebrow" data-reveal>Застосунок, екран за екраном</p>
-      <h2 class="display t-section" id="scr-h" data-reveal data-delay="1" style="margin-top:var(--s-3)">
-        Кожен екран робить<br>одну річ.
-      </h2>
-      <p class="lede" data-reveal data-delay="2" style="margin:var(--s-4) auto 0;max-width:600px">
-        Ті самі демо-цифри, що й на скріншотах у магазині. Гортай.
-      </p>
-    </div>
-    <div class="screens" data-reveal data-delay="2" aria-label="Екрани застосунку">
-      <figure class="shot">
-          <div class="shot-frame">
-            <picture>
-              <source type="image/webp" srcset="/img/uk/screens/calendar@1x.webp 1x, /img/uk/screens/calendar.webp 2x">
-              <img src="/img/uk/screens/calendar.png" width="760" height="1651" loading="lazy" decoding="async" alt="Вигляд місяця: кожен день несе прогнозований баланс, проведені дні відмічені зеленим, тісний відрізок посеред місяця червоний, вище картка балансу з «Зарезервовано», «Найнижча точка» і «Прострочено».">
-            </picture>
-          </div>
-          <figcaption>Не проблема грошей. Проблема часу.</figcaption>
-        </figure>
-      <figure class="shot">
-          <div class="shot-frame">
-            <picture>
-              <source type="image/webp" srcset="/img/uk/screens/whatif@1x.webp 1x, /img/uk/screens/whatif.webp 2x">
-              <img src="/img/uk/screens/whatif.png" width="760" height="1651" loading="lazy" decoding="async" alt="«Що, якщо?» над календарем: додано диван за ₴18,500, кожен день після нього перефарбовано, внизу позначка «Режим пісочниці».">
-            </picture>
-          </div>
-          <figcaption>Перевір покупку, перш ніж гроші підуть.</figcaption>
-        </figure>
-      <figure class="shot">
-          <div class="shot-frame">
-            <picture>
-              <source type="image/webp" srcset="/img/uk/screens/outlook@1x.webp 1x, /img/uk/screens/outlook.webp 2x">
-              <img src="/img/uk/screens/outlook.png" width="760" height="1651" loading="lazy" decoding="async" alt="Прогноз: шість місяців наперед, найнижчі точки позначені, смуги ризику згорнуті.">
-            </picture>
-          </div>
-          <figcaption>Побач тісний день за тижні до нього.</figcaption>
-        </figure>
-      <figure class="shot">
-          <div class="shot-frame">
-            <picture>
-              <source type="image/webp" srcset="/img/uk/screens/gestures@1x.webp 1x, /img/uk/screens/gestures.webp 2x">
-              <img src="/img/uk/screens/gestures.png" width="760" height="1651" loading="lazy" decoding="async" alt="Рядок транзакції, відкритий свайпом до «Сховати» і «Видалити», над ним смужка «Видалено · Повернути».">
-            </picture>
-          </div>
-          <figcaption>Кожен рядок слухається свайпу.</figcaption>
-        </figure>
-      <figure class="shot">
-          <div class="shot-frame">
-            <picture>
-              <source type="image/webp" srcset="/img/uk/screens/analytics@1x.webp 1x, /img/uk/screens/analytics.webp 2x">
-              <img src="/img/uk/screens/analytics.png" width="760" height="1651" loading="lazy" decoding="async" alt="Аналітика: крива балансу день за днем, чесне порівняння 1–3 жовтня з 1–3 вересня, місяць позначений як «поки що».">
-            </picture>
-          </div>
-          <figcaption>Куди пішли гроші — місяць за місяцем.</figcaption>
-        </figure>
-      <figure class="shot">
-          <div class="shot-frame">
-            <picture>
-              <source type="image/webp" srcset="/img/uk/screens/savings@1x.webp 1x, /img/uk/screens/savings.webp 2x">
-              <img src="/img/uk/screens/savings.png" width="760" height="1651" loading="lazy" decoding="async" alt="Заощадження: відкладено ₴39,600, цілі з індикаторами поступу і темпом, близько ₴4,500 на місяць.">
-            </picture>
-          </div>
-          <figcaption>Цілі заощаджень — у твоєму темпі.</figcaption>
-        </figure>
-      <figure class="shot">
-          <div class="shot-frame">
-            <picture>
-              <source type="image/webp" srcset="/img/uk/screens/debts@1x.webp 1x, /img/uk/screens/debts.webp 2x">
-              <img src="/img/uk/screens/debts.png" width="760" height="1651" loading="lazy" decoding="async" alt="Борги: разом винно ₴320,500, без боргів через 31 місяць, показано сумарні відсотки.">
-            </picture>
-          </div>
-          <figcaption>Без боргів — з датою.</figcaption>
-        </figure>
-      <figure class="shot">
-          <div class="shot-frame">
-            <picture>
-              <source type="image/webp" srcset="/img/uk/screens/backup@1x.webp 1x, /img/uk/screens/backup.webp 2x">
-              <img src="/img/uk/screens/backup.png" width="760" height="1651" loading="lazy" decoding="async" alt="Дані й резервна копія: усе локально, експорт та імпорт, без входу в банк.">
-            </picture>
-          </div>
-          <figcaption>Без входу в банк. Працює офлайн.</figcaption>
-        </figure>
     </div>
   </div>
 </section>
@@ -1250,6 +1331,91 @@
       });
     }, { threshold: .4 });
     mio.observe(merge);
+  }
+
+  /* ------------------------------------------------ product experience (M22) --
+     The markup is the data: each screen carries its time (data-ms) and tone; the tab list mirrors it. The timer is
+     the CSS animation on the active segment — animationend advances — so pausing is one class, and reduced motion,
+     which has no animation, never advances on its own. Focus pauses only when it is visible (keyboard), so a mouse
+     click on a tab does not stop the story. */
+  var xp = document.querySelector("[data-xp]");
+  if (xp){
+    var xpScreens = [].slice.call(xp.querySelectorAll(".xp-screen"));
+    var xpTabs = [].slice.call(xp.querySelectorAll("[role='tab']"));
+    var xpStage = xp.querySelector(".xp-stage"), xpPrev = xp.querySelector("[data-xp-prev]"), xpNext = xp.querySelector("[data-xp-next]");
+    var xpPlay = xp.querySelector("[data-xp-play]"), xpStatus = xp.querySelector(".xp-status"), xpNow = xp.querySelector(".xp-now");
+    var xpNav = xp.querySelector(".xp-nav");
+    var xpI = 0, xpUser = false, xpDone = false, xpHover = false, xpFocus = false, xpSeen = !hasIO;
+    xp.classList.add("js"); if (xpNav) xpNav.hidden = false;
+    function xpApply(){
+      xp.classList.toggle("is-paused", xpUser || xpHover || xpFocus || !xpSeen || document.hidden);
+      xpPlay.setAttribute("aria-pressed", String(xpUser));
+      xpPlay.setAttribute("aria-label", xp.getAttribute(xpDone ? "data-l-again" : xpUser ? "data-l-play" : "data-l-pause") || "");
+    }
+    function xpShow(n, announce){
+      n = Math.max(0, Math.min(xpScreens.length - 1, n));
+      xpI = n; xpDone = false; xp.classList.remove("is-done");
+      xpScreens.forEach(function(s, k){ s.classList.toggle("is-active", k === n); });
+      xpTabs.forEach(function(tab, k){
+        tab.setAttribute("aria-selected", String(k === n)); tab.tabIndex = k === n ? 0 : -1;
+        tab.classList.toggle("is-past", k < n);
+        var b = tab.querySelector(".xp-seg b");
+        if (b){ b.style.animation = "none"; void b.offsetWidth; b.style.animation = ""; }
+      });
+      xpStage.setAttribute("data-tone", xpScreens[n].getAttribute("data-tone") || "neutral");
+      xpTabs[n].style.setProperty("--ms", (parseInt(xpScreens[n].getAttribute("data-ms"), 10) || 8000) + "ms");
+      xpPrev.disabled = n === 0; xpNext.disabled = n === xpScreens.length - 1;
+      var label = xpTabs[n].textContent.trim();
+      if (xpNow) xpNow.textContent = (n + 1) + " / " + xpScreens.length + " · " + label;
+      if (announce && xpStatus) xpStatus.textContent = (xp.getAttribute("data-l-status") || "")
+        .replace("{n}", String(n + 1)).replace("{total}", String(xpScreens.length)).replace("{label}", label);
+      xpApply();
+    }
+    xpTabs.forEach(function(tab, k){
+      tab.addEventListener("click", function(){ xpShow(k, true); });
+      tab.addEventListener("keydown", function(e){
+        var to = e.key === "ArrowRight" ? k + 1 : e.key === "ArrowLeft" ? k - 1 : e.key === "Home" ? 0 : e.key === "End" ? xpTabs.length - 1 : -1;
+        if (to < 0 || to >= xpTabs.length) return;
+        e.preventDefault(); xpShow(to, true); xpTabs[to].focus();
+      });
+      var seg = tab.querySelector(".xp-seg b");
+      if (seg) seg.addEventListener("animationend", function(){
+        if (k !== xpI) return;
+        if (xpI < xpScreens.length - 1) xpShow(xpI + 1, false);
+        else { xpDone = true; xp.classList.add("is-done"); xpApply(); }
+      });
+    });
+    xpPrev.addEventListener("click", function(){ xpShow(xpI - 1, true); });
+    xpNext.addEventListener("click", function(){ xpShow(xpI + 1, true); });
+    xpPlay.addEventListener("click", function(){
+      if (xpDone){ xpUser = false; xpShow(0, true); return; }
+      xpUser = !xpUser; xpApply();
+    });
+    xpStage.addEventListener("mouseenter", function(){ xpHover = true; xpApply(); });
+    xpStage.addEventListener("mouseleave", function(){ xpHover = false; xpApply(); });
+    function xpFocusCheck(){
+      var f = false;
+      try { f = !!xp.querySelector(":focus-visible"); } catch (err) { f = xp.contains(document.activeElement); }
+      if (f !== xpFocus){ xpFocus = f; xpApply(); }
+    }
+    xp.addEventListener("focusin", xpFocusCheck);
+    xp.addEventListener("focusout", function(){ setTimeout(xpFocusCheck, 0); });
+    var xpSX = null, xpSY = null;
+    xpStage.addEventListener("pointerdown", function(e){ if (e.pointerType === "mouse") return; xpSX = e.clientX; xpSY = e.clientY; }, { passive:true });
+    xpStage.addEventListener("pointerup", function(e){
+      if (xpSX === null) return;
+      var dx = e.clientX - xpSX, dy = e.clientY - xpSY; xpSX = xpSY = null;
+      if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+      xpShow(xpI + (dx < 0 ? 1 : -1), true);
+    }, { passive:true });
+    xpStage.addEventListener("pointercancel", function(){ xpSX = xpSY = null; }, { passive:true });
+    document.addEventListener("visibilitychange", xpApply);
+    if (hasIO){
+      new IntersectionObserver(function(entries){
+        entries.forEach(function(en){ xpSeen = en.isIntersecting; }); xpApply();
+      }, { threshold:.35 }).observe(xp);
+    }
+    xpShow(0, false);
   }
 
   addEventListener("scroll", onScroll, { passive:true });
