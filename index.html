@@ -37,7 +37,8 @@
 <meta name="theme-color" content="#140917" media="(prefers-color-scheme: dark)">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
 <meta name="apple-itunes-app" content="app-id=6789696499">
-<link rel="preload" as="image" type="image/webp" imagesrcset="/img/app-month@1x.webp 1x, /img/app-month.webp 2x">
+<link rel="preload" as="image" type="image/webp" media="(max-width:640px)" imagesrcset="/img/photos/hero-tall-640.webp 640w, /img/photos/hero-tall-1000.webp 1000w" imagesizes="92vw">
+<link rel="preload" as="image" type="image/webp" media="(min-width:641px)" imagesrcset="/img/photos/hero-wide-800.webp 800w, /img/photos/hero-wide-1280.webp 1280w, /img/photos/hero-wide-1920.webp 1920w" imagesizes="(min-width:1320px) 1240px, 94vw">
 <style>
   /* ============================================================================
      JayCK Flow — premium editorial landing page.
@@ -81,7 +82,9 @@
   .wrap{max-width:var(--page);margin:0 auto;padding:0 var(--s-4)}
   .col{max-width:960px;margin:0 auto}
   .col-narrow{max-width:760px;margin:0 auto}
-  section{padding-block:clamp(96px,13vw,200px);scroll-margin-top:80px}
+  /* 200 → 160 on the desktop, 96 → 80 on a phone (2026-10-04): the shortening merged thirteen blocks into nine and his
+     four photographs added back what the merges took away; the space between blocks gives the scroll back. */
+  section{padding-block:clamp(80px,10vw,160px);scroll-margin-top:80px}
   section.statement{padding-block:clamp(120px,18vw,260px)}
   .center{text-align:center}
 
@@ -193,17 +196,6 @@
     text-align:right;min-width:96px;color:var(--muted)}
   .strip-cap{margin-top:var(--s-2);text-align:right;font-size:13px;color:var(--muted)}
 
-  /* ---------- real product shot (demo data only) ---------- */
-  .shot{max-width:380px;margin:0 auto}
-  .shot-hero{max-width:400px}
-  .shot-frame{border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--hair);
-    background:#F7F7FA;
-    box-shadow:0 2px 4px rgba(0,0,0,.03),0 18px 40px -14px rgba(0,0,0,.10),
-               0 56px 110px -40px rgba(0,0,0,.16)}
-  .shot img{display:block;width:100%;height:auto}
-  .shot figcaption{margin-top:14px;text-align:center;font-size:13px;color:var(--muted)}
-  /* Real screens (2026-10-03): the hero crop and the experience's frames; the Home Screen pair and the strip of eight
-     store frames both became the experience the same evening (M22). */
   /* ---------- product experience (M22 — PRODUCT-EXPERIENCE.md; his brief LANDING-STANDARD.md §5) ----------
      One stage, one device, five screens stacked in one grid cell so the stage never changes height; the active
      screen is the visible one. The field takes the screen's own state colour (data-tone). The timer is a CSS
@@ -288,13 +280,22 @@
   .xp [role="tab"]:focus-visible,.xp-arrow:focus-visible,.xp-play:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
   .xp-now{display:none;margin-top:var(--s-2);text-align:center}
   
-  /* ---------- lowest balance figure (spec §11) ---------- */
-  .figure{background:var(--subtle);border-radius:var(--r-xl);
-    padding:clamp(32px,4.5vw,64px);display:flex;flex-direction:column;justify-content:center}
-  .figure-big{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;
-    font-size:clamp(72px,12vw,150px);font-weight:600;letter-spacing:-.05em;line-height:.92;
-    color:var(--red-text)}
-  .figure-sub{margin-top:var(--s-2);font-size:clamp(18px,1.8vw,24px);color:var(--muted);letter-spacing:-.02em}
+  /* ---------- photographs (M21 — his four of 2026-10-04; LANDING-STANDARD.md §2, §4) ----------
+     Large and quiet, between the product blocks: photography carries the feeling, the product UI the information. Two
+     phones show a real screen of the app, laid in at the photograph's own perspective. Each image rounds itself as well
+     as its box, because Safari does not clip a composited child by a parent's rounded overflow during a transform. */
+  .photo-fig{margin:0}
+  .photo{border-radius:var(--r-xl);overflow:hidden;background:var(--subtle)}
+  .photo img{display:block;width:100%;height:auto;border-radius:var(--r-xl)}
+  .photo-hero{max-width:1240px;margin:0 auto}
+  .photo-band{max-width:860px;margin:0 auto}
+  .photo-cap{margin-top:14px;text-align:center;font-size:13px;color:var(--muted)}
+  .photo-gap{margin-top:clamp(48px,6vw,88px)}
+  .sub-gap{margin-top:clamp(80px,10vw,140px)}
+  .feature .photo-fig{max-width:480px;margin:0 auto}
+  [data-reveal="photo"]{transform:scale(.96);transition:opacity 1.2s var(--ease),transform 1.6s var(--glide)}
+  .principles.two{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:var(--s-5)}
+
   /* One grid for the three rows — dot, label, text — so the label column is as wide as the longest label and the
      three descriptions start on one line. In English the labels differ by two letters and the stagger passed; in
      Ukrainian (Зелений · Жовтий · Червоний) his eye caught it (2026-10-03). `display:contents` hands each row's three
@@ -309,22 +310,6 @@
   .state i{width:10px;height:10px;border-radius:50%;margin-top:.42em}
   .state b{font-weight:600}
   .state span{color:var(--muted)}
-
-  /* mini month used inside the lowest-balance figure */
-  /* The tiles are squares sized by the COLUMN, never by the row. The figure stretches to the copy's height in the
-     two-column layout, and a stretched row lets Safari derive a 1:1 tile's width from that height — on an iPad mini
-     in landscape (1133 px) the grid grew past its panel and over the headline (his screenshot, 2026-10-04). Rows
-     and items start-aligned, the ratio can only resolve from the track. */
-  .mini{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;align-content:start}
-  .mini i{aspect-ratio:1;width:100%;align-self:start;border-radius:9px;background:#ECECEF;display:grid;place-items:center;
-    transition:background .5s var(--ease)}
-  .mini i::after{content:"";width:14%;height:14%;min-width:5px;min-height:5px;border-radius:50%}
-  .mini i.g{background:var(--green-soft)} .mini i.g::after{background:var(--green)}
-  .mini i.r{background:var(--red-soft)}   .mini i.r::after{background:var(--red)}
-  .mini i.lowday{position:relative}
-  .mini i.lowday::before{content:"▾";position:absolute;top:8%;left:0;right:0;
-    text-align:center;color:var(--blue);font-size:clamp(13px,1.3vw,18px);font-weight:800;line-height:1}
-  .mini i.empty{background:transparent}
 
   /* ---------- what-if (spec §12) ---------- */
   .whatif-panel{background:var(--subtle);border-radius:var(--r-xl);
@@ -500,7 +485,7 @@
        the right-alignment that only made sense in a row is dropped. */
     .wif-foot{flex-direction:column;align-items:stretch;gap:var(--s-2)}
     .wif-foot-b{text-align:left}
-    .principles{grid-template-columns:1fr;gap:var(--s-3)}
+    .principles,.principles.two{grid-template-columns:1fr;gap:var(--s-3)}
     .device{padding:var(--s-3) var(--s-2)}
     .contrast-row.b,.contrast-arrow{padding-left:0;margin-left:0}
   }
@@ -516,7 +501,7 @@
     .btn:hover,.nav-cta:hover{transform:none}
     .nav-cta,.nav-cta[data-hidden="true"]{transition:none}
     .switch .track,.switch .track::after,.buy-chip,.merge-tag,
-    .wif-bar,.wif-fill,.wif-val,.mini i{transition:none}
+    .wif-bar,.wif-fill,.wif-val{transition:none}
     .xp.js [role="tab"][aria-selected="true"] .xp-seg b{animation:none;width:100%}
     .xp.js .xp-screen,.xp.js .xp-screen.is-active,.xp.js .xp-device,.xp.js .xp-screen.is-active .xp-device,
     .xp.js .xp-copy>*,.xp.js .xp-screen.is-active .xp-copy>*,.xp.js .xp-chip,.xp.js .xp-screen.is-active .xp-chip,
@@ -632,15 +617,20 @@
   </div>
 
   <div class="wrap" style="margin-top:clamp(56px,7vw,96px)">
-    <figure class="shot shot-hero" data-reveal="scale" data-delay="3">
-      <div class="shot-frame">
+    <!-- his photograph, the real calendar laid into the phone at its own perspective (M21, 2026-10-04) -->
+    <figure class="photo-fig photo-hero" data-reveal="photo" data-delay="3">
+      <div class="photo">
         <picture>
-          <source type="image/webp" srcset="/img/app-month@1x.webp 1x, /img/app-month.webp 2x">
-          <img src="/img/app-month.png" width="1206" height="1558" fetchpriority="high" decoding="async"
-               alt="A month in JayCK Flow: every day carries its projected balance — green checkmarks on settled days, an amber 0/1 on one overdue bill, and the 30th and 31st in red where the projection dips below zero, the lowest day marked with a small blue arrow.">
+          <source media="(max-width:640px)" type="image/webp" width="1000" height="1250"
+                  srcset="/img/photos/hero-tall-640.webp 640w, /img/photos/hero-tall-1000.webp 1000w"
+                  sizes="92vw">
+          <source type="image/webp" width="1280" height="800"
+                  srcset="/img/photos/hero-wide-800.webp 800w, /img/photos/hero-wide-1280.webp 1280w, /img/photos/hero-wide-1920.webp 1920w"
+                  sizes="(min-width:1320px) 1240px, 94vw">
+          <img src="/img/photos/hero-wide-1280.jpg" width="1280" height="800" fetchpriority="high" decoding="async" alt="A hand holding an iPhone over a light kitchen table, a cup of black coffee beside it; on the screen, a month in JayCK Flow — every day with its balance, the tight days at the end of the month in red.">
         </picture>
       </div>
-      <figcaption>The app itself — demo numbers.</figcaption>
+      <figcaption class="photo-cap">The app itself — demo numbers.</figcaption>
     </figure>
   </div>
 
@@ -755,20 +745,30 @@
   </div>
 </section>
 
-<!-- ============================ 03 · FUTURE FIRST ============================ -->
-<section class="statement center" aria-labelledby="future-h">
-  <div class="wrap col">
+<!-- ============================ 03 · FUTURE FIRST — the statement, his photograph, the contrast ============================ -->
+<!-- Two blocks became one in the shortening of 2026-10-04: the statement, the table from above — a notebook and a
+     cup beside the phone, whose screen shows the months ahead — and the contrast the statement names. -->
+<section class="statement" aria-labelledby="future-h">
+  <div class="wrap col center">
     <h2 class="display t-statement" id="future-h">
       <span class="statement-line quiet" data-reveal>Most apps look back.</span>
       <span class="statement-line" data-reveal data-delay="4">JayCK&nbsp;Flow looks ahead.</span>
     </h2>
   </div>
-</section>
-
-<!-- ============================ 04 · PROBLEM ============================ -->
-<section aria-labelledby="problem-h">
-  <div class="wrap col">
-    <h2 class="visually-hidden" id="problem-h">The question each kind of app answers</h2>
+  <div class="wrap photo-gap">
+    <div data-parallax="0.04"><figure class="photo-fig photo-band" data-reveal="photo">
+      <div class="photo">
+        <picture>
+          <source type="image/webp" width="1024" height="819"
+                  srcset="/img/photos/table-640.webp 640w, /img/photos/table-1024.webp 1024w, /img/photos/table-1600.webp 1600w"
+                  sizes="(min-width:960px) 860px, 92vw">
+          <img src="/img/photos/table-1024.jpg" width="1024" height="819" loading="lazy" decoding="async" alt="A phone on a wooden table beside a notebook, a pencil and a cup of coffee, seen from above; on the screen, JayCK Flow's outlook — the months ahead, each with its lowest day.">
+        </picture>
+      </div>
+    </figure></div>
+  </div>
+  <div class="wrap col photo-gap">
+    <h3 class="visually-hidden" id="problem-h">The question each kind of app answers</h3>
     <div class="contrast">
       <div class="contrast-row a" data-reveal>
         <p class="eyebrow">Budget trackers ask</p>
@@ -821,8 +821,11 @@
   </div>
 </section>
 
-<!-- ============================ 06 · LOWEST BALANCE ============================ -->
-<section aria-labelledby="low-h" style="background:var(--bg)">
+<!-- ============================ 06 · LOWEST BALANCE — with the What if? widget as its figure ============================ -->
+<!-- The day money gets tight, and a purchase tested against it, in one block (the shortening of 2026-10-04): the
+     widget's foot names the same lowest point the mini month used to, and the experience above already says what
+     What if? is for. -->
+<section aria-labelledby="low-h">
   <div class="wrap">
     <div class="feature flip">
       <div class="feature-copy" data-reveal>
@@ -835,29 +838,8 @@
           <p class="state"><i style="background:var(--red)"></i><b>Red</b><span>— the projected balance goes below zero</span></p>
         </div>
       </div>
-      <div data-parallax="0.05"><div class="figure" data-reveal="scale" data-delay="1">
-        <div class="mini" id="mini-month" aria-hidden="true"></div>
-        <p class="figure-big mono-num" data-count="-10" style="margin-top:clamp(28px,3.4vw,44px)">−$10</p>
-        <p class="figure-sub">on the 27th — fifteen days<br>before you would have noticed.</p>
-      </div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ 07 · WHAT IF ============================ -->
-<section aria-labelledby="wif-h" style="background:var(--subtle)">
-  <div class="wrap">
-        <div class="col center" style="margin-bottom:clamp(36px,4.5vw,56px)">
-          <p class="eyebrow" data-reveal>What if?</p>
-          <h2 class="display t-section" id="wif-h" data-reveal data-delay="1" style="margin-top:var(--s-2)">
-            What if I buy it?
-          </h2>
-          <p class="lede" data-reveal data-delay="2" style="margin-top:var(--s-3)">
-            Test a purchase against the whole timeline — before you spend anything.
-          </p>
-        </div>
-
-        <div class="whatif-panel" style="background:var(--bg)">
+      <div data-reveal="scale" data-delay="1">
+        <div class="whatif-panel">
           <div class="whatif-top">
             <button class="switch" id="wif-switch" type="button" role="switch" aria-checked="false">
               <span class="track" aria-hidden="true"></span>What if?
@@ -879,6 +861,8 @@
           </div>
           <p class="wif-note">Every day after the 18th re-colours. Nothing is saved until you say so.</p>
         </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -907,7 +891,9 @@
   </div>
 </section>
 
-<!-- ============================ 09 · CREDIT CARDS ============================ -->
+<!-- ============================ 09 · CREDIT CARDS — and MONEY OWED, one block ============================ -->
+<!-- What the forecast counts, in one block (the shortening of 2026-10-04): the day a card's money leaves, then the
+     money that is owed to you. -->
 <section aria-labelledby="cc-h">
   <div class="wrap">
     <div class="col center" style="margin-bottom:clamp(56px,7vw,96px)">
@@ -941,22 +927,17 @@
       <p class="branch-item">Savings transfer — one line on the timeline</p>
       <p style="margin-top:var(--s-2)">Nothing to reconcile, nothing to keep in sync. One account, one timeline.</p>
     </div>
-  </div>
-</section>
-
-<!-- ============================ 10 · MONEY OWED ============================ -->
-<section aria-labelledby="owed-h" style="background:var(--subtle)">
-  <div class="wrap col center">
-    <p class="eyebrow" data-reveal>Income belongs on the timeline too</p>
-    <h2 class="display t-section" id="owed-h" data-reveal data-delay="1" style="margin-top:var(--s-3)">
-      Money you're owed is<br>part of the forecast.
-    </h2>
+    <div class="col center sub-gap">
+      <p class="eyebrow" data-reveal>Income belongs on the timeline too</p>
+      <h3 class="display t-section" id="owed-h" data-reveal data-delay="1" style="margin-top:var(--s-3)">
+        Money you're owed is<br>part of the forecast.
+      </h3>
     <div class="owed">
-      <div class="owed-card" data-reveal data-delay="2" style="background:var(--bg)">
+      <div class="owed-card" data-reveal data-delay="2" style="background:var(--subtle);border-color:transparent">
         <p class="eyebrow">A bill you forget to tick</p>
         <p class="owed-line">makes the forecast pessimistic —<br>you have <b>more</b> than it says.</p>
       </div>
-      <div class="owed-card" data-reveal data-delay="3" style="background:var(--bg)">
+      <div class="owed-card" data-reveal data-delay="3" style="background:var(--subtle);border-color:transparent">
         <p class="eyebrow">A payment that never arrives</p>
         <p class="owed-line">does the opposite — the forecast<br>promises money you <b>don't</b> have.</p>
       </div>
@@ -964,35 +945,38 @@
     <p class="lede" style="margin:clamp(36px,4vw,56px) auto 0;max-width:640px" data-reveal data-delay="3">
       So income is watched the same way bills are. And anything paid by someone else stays in your history but out of the forecast — the number you see is the number you have.
     </p>
+    </div>
   </div>
 </section>
 
-<!-- ============================ 11 · PHILOSOPHY ============================ -->
-<section class="dark statement" aria-labelledby="phil-h">
-  <div class="wrap col-narrow center">
-    <p class="eyebrow" data-reveal>A limit we chose</p>
-    <h2 class="display t-mid" id="phil-h" data-reveal data-delay="1"
-        style="margin-top:clamp(40px,5vw,72px);line-height:1.14">
-      The moment an app starts asking what's on each card, it stops answering the only question that matters.
-    </h2>
-    <p class="lede" data-reveal data-delay="2" style="margin-top:clamp(32px,4vw,56px)">
-      We chose this limit — and we intend to keep it.
-    </p>
-  </div>
-</section>
-
-<!-- ============================ 12 · PRIVACY ============================ -->
+<!-- ============================ 11 · A LIMIT WE CHOSE — and PRIVACY, each beside his photograph ============================ -->
+<!-- Two blocks became one in the shortening of 2026-10-04: the limit beside the quiet sofa, in black and white; the
+     privacy beside the phone going into a pocket. -->
 <section id="privacy" aria-labelledby="priv-h">
   <div class="wrap">
-    <div class="col center">
-      <p class="eyebrow" data-reveal>Private by design</p>
-      <h2 class="display t-section" id="priv-h" data-reveal data-delay="1" style="margin-top:var(--s-3)">
-        Your financial timeline<br>belongs to you.
-      </h2>
-      <p class="lede" data-reveal data-delay="2" style="margin-top:var(--s-3)">Manual control, always.</p>
+    <div class="feature">
+      <div data-parallax="0.04"><figure class="photo-fig" data-reveal="photo">
+        <div class="photo">
+        <picture>
+          <source type="image/webp" width="800" height="1000"
+                  srcset="/img/photos/sofa-480.webp 480w, /img/photos/sofa-800.webp 800w, /img/photos/sofa-1200.webp 1200w"
+                  sizes="(min-width:861px) 480px, 92vw">
+          <img src="/img/photos/sofa-800.jpg" width="800" height="1000" loading="lazy" decoding="async" alt="A woman on a sofa at home, looking calmly at her phone; black and white.">
+        </picture>
+        </div>
+      </figure></div>
+      <div class="feature-copy" data-reveal>
+        <p class="eyebrow">A limit we chose</p>
+        <h2 class="display t-mid" id="phil-h" style="line-height:1.14">The moment an app starts asking what's on each card, it stops answering the only question that matters.</h2>
+        <p class="lede">We chose this limit — and we intend to keep it.</p>
+      </div>
     </div>
-
-    <div class="principles">
+    <div class="feature sub-gap">
+      <div class="feature-copy" data-reveal>
+        <p class="eyebrow">Private by design</p>
+        <h2 class="display t-section" id="priv-h">Your financial timeline<br>belongs to you.</h2>
+        <p class="lede">Manual control, always.</p>
+    <div class="principles two">
       <div class="principle" data-reveal data-delay="1">
         <p>No bank connection. No account needed to start.</p>
       </div>
@@ -1007,6 +991,18 @@
       </div>
     </div>
 
+      </div>
+      <div data-parallax="0.04"><figure class="photo-fig" data-reveal="photo">
+        <div class="photo">
+        <picture>
+          <source type="image/webp" width="800" height="1000"
+                  srcset="/img/photos/pocket-480.webp 480w, /img/photos/pocket-800.webp 800w, /img/photos/pocket-1200.webp 1200w"
+                  sizes="(min-width:861px) 480px, 92vw">
+          <img src="/img/photos/pocket-800.jpg" width="800" height="1000" loading="lazy" decoding="async" alt="A hand slipping a phone into the pocket of olive shorts, outdoors on a sunny path.">
+        </picture>
+        </div>
+      </figure></div>
+    </div>
     <div class="flowline" aria-hidden="true">
       <b data-reveal>Data</b><s data-reveal data-delay="1"></s>
       <b data-reveal data-delay="1">Device</b><s data-reveal data-delay="2"></s>
@@ -1172,16 +1168,6 @@
       el.textContent = money(0);
       requestAnimationFrame(step);
     });
-  }
-
-  /* --------------------------------------------- lowest-balance mini month -- */
-  var mini = document.getElementById("mini-month");
-  if (mini) {
-    var html = "";
-    for (var i = 0; i < OFFSET; i++) html += "<i class='empty'></i>";
-    for (var i = 0; i < DAYS; i++) html += "<i class='" + statusOf(PLAIN[i].balance)
-      + (PLAIN[i].day === LOW_PLAIN.day ? " lowday" : "") + "'></i>";
-    mini.innerHTML = html;
   }
 
   /* ------------------------------------------------------ what-if section --
