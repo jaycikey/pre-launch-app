@@ -1380,10 +1380,19 @@
     }, { passive:true });
     xpStage.addEventListener("pointercancel", function(){ xpSX = xpSY = null; }, { passive:true });
     document.addEventListener("visibilitychange", xpApply);
+    /* "In view" means MOST of the stage, not a third of the block: with a third, the story kept running while the
+       reader was already two sections down with the block's tail still on screen, and came back to the last picture
+       (his report, 2026-10-04). The share required is 60% of the stage, or 80% of what the viewport can show of it when
+       the stage is taller than the viewport, so a small phone can still reach it. */
     if (hasIO){
+      var xpSteps = []; for (var xs = 0; xs <= 10; xs++) xpSteps.push(xs / 10);
       new IntersectionObserver(function(entries){
-        entries.forEach(function(en){ xpSeen = en.isIntersecting; }); xpApply();
-      }, { threshold:.35 }).observe(xp);
+        entries.forEach(function(en){
+          var need = Math.min(.6, (window.innerHeight / Math.max(1, en.boundingClientRect.height)) * .8);
+          xpSeen = en.isIntersecting && en.intersectionRatio >= need;
+        });
+        xpApply();
+      }, { threshold: xpSteps }).observe(xpStage);
     }
     xpShow(0, false);
   }
