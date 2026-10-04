@@ -98,10 +98,17 @@
   /* The CTA lives on every width, but only while no in-page App Store button is
      on screen, so the same offer is never asked twice in one viewport.
      `visibility` (not just opacity) keeps a hidden link out of the tab order.
-     Everything else about this pill — shape, colour, 44px target — is .pill-cta. */
-  .nav-cta{transition:opacity .3s var(--ease),transform .3s var(--ease),visibility 0s}
-  .nav-cta[data-hidden="true"]{opacity:0;transform:translateY(-8px);visibility:hidden;
-    pointer-events:none;transition-delay:0s,0s,.3s}
+     Everything else about this pill — shape, colour, 44px target — is .pill-cta.
+     Hidden, it gives its place back and the language code beside it glides into the corner; shown, it takes the
+     place again (his eye, 2026-10-04: the code floated in the middle of an empty slot). Width, padding, the gap and
+     the fade move together on one long ease, so nothing jumps; 11em is above the widest label (Завантажити). */
+  .nav-cta{max-width:11em;overflow:hidden;transform-origin:right center;
+    transition:max-width .6s var(--glide),padding .6s var(--glide),margin .6s var(--glide),
+      opacity .4s var(--ease) .2s,transform .6s var(--glide),visibility 0s}
+  .nav-cta[data-hidden="true"]{max-width:0;padding-left:0;padding-right:0;margin-left:calc(-1 * var(--hdr-gap,24px));
+    opacity:0;transform:scale(.94);visibility:hidden;pointer-events:none;
+    transition:max-width .6s var(--glide),padding .6s var(--glide),margin .6s var(--glide),
+      opacity .2s var(--ease),transform .6s var(--glide),visibility 0s linear .6s}
 
   /* ---------- buttons ---------- */
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
@@ -210,7 +217,7 @@
      colour. The state colours live where they are real: in the frame and in the chip. */
   .xp-stage{position:relative;display:grid;border-radius:var(--r-xl);background:var(--subtle);touch-action:pan-y;
     padding:clamp(24px,4vw,56px) clamp(20px,4vw,56px)}
-  .xp-screen{grid-area:1/1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center}
+  .xp-screen{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center}
   .xp-title{font-size:clamp(30px,3.6vw,52px);line-height:1.04;letter-spacing:-.035em;margin-top:var(--s-2)}
   .xp-text{margin-top:var(--s-3);max-width:34ch}
   .xp-cta{margin-top:var(--s-4);display:flex;align-items:center;gap:var(--s-3);flex-wrap:wrap}
@@ -227,14 +234,28 @@
     border-radius:var(--r-pill);background:var(--card);border:1px solid var(--hair);box-shadow:0 10px 30px -10px rgba(0,0,0,.25);
     font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--ink);white-space:nowrap}
   .xp-chip b{color:var(--red-text)}
-  .xp.js .xp-screen{visibility:hidden;opacity:0;transition:opacity .4s var(--ease),visibility 0s .4s}
-  .xp.js .xp-screen.is-active{visibility:visible;opacity:1;transition:opacity .4s var(--ease),visibility 0s}
-  .xp.js .xp-copy{transform:translateY(16px);transition:transform .3s var(--ease)}
-  .xp.js .xp-screen.is-active .xp-copy{transform:none}
-  .xp.js .xp-chip{opacity:0;transform:translateX(24px);transition:opacity .3s var(--ease) .4s,transform .3s var(--ease) .4s}
-  .xp.js .xp-screen.is-active .xp-chip{opacity:1;transform:none}
-  /* the screen with the button: its device steps back a little, no more — his eye on 2026-10-03: half opacity read as "off" */
-  .xp.js .xp-screen[data-cta] .xp-device{opacity:.85;transform:scale(.97);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+  /* The change between screens — his eye, 2026-10-04: the photo jumped and the words arrived abruptly from below.
+     One phone, its screen changes: the incoming frame fades in ON TOP while the outgoing one holds, then lets go. A
+     simultaneous crossfade of two identical bezels dims both halfway through (two halves of opacity cover three
+     quarters), which read as a flicker; this order never lets the bezel thin. The fifth screen's device no longer
+     steps back for the same reason — a device that changes size between screens cannot crossfade cleanly. The words
+     never cross: the old ones fade where they stand, the new ones rise in a slow cascade — label, title, text,
+     button — on a long ease-out. The screens share one grid cell only with the script; without it they read stacked.
+     `xp-init` holds every transition still for the first two frames, so nothing animates on load. */
+  .xp.js .xp-screen{grid-area:1/1;visibility:hidden;z-index:1;transition:visibility 0s linear .8s}
+  .xp.js .xp-screen.is-active{visibility:visible;z-index:2;transition:visibility 0s}
+  .xp.js .xp-device{opacity:0;transition:opacity .5s var(--ease) .3s}
+  .xp.js .xp-screen.is-active .xp-device{opacity:1;transition:opacity .7s var(--glide)}
+  .xp.js .xp-copy>*{opacity:0;transform:translateY(32px);transition:opacity .3s var(--ease),transform 0s linear .35s}
+  .xp.js .xp-screen.is-active .xp-copy>*{opacity:1;transform:none;
+    transition:opacity .8s var(--glide) var(--d,.2s),transform 1.1s var(--glide) var(--d,.2s)}
+  .xp.js .xp-screen.is-active .xp-copy>:nth-child(2){--d:.3s}
+  .xp.js .xp-screen.is-active .xp-copy>:nth-child(3){--d:.4s}
+  .xp.js .xp-screen.is-active .xp-copy>:nth-child(4){--d:.5s}
+  .xp.js .xp-chip{opacity:0;transform:translateX(40px);transition:opacity .25s var(--ease),transform 0s linear .3s}
+  .xp.js .xp-screen.is-active .xp-chip{opacity:1;transform:none;transition:opacity .7s var(--glide) .6s,transform 1.1s var(--glide) .6s}
+  .xp.js .xp-tabs [role="tab"]{transition:color .4s var(--ease)}
+  .xp.xp-init *{transition:none!important}
   .xp-nav{display:none;align-items:center;gap:var(--s-2);margin-top:var(--s-3)}
   .xp.js .xp-nav{display:flex}
   .xp-tabs{flex:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
@@ -476,11 +497,13 @@
     [data-reveal],[data-reveal="scale"]{opacity:1;transform:none;transition:none}
     [data-parallax]{transform:none !important}
     .btn:hover,.nav-cta:hover{transform:none}
+    .nav-cta,.nav-cta[data-hidden="true"]{transition:none}
     .switch .track,.switch .track::after,.buy-chip,.merge-tag,
     .wif-bar,.wif-fill,.wif-val,.mini i{transition:none}
     .xp.js [role="tab"][aria-selected="true"] .xp-seg b{animation:none;width:100%}
-    .xp.js .xp-screen,.xp.js .xp-copy,.xp.js .xp-chip,.xp.js .xp-screen[data-cta] .xp-device{transition:none}
-    .xp.js .xp-copy{transform:none}
+    .xp.js .xp-screen,.xp.js .xp-screen.is-active,.xp.js .xp-device,.xp.js .xp-screen.is-active .xp-device,
+    .xp.js .xp-copy>*,.xp.js .xp-screen.is-active .xp-copy>*,.xp.js .xp-chip,.xp.js .xp-screen.is-active .xp-chip{transition:none}
+    .xp.js .xp-copy>*,.xp.js .xp-chip{transform:none}
   }
 </style>
 <script type="application/ld+json">
@@ -1319,7 +1342,7 @@
     var xpPlay = xp.querySelector("[data-xp-play]"), xpStatus = xp.querySelector(".xp-status"), xpNow = xp.querySelector(".xp-now");
     var xpNav = xp.querySelector(".xp-nav");
     var xpI = 0, xpUser = false, xpDone = false, xpHover = false, xpFocus = false, xpSeen = !hasIO;
-    xp.classList.add("js"); if (xpNav) xpNav.hidden = false;
+    xp.classList.add("js", "xp-init"); if (xpNav) xpNav.hidden = false;
     function xpApply(){
       xp.classList.toggle("is-paused", xpUser || xpHover || xpFocus || !xpSeen || document.hidden);
       xpPlay.setAttribute("aria-pressed", String(xpUser));
@@ -1398,6 +1421,17 @@
       }, { threshold: xpSteps }).observe(xpStage);
     }
     xpShow(0, false);
+    // The first state is set without motion; transitions start two frames later, so nothing fades in on load.
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ xp.classList.remove("xp-init"); }); });
+    // Warm the frames before the block is reached, so no screen's photo arrives late and pops in.
+    if (hasIO){
+      var xpWarm = new IntersectionObserver(function(entries){
+        if (!entries.some(function(e){ return e.isIntersecting; })) return;
+        [].forEach.call(xp.querySelectorAll('img[loading="lazy"]'), function(im){ im.loading = "eager"; });
+        xpWarm.disconnect();
+      }, { rootMargin: "800px 0px" });
+      xpWarm.observe(xp);
+    }
   }
 
   addEventListener("scroll", onScroll, { passive:true });
