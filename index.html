@@ -53,8 +53,10 @@
 <meta name="theme-color" content="#140917" media="(prefers-color-scheme: dark)">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
 <meta name="apple-itunes-app" content="app-id=6789696499">
-<link rel="preload" as="image" type="image/webp" media="(max-width:640px)" imagesrcset="/img/photos/hero-tall-640.webp 640w, /img/photos/hero-tall-1000.webp 1000w" imagesizes="92vw">
-<link rel="preload" as="image" type="image/webp" media="(min-width:641px)" imagesrcset="/img/photos/hero-wide-800.webp 800w, /img/photos/hero-wide-1280.webp 1280w, /img/photos/hero-wide-1920.webp 1920w" imagesizes="(min-width:1320px) 1240px, 94vw">
+<link rel="preload" as="image" type="image/webp" media="(max-width:640px) and (prefers-color-scheme: light)" imagesrcset="/img/photos/hero-tall-640.webp 640w, /img/photos/hero-tall-1000.webp 1000w" imagesizes="92vw">
+<link rel="preload" as="image" type="image/webp" media="(max-width:640px) and (prefers-color-scheme: dark)" imagesrcset="/img/photos/hero-tall-dark-640.webp 640w, /img/photos/hero-tall-dark-1000.webp 1000w" imagesizes="92vw">
+<link rel="preload" as="image" type="image/webp" media="(min-width:641px) and (prefers-color-scheme: light)" imagesrcset="/img/photos/hero-wide-800.webp 800w, /img/photos/hero-wide-1280.webp 1280w, /img/photos/hero-wide-1920.webp 1920w" imagesizes="(min-width:1320px) 1240px, 94vw">
+<link rel="preload" as="image" type="image/webp" media="(min-width:641px) and (prefers-color-scheme: dark)" imagesrcset="/img/photos/hero-wide-dark-800.webp 800w, /img/photos/hero-wide-dark-1280.webp 1280w, /img/photos/hero-wide-dark-1920.webp 1920w" imagesizes="(min-width:1320px) 1240px, 94vw">
 <style>
   /* ============================================================================
      JayCK Flow — premium editorial landing page.
@@ -152,7 +154,6 @@
   [data-delay="2"]{transition-delay:.12s}
   [data-delay="3"]{transition-delay:.18s}
   [data-delay="4"]{transition-delay:.24s}
-  [data-parallax]{will-change:transform}
 
   /* ---------- hero (spec §5) ---------- */
   .hero{padding-top:calc(var(--nav-h) + clamp(72px,11vh,132px));padding-bottom:0}
@@ -301,8 +302,14 @@
      phones show a real screen of the app, laid in at the photograph's own perspective. Each image rounds itself as well
      as its box, because Safari does not clip a composited child by a parent's rounded overflow during a transform. */
   .photo-fig{margin:0}
-  .photo{border-radius:var(--r-xl);overflow:hidden;background:var(--subtle)}
+  .photo{border-radius:var(--r-xl);overflow:hidden;background:var(--subtle);isolation:isolate;transform:translateZ(0)}
   .photo img{display:block;width:100%;height:auto;border-radius:var(--r-xl)}
+  /* Depth — his brief of 2026-10-04: «Use subtle depth, scale and parallax motion rather than artificial 3D effects».
+     The frame stays on the page's grid; the photograph inside it is 8 % larger and drifts against the scroll by at
+     most 3.5 % of its height, inside the 4 % the enlargement leaves on each side, so it reads as lying just behind
+     the page. The script sets --depth, −1 … 1; the frame clips (isolation and its own layer: WebKit clips a moving
+     child to a rounded frame only then). */
+  .photo img{transform:translate3d(0,calc(var(--depth, 0) * 3.5%),0) scale(1.08);will-change:transform}
   .photo-hero{max-width:1240px;margin:0 auto}
   .photo-band{max-width:860px;margin:0 auto}
   .photo-cap{margin-top:14px;text-align:center;font-size:13px;color:var(--muted)}
@@ -516,7 +523,7 @@
   @media(prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     [data-reveal],[data-reveal="scale"]{opacity:1;transform:none;transition:none}
-    [data-parallax]{transform:none !important}
+    .photo img{transform:none !important}
     .btn:hover,.nav-cta:hover{transform:none}
     .nav-cta,.nav-cta[data-hidden="true"]{transition:none}
     .switch .track,.switch .track::after,.buy-chip,.merge-tag,
@@ -590,7 +597,7 @@
      header pill, which is markup-hidden until a script decides otherwise. -->
 <noscript><style>
   [data-reveal],[data-reveal="scale"]{opacity:1!important;transform:none!important}
-  [data-parallax]{transform:none!important}
+  .photo img{transform:none!important}
   /* The header pill stays hidden, and that is the page's own rule rather than a
      workaround: it exists only to offer the App Store when no in-page button is
      on screen, and with no script the hero's button is right there. Showing it
@@ -640,9 +647,15 @@
     <figure class="photo-fig photo-hero" data-reveal="photo" data-delay="3">
       <div class="photo">
         <picture>
+          <source media="(max-width:640px) and (prefers-color-scheme: dark)" type="image/webp" width="1000" height="1250"
+                  srcset="/img/photos/hero-tall-dark-640.webp 640w, /img/photos/hero-tall-dark-1000.webp 1000w"
+                  sizes="92vw">
           <source media="(max-width:640px)" type="image/webp" width="1000" height="1250"
                   srcset="/img/photos/hero-tall-640.webp 640w, /img/photos/hero-tall-1000.webp 1000w"
                   sizes="92vw">
+          <source media="(prefers-color-scheme: dark)" type="image/webp" width="1280" height="800"
+                  srcset="/img/photos/hero-wide-dark-800.webp 800w, /img/photos/hero-wide-dark-1280.webp 1280w, /img/photos/hero-wide-dark-1920.webp 1920w"
+                  sizes="(min-width:1320px) 1240px, 94vw">
           <source type="image/webp" width="1280" height="800"
                   srcset="/img/photos/hero-wide-800.webp 800w, /img/photos/hero-wide-1280.webp 1280w, /img/photos/hero-wide-1920.webp 1920w"
                   sizes="(min-width:1320px) 1240px, 94vw">
@@ -678,7 +691,8 @@
         <figure class="xp-device">
           <div class="xp-phone">
             <picture>
-              <source type="image/webp" srcset="/img/screens/calendar@1x.webp 380w, /img/screens/calendar.webp 760w" sizes="(min-width:861px) 380px, 62vw">
+              <source media="(prefers-color-scheme: dark)" type="image/webp" width="760" height="1651" srcset="/img/screens/calendar-dark@1x.webp 380w, /img/screens/calendar-dark.webp 760w" sizes="(min-width:861px) 380px, 62vw">
+              <source type="image/webp" width="760" height="1651" srcset="/img/screens/calendar@1x.webp 380w, /img/screens/calendar.webp 760w" sizes="(min-width:861px) 380px, 62vw">
               <img src="/img/screens/calendar.png" width="760" height="1651" decoding="async" alt="The month view: every day carries its projected balance, settled days ticked green, a tight stretch at the end of the month in red, the balance card above with Reserved, Lowest point and Overdue.">
             </picture>
           </div>
@@ -693,7 +707,8 @@
         <figure class="xp-device">
           <div class="xp-phone">
             <picture>
-              <source type="image/webp" srcset="/img/screens/whatif@1x.webp 380w, /img/screens/whatif.webp 760w" sizes="(min-width:861px) 380px, 62vw">
+              <source media="(prefers-color-scheme: dark)" type="image/webp" width="760" height="1651" srcset="/img/screens/whatif-dark@1x.webp 380w, /img/screens/whatif-dark.webp 760w" sizes="(min-width:861px) 380px, 62vw">
+              <source type="image/webp" width="760" height="1651" srcset="/img/screens/whatif@1x.webp 380w, /img/screens/whatif.webp 760w" sizes="(min-width:861px) 380px, 62vw">
               <img src="/img/screens/whatif.png" width="760" height="1651" loading="lazy" decoding="async" alt="What if? open over the calendar: a $450 sofa added, every day after it recoloured, the edge glowing in safe mode.">
             </picture>
           </div>
@@ -709,7 +724,8 @@
         <figure class="xp-device">
           <div class="xp-phone">
             <picture>
-              <source type="image/webp" srcset="/img/screens/outlook@1x.webp 380w, /img/screens/outlook.webp 760w" sizes="(min-width:861px) 380px, 62vw">
+              <source media="(prefers-color-scheme: dark)" type="image/webp" width="760" height="1651" srcset="/img/screens/outlook-dark@1x.webp 380w, /img/screens/outlook-dark.webp 760w" sizes="(min-width:861px) 380px, 62vw">
+              <source type="image/webp" width="760" height="1651" srcset="/img/screens/outlook@1x.webp 380w, /img/screens/outlook.webp 760w" sizes="(min-width:861px) 380px, 62vw">
               <img src="/img/screens/outlook.png" width="760" height="1651" loading="lazy" decoding="async" alt="The Outlook: six months ahead as a plant-like forecast, the low points marked, risk bands folded.">
             </picture>
           </div>
@@ -724,7 +740,8 @@
         <figure class="xp-device">
           <div class="xp-phone">
             <picture>
-              <source type="image/webp" srcset="/img/screens/widgets2@1x.webp 380w, /img/screens/widgets2.webp 760w" sizes="(min-width:861px) 380px, 62vw">
+              <source media="(prefers-color-scheme: dark)" type="image/webp" width="760" height="1651" srcset="/img/screens/widgets2-dark@1x.webp 380w, /img/screens/widgets2-dark.webp 760w" sizes="(min-width:861px) 380px, 62vw">
+              <source type="image/webp" width="760" height="1651" srcset="/img/screens/widgets2@1x.webp 380w, /img/screens/widgets2.webp 760w" sizes="(min-width:861px) 380px, 62vw">
               <img src="/img/screens/widgets2.png" width="760" height="1651" loading="lazy" decoding="async" alt="A second Home Screen page among real app icons: the Balance widget with the projected balance, reserved money, the lowest point and what is overdue, and the Day widget with the day's plan.">
             </picture>
           </div>
@@ -740,7 +757,8 @@
         <figure class="xp-device">
           <div class="xp-phone">
             <picture>
-              <source type="image/webp" srcset="/img/screens/backup@1x.webp 380w, /img/screens/backup.webp 760w" sizes="(min-width:861px) 380px, 62vw">
+              <source media="(prefers-color-scheme: dark)" type="image/webp" width="760" height="1651" srcset="/img/screens/backup-dark@1x.webp 380w, /img/screens/backup-dark.webp 760w" sizes="(min-width:861px) 380px, 62vw">
+              <source type="image/webp" width="760" height="1651" srcset="/img/screens/backup@1x.webp 380w, /img/screens/backup.webp 760w" sizes="(min-width:861px) 380px, 62vw">
               <img src="/img/screens/backup.png" width="760" height="1651" loading="lazy" decoding="async" alt="Data & backup: everything local, export and import, no bank login.">
             </picture>
           </div>
@@ -774,18 +792,6 @@
       <span class="statement-line" data-reveal data-delay="4">JayCK&nbsp;Flow looks ahead.</span>
     </h2>
   </div>
-  <div class="wrap photo-gap">
-    <div data-parallax="0.04"><figure class="photo-fig photo-band" data-reveal="photo">
-      <div class="photo">
-        <picture>
-          <source type="image/webp" width="1024" height="819"
-                  srcset="/img/photos/table-640.webp 640w, /img/photos/table-1024.webp 1024w, /img/photos/table-1600.webp 1600w"
-                  sizes="(min-width:960px) 860px, 92vw">
-          <img src="/img/photos/table-1024.jpg" width="1024" height="819" loading="lazy" decoding="async" alt="A phone on a wooden table beside a notebook, a pencil and a cup of coffee, seen from above; on the screen, JayCK Flow's outlook — the months ahead, each with its lowest day.">
-        </picture>
-      </div>
-    </figure></div>
-  </div>
   <div class="wrap col photo-gap">
     <h3 class="visually-hidden" id="problem-h">The question each kind of app answers</h3>
     <div class="contrast">
@@ -799,6 +805,21 @@
         <p class="display t-section">“What will my money<br>look like tomorrow?”</p>
       </div>
     </div>
+  </div>
+  <div class="wrap photo-gap">
+    <figure class="photo-fig photo-band" data-reveal="photo">
+      <div class="photo">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" type="image/webp" width="1024" height="819"
+                  srcset="/img/photos/table-dark-640.webp 640w, /img/photos/table-dark-1024.webp 1024w, /img/photos/table-dark-1600.webp 1600w"
+                  sizes="(min-width:960px) 860px, 92vw">
+          <source type="image/webp" width="1024" height="819"
+                  srcset="/img/photos/table-640.webp 640w, /img/photos/table-1024.webp 1024w, /img/photos/table-1600.webp 1600w"
+                  sizes="(min-width:960px) 860px, 92vw">
+          <img src="/img/photos/table-1024.jpg" width="1024" height="819" loading="lazy" decoding="async" alt="A phone on a wooden table beside a notebook, a pencil and a cup of coffee, seen from above; on the screen, JayCK Flow's outlook — the months ahead, each with its lowest day.">
+        </picture>
+      </div>
+    </figure>
   </div>
 </section>
 
@@ -974,16 +995,19 @@
 <section id="privacy" aria-labelledby="priv-h">
   <div class="wrap">
     <div class="feature">
-      <div data-parallax="0.04"><figure class="photo-fig" data-reveal="photo">
+      <figure class="photo-fig" data-reveal="photo">
         <div class="photo">
         <picture>
+          <source media="(prefers-color-scheme: dark)" type="image/webp" width="800" height="1000"
+                  srcset="/img/photos/sofa-dark-480.webp 480w, /img/photos/sofa-dark-800.webp 800w, /img/photos/sofa-dark-1200.webp 1200w"
+                  sizes="(min-width:861px) 480px, 92vw">
           <source type="image/webp" width="800" height="1000"
                   srcset="/img/photos/sofa-480.webp 480w, /img/photos/sofa-800.webp 800w, /img/photos/sofa-1200.webp 1200w"
                   sizes="(min-width:861px) 480px, 92vw">
           <img src="/img/photos/sofa-800.jpg" width="800" height="1000" loading="lazy" decoding="async" alt="A woman on a sofa at home, looking calmly at her phone; black and white.">
         </picture>
         </div>
-      </figure></div>
+      </figure>
       <div class="feature-copy" data-reveal>
         <p class="eyebrow">A limit we chose</p>
         <h2 class="display t-mid" id="phil-h" style="line-height:1.14">The moment an app starts asking what's on each card, it stops answering the only question that matters.</h2>
@@ -1011,16 +1035,19 @@
     </div>
 
       </div>
-      <div data-parallax="0.04"><figure class="photo-fig" data-reveal="photo">
+      <figure class="photo-fig" data-reveal="photo">
         <div class="photo">
         <picture>
+          <source media="(prefers-color-scheme: dark)" type="image/webp" width="800" height="1000"
+                  srcset="/img/photos/pocket-dark-480.webp 480w, /img/photos/pocket-dark-800.webp 800w, /img/photos/pocket-dark-1200.webp 1200w"
+                  sizes="(min-width:861px) 480px, 92vw">
           <source type="image/webp" width="800" height="1000"
                   srcset="/img/photos/pocket-480.webp 480w, /img/photos/pocket-800.webp 800w, /img/photos/pocket-1200.webp 1200w"
                   sizes="(min-width:861px) 480px, 92vw">
           <img src="/img/photos/pocket-800.jpg" width="800" height="1000" loading="lazy" decoding="async" alt="A hand slipping a phone into the pocket of olive shorts, outdoors on a sunny path.">
         </picture>
         </div>
-      </figure></div>
+      </figure>
     </div>
     <div class="flowline" aria-hidden="true">
       <b data-reveal>Data</b><s data-reveal data-delay="1"></s>
@@ -1264,22 +1291,23 @@
     renderWif(0);   // always opens on what is real — the switch is the way in
   }
 
-  /* --------------------------------------------------- scroll: parallax --
-     One rAF, one layout read per frame. */
-  var parallaxEls = [].slice.call(document.querySelectorAll("[data-parallax]"));
+  /* ------------------------------------------------------ scroll: depth -- */
+  /* One rAF, one layout read per frame. Each photograph drifts inside its frame: −1 as the frame enters at the foot of
+     the screen, 0 at its centre, 1 as it leaves at the top; the CSS turns that into a drift its enlargement covers.
+     His brief of 2026-10-04 asked for «subtle depth, scale and parallax motion rather than artificial 3D effects» —
+     the frames themselves, which used to move against the text (data-parallax), now stay on the grid. */
+  var depthEls = [].slice.call(document.querySelectorAll(".photo"));
 
   var ticking = false;
   function frame(){
     ticking = false;
     var vh = innerHeight;
 
-    for (var j = 0; j < parallaxEls.length; j++){
-      var pe = parallaxEls[j], pr = pe.getBoundingClientRect();
-      if (pr.bottom < -200 || pr.top > vh + 200) continue;
-      var amt = parseFloat(pe.getAttribute("data-parallax")) || .05;
-      var centred = (pr.top + pr.height / 2 - vh / 2) / vh;   /* −1 … 1 */
-      var shift = clamp(centred * amt * vh, -60, 60);          /* spec §29 cap */
-      pe.style.transform = "translate3d(0," + shift.toFixed(1) + "px,0)";
+    for (var j = 0; j < depthEls.length; j++){
+      var de = depthEls[j], dr = de.getBoundingClientRect();
+      if (dr.bottom < -200 || dr.top > vh + 200) continue;
+      var depth = clamp((vh / 2 - (dr.top + dr.height / 2)) / ((vh + dr.height) / 2), -1, 1);
+      de.style.setProperty("--depth", depth.toFixed(3));
     }
   }
   function onScroll(){
