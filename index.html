@@ -243,18 +243,27 @@
      `xp-init` holds every transition still for the first two frames, so nothing animates on load. */
   .xp.js .xp-screen{grid-area:1/1;visibility:hidden;z-index:1;transition:visibility 0s linear .8s}
   .xp.js .xp-screen.is-active{visibility:visible;z-index:2;transition:visibility 0s}
-  .xp.js .xp-device{opacity:0;transition:opacity .5s var(--ease) .3s}
-  .xp.js .xp-screen.is-active .xp-device{opacity:1;transition:opacity .7s var(--glide)}
+  /* The frame changes through a light flash — his words of 2026-10-04: «плавне зникнення і плавне з'явлення як flash
+     light». The outgoing screen brightens to white (0.4 s, easing in); at the brightest moment the incoming device takes
+     the top, its own screen white, and its picture emerges (0.6 s, easing out). The bezels never fade — only the
+     screen inside flashes. The first version faded the picture on the long ease-out the words use, which put it at 84%
+     in 0.2 s: on a phone that read as a redraw, not a change. */
+  .xp.js .xp-phone{position:relative}
+  .xp.js .xp-phone::after{content:"";position:absolute;inset:clamp(7px,2.4%,10px);inset:2.4cqw;border-radius:13cqw;
+    background:#fff;opacity:1;pointer-events:none;transition:opacity .4s cubic-bezier(.4,0,1,1)}
+  .xp.js .xp-screen.is-active .xp-phone::after{opacity:0;transition:opacity .6s cubic-bezier(0,0,.2,1) .4s}
+  .xp.js .xp-device{opacity:0;transition:opacity .3s var(--ease) .42s}
+  .xp.js .xp-screen.is-active .xp-device{opacity:1;transition:opacity 0s linear .4s}
   .xp.js .xp-copy>*{opacity:0;transform:translateY(32px);transition:opacity .3s var(--ease),transform 0s linear .35s}
   .xp.js .xp-screen.is-active .xp-copy>*{opacity:1;transform:none;
-    transition:opacity .8s var(--glide) var(--d,.2s),transform 1.1s var(--glide) var(--d,.2s)}
-  .xp.js .xp-screen.is-active .xp-copy>:nth-child(2){--d:.3s}
-  .xp.js .xp-screen.is-active .xp-copy>:nth-child(3){--d:.4s}
-  .xp.js .xp-screen.is-active .xp-copy>:nth-child(4){--d:.5s}
+    transition:opacity .9s var(--ease) var(--d,.45s),transform 1.1s var(--glide) var(--d,.45s)}
+  .xp.js .xp-screen.is-active .xp-copy>:nth-child(2){--d:.55s}
+  .xp.js .xp-screen.is-active .xp-copy>:nth-child(3){--d:.65s}
+  .xp.js .xp-screen.is-active .xp-copy>:nth-child(4){--d:.75s}
   .xp.js .xp-chip{opacity:0;transform:translateX(40px);transition:opacity .25s var(--ease),transform 0s linear .3s}
-  .xp.js .xp-screen.is-active .xp-chip{opacity:1;transform:none;transition:opacity .7s var(--glide) .6s,transform 1.1s var(--glide) .6s}
+  .xp.js .xp-screen.is-active .xp-chip{opacity:1;transform:none;transition:opacity .7s var(--ease) .8s,transform 1.1s var(--glide) .8s}
   .xp.js .xp-tabs [role="tab"]{transition:color .4s var(--ease)}
-  .xp.xp-init *{transition:none!important}
+  .xp.xp-init *,.xp.xp-init *::after{transition:none!important}
   .xp-nav{display:none;align-items:center;gap:var(--s-2);margin-top:var(--s-3)}
   .xp.js .xp-nav{display:flex}
   .xp-tabs{flex:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
@@ -441,7 +450,10 @@
     .xp-stage{padding:clamp(20px,4vw,32px) clamp(16px,4vw,32px)}
     .xp-title{font-size:clamp(26px,6.4vw,34px)}
     .xp-text{max-width:none}
-    .xp-chip{left:auto;right:-2%;bottom:30%;font-size:13px;padding:8px 12px}
+    /* inside the frame: here the device is cropped (overflow), so a chip over its edge was cut — his screenshot,
+       2026-10-04 — and it rises from below rather than sliding in from the edge it would be cut by */
+    .xp-chip{left:auto;right:5%;bottom:34%;font-size:13px;padding:8px 12px}
+    .xp.js .xp-chip{transform:translateY(14px)}
     .xp-tabs [role="tab"] span{display:none}
     .xp-tabs [role="tab"]{padding:12px 2px 8px}
     .xp.js .xp-now{display:block}
@@ -501,7 +513,8 @@
     .wif-bar,.wif-fill,.wif-val,.mini i{transition:none}
     .xp.js [role="tab"][aria-selected="true"] .xp-seg b{animation:none;width:100%}
     .xp.js .xp-screen,.xp.js .xp-screen.is-active,.xp.js .xp-device,.xp.js .xp-screen.is-active .xp-device,
-    .xp.js .xp-copy>*,.xp.js .xp-screen.is-active .xp-copy>*,.xp.js .xp-chip,.xp.js .xp-screen.is-active .xp-chip{transition:none}
+    .xp.js .xp-copy>*,.xp.js .xp-screen.is-active .xp-copy>*,.xp.js .xp-chip,.xp.js .xp-screen.is-active .xp-chip,
+    .xp.js .xp-phone::after,.xp.js .xp-screen.is-active .xp-phone::after{transition:none}
     .xp.js .xp-copy>*,.xp.js .xp-chip{transform:none}
   }
 </style>
