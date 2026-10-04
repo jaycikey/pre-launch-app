@@ -405,9 +405,16 @@
     .principles{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
   @media(max-width:860px){
-    .xp-screen{grid-template-columns:1fr;gap:var(--s-3)}
-    .xp-device{order:-1;width:min(62vw,320px);max-height:min(62vh,520px);overflow:hidden;
+    /* The five screens share one cell, so the stage is as tall as the fifth (the one with the button). Rows must not
+       stretch into that height, or the words drift away from the frame on the shorter screens — his eye on the phone,
+       2026-10-04: the fifth screen, with the words right under the frame, read best; now every screen does. The frame
+       is a little shorter here so a screen's frame and words fit one phone viewport. */
+    .xp-screen{grid-template-columns:1fr;gap:var(--s-3);align-content:start}
+    .xp-device{order:-1;width:min(62vw,320px);max-height:min(56vh,470px);overflow:hidden;
       -webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent)}
+    /* the fifth screen is the words and the button: its frame is shorter here so all three fit one viewport */
+    .xp-screen[data-dark] .xp-device{max-height:min(42vh,350px)}
+    .xp-cta{margin-top:var(--s-3)}
     .xp-stage{padding:clamp(20px,4vw,32px) clamp(16px,4vw,32px)}
     .xp-title{font-size:clamp(26px,6.4vw,34px)}
     .xp-text{max-width:none}
