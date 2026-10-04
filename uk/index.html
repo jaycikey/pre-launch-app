@@ -447,6 +447,10 @@
     .xp-screen{grid-template-columns:1fr;gap:var(--s-3);align-content:start}
     .xp-device{order:-1;width:min(62vw,320px);max-height:min(56vh,470px);overflow:hidden;
       -webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent)}
+    /* No drop shadow where the device is cropped: Safari keeps the shadow's faint tint inside the crop's rectangle, so a
+       grey box stood out past the rounded corners, "as if the phone's sides were laid over a picture" — his screenshot,
+       2026-10-04 (244,243,247 inside the box against the panel's 247,247,249). The bezel's ring stays. */
+    .xp-phone{box-shadow:inset 0 0 0 2px #3A3C40}
     /* the screen with the button is the words and the button: its frame is shorter here so all three fit one viewport */
     .xp-screen[data-cta] .xp-device{max-height:min(42vh,350px)}
     .xp-cta{margin-top:var(--s-3)}
