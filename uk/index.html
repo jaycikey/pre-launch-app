@@ -196,33 +196,35 @@
                0 56px 110px -40px rgba(0,0,0,.16)}
   .shot img{display:block;width:100%;height:auto}
   .shot figcaption{margin-top:14px;text-align:center;font-size:13px;color:var(--muted)}
-  /* Real screens (2026-10-03, M6's last gap): the Home Screen pair. The strip of eight store frames became the
-     experience below (M22, the same evening). */
-  .two-up{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-3);align-items:start}
-  .two-up .shot{max-width:none;margin:0}
+  /* Real screens (2026-10-03): the hero crop and the experience's frames; the Home Screen pair and the strip of eight
+     store frames both became the experience the same evening (M22). */
   /* ---------- product experience (M22 — PRODUCT-EXPERIENCE.md; his brief LANDING-STANDARD.md §5) ----------
      One stage, one device, five screens stacked in one grid cell so the stage never changes height; the active
      screen is the visible one. The field takes the screen's own state colour (data-tone). The timer is a CSS
      animation on the active tab's segment: pausing is a class on the block, and reduced motion — which has no
      animation — never advances on its own. */
   .xp{padding-block:clamp(40px,6vw,96px) clamp(64px,9vw,140px)}
-  .xp-stage{position:relative;display:grid;border-radius:var(--r-xl);background:var(--green-soft);touch-action:pan-y;
+  /* The field is the page's own panel colour (the figures' --subtle), and the fifth screen is dark the way the page's
+     statements are (--plum): his eye on 2026-10-03 — tinted fields per screen stood out from the rest of the design.
+     The state colours live where they are real: in the frame and in the chip. */
+  .xp-stage{position:relative;display:grid;border-radius:var(--r-xl);background:var(--subtle);touch-action:pan-y;
     padding:clamp(24px,4vw,56px) clamp(20px,4vw,56px);transition:background-color .4s var(--ease),color .4s var(--ease)}
-  .xp-stage[data-tone="red"]{background:var(--red-soft)}
-  .xp-stage[data-tone="neutral"]{background:var(--subtle)}
-  .xp-stage[data-tone="blue"]{background:var(--blue-soft)}
-  /* the fifth screen is dark in both colour schemes, and a different dark from the dark scheme's page */
-  .xp-stage[data-tone="dark"]{background:#1C1C1E;color:#fff}
-  .xp-stage[data-tone="dark"] .lede,.xp-stage[data-tone="dark"] .eyebrow,.xp-stage[data-tone="dark"] .fine{color:#98989F}
-  .xp-stage[data-tone="dark"] .btn{background:#fff;color:#000}
+  .xp-stage[data-dark]{background:var(--plum);color:#fff}
+  .xp-stage[data-dark] .lede,.xp-stage[data-dark] .eyebrow,.xp-stage[data-dark] .fine{color:#98989F}
+  .xp-stage[data-dark] .btn{background:#fff;color:#000}
   .xp-screen{grid-area:1/1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center}
   .xp-title{font-size:clamp(30px,3.6vw,52px);line-height:1.04;letter-spacing:-.035em;margin-top:var(--s-2)}
   .xp-text{margin-top:var(--s-3);max-width:34ch}
   .xp-cta{margin-top:var(--s-4);display:flex;align-items:center;gap:var(--s-3);flex-wrap:wrap}
-  .xp-device{position:relative;margin:0;justify-self:center;width:min(380px,100%)}
-  .xp-phone{background:#1A1B1E;border-radius:clamp(30px,11.5%,46px);padding:clamp(7px,2.2%,10px);
-    box-shadow:0 44px 110px -30px rgba(24,60,110,.28),0 10px 34px -12px rgba(24,60,110,.18),inset 0 0 0 2px #3A3C40}
-  .xp-phone img{display:block;width:100%;height:auto;border-radius:clamp(24px,10%,40px)}
+  /* The device's proportions are the store frames' (compose.mjs: bezel 26, outer radius 168, screen radius 142 on a
+     1092-wide device) — his eye on 2026-10-03: smaller radii did not look like a real phone. Container units scale
+     them with the device at every width; the px clamps are the fallback for browsers without them. */
+  .xp-device{position:relative;margin:0;justify-self:center;width:min(380px,100%);container-type:inline-size}
+  .xp-phone{background:#1A1B1E;border-radius:clamp(36px,15.4%,60px);padding:clamp(7px,2.4%,10px);
+    box-shadow:0 44px 110px -30px rgba(0,0,0,.30),0 10px 34px -12px rgba(0,0,0,.18),inset 0 0 0 2px #3A3C40}
+  .xp-phone{border-radius:15.4cqw;padding:2.4cqw}
+  .xp-phone img{display:block;width:100%;height:auto;border-radius:clamp(30px,13%,50px)}
+  .xp-phone img{border-radius:13cqw}
   .xp-chip{position:absolute;left:-6%;bottom:18%;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;
     border-radius:var(--r-pill);background:var(--card);border:1px solid var(--hair);box-shadow:0 10px 30px -10px rgba(0,0,0,.25);
     font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--ink);white-space:nowrap}
@@ -233,7 +235,8 @@
   .xp.js .xp-screen.is-active .xp-copy{transform:none}
   .xp.js .xp-chip{opacity:0;transform:translateX(24px);transition:opacity .3s var(--ease) .4s,transform .3s var(--ease) .4s}
   .xp.js .xp-screen.is-active .xp-chip{opacity:1;transform:none}
-  .xp.js .xp-screen[data-tone="dark"] .xp-device{opacity:.5;transform:scale(.96);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+  /* the fifth screen's device steps back a little, no more — his eye on 2026-10-03: half opacity read as "off" */
+  .xp.js .xp-screen[data-dark] .xp-device{opacity:.85;transform:scale(.97);transition:opacity .5s var(--ease),transform .5s var(--ease)}
   .xp-nav{display:none;align-items:center;gap:var(--s-2);margin-top:var(--s-3)}
   .xp.js .xp-nav{display:flex}
   .xp-tabs{flex:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
@@ -255,8 +258,7 @@
   .xp-play[aria-pressed="true"] .i-play,.xp.is-done .xp-play .i-play{display:block}
   .xp [role="tab"]:focus-visible,.xp-arrow:focus-visible,.xp-play:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
   .xp-now{display:none;margin-top:var(--s-2);text-align:center}
-  @media (max-width:560px){.two-up{gap:var(--s-2)}}
-
+  
   /* ---------- lowest balance figure (spec §11) ---------- */
   .figure{background:var(--subtle);border-radius:var(--r-xl);
     padding:clamp(32px,4.5vw,64px);display:flex;flex-direction:column;justify-content:center}
@@ -378,14 +380,6 @@
      says" / "money you DON'T have". Those say it without borrowing a colour that
      means something else. */
 
-  /* ---------- widgets ---------- */
-  .widget{background:var(--bg);border:1px solid var(--hair);border-radius:var(--r-lg);
-    padding:clamp(24px,3vw,34px);max-width:340px;width:100%;margin:0 auto;
-    box-shadow:0 24px 60px -32px rgba(0,0,0,.24)}
-  .widget-line{display:flex;justify-content:space-between;align-items:center;gap:12px;
-    margin:9px 0;font-size:14.5px}
-  .widget-line i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:9px}
-
   /* ---------- privacy (spec §20) ---------- */
   .principles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
     gap:clamp(24px,3vw,48px);margin-top:clamp(56px,7vw,100px);text-align:left}
@@ -476,7 +470,7 @@
     .switch .track,.switch .track::after,.buy-chip,.merge-tag,
     .wif-bar,.wif-fill,.wif-val,.mini i{transition:none}
     .xp.js [role="tab"][aria-selected="true"] .xp-seg b{animation:none;width:100%}
-    .xp-stage,.xp.js .xp-screen,.xp.js .xp-copy,.xp.js .xp-chip,.xp.js .xp-screen[data-tone="dark"] .xp-device{transition:none}
+    .xp-stage,.xp.js .xp-screen,.xp.js .xp-copy,.xp.js .xp-chip,.xp.js .xp-screen[data-dark] .xp-device{transition:none}
     .xp.js .xp-copy{transform:none}
   }
 </style>
@@ -605,15 +599,16 @@
 
 <!-- ============================ 02b · EXPERIENCE (M22) ============================ -->
 <!-- One month, one story: five screens on one device (PRODUCT-EXPERIENCE.md; his brief LANDING-STANDARD.md §5).
-     The markup is the data — a screen is an <article> with its words, its frame, its tone and its time (data-ms); the
+     The markup is the data — a screen is an <article> with its words, its frame, its time (data-ms) and, for the last,
+     its darkness (data-dark); the
      tab list mirrors it one to one. Without JavaScript the five screens read stacked and the controls stay hidden
      (LANDING-STANDARD.md §1); with it, one screen shows at a time and the timer is the segment's CSS animation. -->
 <section class="xp" id="xp" aria-roledescription="carousel" aria-label="Як працює JayCK Flow, у п'яти екранах" data-xp
          data-l-pause="Пауза" data-l-play="Продовжити" data-l-again="Переглянути знову" data-l-status="Екран {n} з {total} — {label}">
   <div class="wrap">
     <h2 class="visually-hidden">Як працює JayCK Flow, у п'яти екранах</h2>
-    <div class="xp-stage" data-tone="green">
-      <article class="xp-screen is-active" id="xp-s1" role="tabpanel" aria-labelledby="xp-t1" data-ms="8000" data-tone="green">
+    <div class="xp-stage">
+      <article class="xp-screen is-active" id="xp-s1" role="tabpanel" aria-labelledby="xp-t1" data-ms="8000">
         <div class="xp-copy">
           <p class="eyebrow xp-label">Місяць</p>
           <h3 class="display xp-title">Кожен день уже має баланс.</h3>
@@ -628,7 +623,7 @@
           </div>
         </figure>
       </article>
-      <article class="xp-screen" id="xp-s2" role="tabpanel" aria-labelledby="xp-t2" data-ms="8000" data-tone="red">
+      <article class="xp-screen" id="xp-s2" role="tabpanel" aria-labelledby="xp-t2" data-ms="8000">
         <div class="xp-copy">
           <p class="eyebrow xp-label">Що, якщо?</p>
           <h3 class="display xp-title">Перевір покупку, перш ніж гроші підуть.</h3>
@@ -644,7 +639,7 @@
           <span class="xp-chip" aria-hidden="true"><b>−₴18,500</b> Диван</span>
         </figure>
       </article>
-      <article class="xp-screen" id="xp-s3" role="tabpanel" aria-labelledby="xp-t3" data-ms="8000" data-tone="neutral">
+      <article class="xp-screen" id="xp-s3" role="tabpanel" aria-labelledby="xp-t3" data-ms="8000">
         <div class="xp-copy">
           <p class="eyebrow xp-label">Горизонт</p>
           <h3 class="display xp-title">У кожного місяця є найнижчий день. Тепер ти знаєш який.</h3>
@@ -659,7 +654,7 @@
           </div>
         </figure>
       </article>
-      <article class="xp-screen" id="xp-s4" role="tabpanel" aria-labelledby="xp-t4" data-ms="8000" data-tone="blue">
+      <article class="xp-screen" id="xp-s4" role="tabpanel" aria-labelledby="xp-t4" data-ms="8000">
         <div class="xp-copy">
           <p class="eyebrow xp-label">Головний екран</p>
           <h3 class="display xp-title">Календар зустрічає тебе на головному екрані.</h3>
@@ -674,7 +669,7 @@
           </div>
         </figure>
       </article>
-      <article class="xp-screen" id="xp-s5" role="tabpanel" aria-labelledby="xp-t5" data-ms="10000" data-tone="dark">
+      <article class="xp-screen" id="xp-s5" role="tabpanel" aria-labelledby="xp-t5" data-ms="10000" data-dark>
         <div class="xp-copy">
           <p class="eyebrow xp-label">Твоє</p>
           <h3 class="display xp-title">Без входу в банк. Працює офлайн. Твоє.</h3>
@@ -917,44 +912,6 @@
     <p class="lede" style="margin:clamp(36px,4vw,56px) auto 0;max-width:640px" data-reveal data-delay="3">
       Тож за доходом наглядають так само, як за рахунками. А все, що сплатив хтось інший, лишається в історії, але не в прогнозі — число, яке ти бачиш, це число, яке в тебе є.
     </p>
-  </div>
-</section>
-
-<!-- ============================ 10b · WIDGETS ============================ -->
-<section aria-labelledby="wid-h">
-  <div class="wrap">
-    <div class="feature flip">
-      <div class="feature-copy" data-reveal>
-        <p class="eyebrow">На головному екрані</p>
-        <h2 class="display t-mid" id="wid-h">Календар приходить на<br>головний&nbsp;екран.</h2>
-        <p class="lede">
-          Чотири віджети — план на сьогодні, твій баланс, тижні навколо сьогодні та весь місяць. У кожного свої налаштування, а дотик до дня відкриває застосунок просто там.
-        </p>
-        <p class="lede" style="font-size:17px;margin-top:var(--s-3)">
-          Одне правило ми лишили навмисно: поки ти перевіряєш покупку у «Що,&nbsp;якщо?», віджети не рухаються. Головний&nbsp;екран показує лише те, що є насправді — а віджет читає знімок на твоєму пристрої, ніколи не мережу.
-        </p>
-      </div>
-      <div class="two-up" data-reveal="scale" data-delay="1">
-        <figure class="shot">
-          <div class="shot-frame">
-            <picture>
-              <source type="image/webp" srcset="/img/uk/screens/widgets1@1x.webp 1x, /img/uk/screens/widgets1.webp 2x">
-              <img src="/img/uk/screens/widgets1.png" width="760" height="1651" loading="lazy" decoding="async" alt="Головний екран iPhone з віджетами JayCK Flow: віджет «Місяць» із цілим місяцем, розфарбованим за балансом, і віджет «День і тижні» — сьогодні поруч із трьома тижнями.">
-            </picture>
-          </div>
-          <figcaption>Віджети «Місяць» і «День і тижні»</figcaption>
-        </figure>
-        <figure class="shot">
-          <div class="shot-frame">
-            <picture>
-              <source type="image/webp" srcset="/img/uk/screens/widgets2@1x.webp 1x, /img/uk/screens/widgets2.webp 2x">
-              <img src="/img/uk/screens/widgets2.png" width="760" height="1651" loading="lazy" decoding="async" alt="Друга сторінка головного екрана серед справжніх іконок: віджет «Баланс» із прогнозованим балансом, відкладеним, найнижчою точкою і простроченим, і віджет «День» із планом на день.">
-            </picture>
-          </div>
-          <figcaption>Віджети «Баланс» і «День»</figcaption>
-        </figure>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1274,16 +1231,21 @@
     if (!storeBtns.length || !hasIO) {
       hdrCta.setAttribute("data-hidden", "false");
     } else {
-      var onScreen = 0;
+      /* A button inside a screen of the experience that is not showing has a box but no presence: the observer
+         sees it intersect, the reader sees nothing — so it counts only while its screen is active, and the
+         experience says when that changes (his report, 2026-10-03: the header's button vanished for the whole block). */
+      function ctaShowing(b){ var s = b.closest(".xp-screen"); return !s || s.classList.contains("is-active"); }
+      function ctaRecount(){
+        var n = 0;
+        storeBtns.forEach(function(b){ if (b.dataset.seen === "1" && ctaShowing(b)) n++; });
+        hdrCta.setAttribute("data-hidden", n > 0 ? "true" : "false");
+      }
       var cio = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          var was = e.target.dataset.seen === "1";
-          if (e.isIntersecting && !was) { onScreen++; e.target.dataset.seen = "1"; }
-          else if (!e.isIntersecting && was) { onScreen--; e.target.dataset.seen = "0"; }
-        });
-        hdrCta.setAttribute("data-hidden", onScreen > 0 ? "true" : "false");
+        entries.forEach(function(e){ e.target.dataset.seen = e.isIntersecting ? "1" : "0"; });
+        ctaRecount();
       }, { threshold: .35 });
       storeBtns.forEach(function(b){ cio.observe(b); });
+      document.addEventListener("xpchange", ctaRecount);
     }
   }
 
@@ -1334,7 +1296,7 @@
   }
 
   /* ------------------------------------------------ product experience (M22) --
-     The markup is the data: each screen carries its time (data-ms) and tone; the tab list mirrors it. The timer is
+     The markup is the data: each screen carries its time (data-ms), the last its darkness; the tab list mirrors it. The timer is
      the CSS animation on the active segment — animationend advances — so pausing is one class, and reduced motion,
      which has no animation, never advances on its own. Focus pauses only when it is visible (keyboard), so a mouse
      click on a tab does not stop the story. */
@@ -1362,7 +1324,7 @@
         var b = tab.querySelector(".xp-seg b");
         if (b){ b.style.animation = "none"; void b.offsetWidth; b.style.animation = ""; }
       });
-      xpStage.setAttribute("data-tone", xpScreens[n].getAttribute("data-tone") || "neutral");
+      if (xpScreens[n].hasAttribute("data-dark")) xpStage.setAttribute("data-dark", ""); else xpStage.removeAttribute("data-dark");
       xpTabs[n].style.setProperty("--ms", (parseInt(xpScreens[n].getAttribute("data-ms"), 10) || 8000) + "ms");
       xpPrev.disabled = n === 0; xpNext.disabled = n === xpScreens.length - 1;
       var label = xpTabs[n].textContent.trim();
@@ -1370,6 +1332,7 @@
       if (announce && xpStatus) xpStatus.textContent = (xp.getAttribute("data-l-status") || "")
         .replace("{n}", String(n + 1)).replace("{total}", String(xpScreens.length)).replace("{label}", label);
       xpApply();
+      document.dispatchEvent(new Event("xpchange"));
     }
     xpTabs.forEach(function(tab, k){
       tab.addEventListener("click", function(){ xpShow(k, true); });
