@@ -207,6 +207,12 @@ body[data-menu="open"] .burger i:nth-child(3){transform:translateY(-7px) rotate(
    /support, and 412 against 195 at 200% browser zoom, which is a WCAG 1.4.10
    reflow failure. The menu already carries the same Download link. */
 @media (max-width:560px){
+  /* His word 2026-10-04: the offer belongs in the header on the phone too, when no button is on screen. So the
+     pill stays, compact — and it goes only where it cannot fit without the reflow failure above: under 361px, which
+     is also every phone at 200% zoom. The menu still carries the same link for those. */
+  .hdr-side .pill-cta{min-height:40px;padding:0 14px;font-size:14px}
+}
+@media (max-width:360px){
   .hdr-side .pill-cta{display:none}
 }
 
