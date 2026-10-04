@@ -279,8 +279,12 @@
   .state span{color:var(--muted)}
 
   /* mini month used inside the lowest-balance figure */
-  .mini{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
-  .mini i{aspect-ratio:1;border-radius:9px;background:#ECECEF;display:grid;place-items:center;
+  /* The tiles are squares sized by the COLUMN, never by the row. The figure stretches to the copy's height in the
+     two-column layout, and a stretched row lets Safari derive a 1:1 tile's width from that height — on an iPad mini
+     in landscape (1133 px) the grid grew past its panel and over the headline (his screenshot, 2026-10-04). Rows
+     and items start-aligned, the ratio can only resolve from the track. */
+  .mini{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;align-content:start}
+  .mini i{aspect-ratio:1;width:100%;align-self:start;border-radius:9px;background:#ECECEF;display:grid;place-items:center;
     transition:background .5s var(--ease)}
   .mini i::after{content:"";width:14%;height:14%;min-width:5px;min-height:5px;border-radius:50%}
   .mini i.g{background:var(--green-soft)} .mini i.g::after{background:var(--green)}
