@@ -227,7 +227,8 @@
   .xp-phone{background:#1A1B1E;border-radius:clamp(36px,15.4%,60px);padding:clamp(7px,2.4%,10px);
     box-shadow:0 44px 110px -30px rgba(0,0,0,.30),0 10px 34px -12px rgba(0,0,0,.18),inset 0 0 0 2px #3A3C40}
   .xp-phone{border-radius:15.4cqw;padding:2.4cqw}
-  .xp-phone img{display:block;width:100%;height:auto;border-radius:clamp(30px,13%,50px)}
+  /* a picture not yet painted shows the app's own light screen, not the dark of the bezel behind it */
+  .xp-phone img{display:block;width:100%;height:auto;border-radius:clamp(30px,13%,50px);background:#F7F7FA}
   .xp-phone img{border-radius:13cqw}
   .xp-chip{position:absolute;left:-6%;bottom:18%;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;
     border-radius:var(--r-pill);background:var(--card);border:1px solid var(--hair);box-shadow:0 10px 30px -10px rgba(0,0,0,.25);
@@ -251,7 +252,8 @@
   .xp.js .xp-phone{position:relative}
   .xp.js .xp-phone::after{content:"";position:absolute;inset:clamp(7px,2.4%,10px);inset:2.4cqw;border-radius:13cqw;
     background:#fff;opacity:1;pointer-events:none;transition:opacity .4s cubic-bezier(.4,0,1,1)}
-  .xp.js .xp-screen.is-active .xp-phone::after{opacity:0;transition:opacity .6s cubic-bezier(0,0,.2,1) .4s}
+  /* the white holds 0.1 s after the swap, so a picture's first paint happens under it */
+  .xp.js .xp-screen.is-active .xp-phone::after{opacity:0;transition:opacity .6s cubic-bezier(0,0,.2,1) .5s}
   .xp.js .xp-device{opacity:0;transition:opacity .3s var(--ease) .42s}
   .xp.js .xp-screen.is-active .xp-device{opacity:1;transition:opacity 0s linear .4s}
   .xp.js .xp-copy>*{opacity:0;transform:translateY(32px);transition:opacity .3s var(--ease),transform 0s linear .35s}
@@ -1378,25 +1380,45 @@
         .replace("{n}", String(n + 1)).replace("{total}", String(xpScreens.length)).replace("{label}", label);
       xpApply();
       document.dispatchEvent(new Event("xpchange"));
+      if (n + 1 < xpScreens.length) xpDecode(n + 1);
+    }
+    /* A screen changes only once its picture is decoded. On a first visit Safari decodes a hidden picture at the moment
+       it first shows, so the first round of changes cut the flash short — the picture appeared at once, the animation
+       as if broken off; the second round was smooth (his report and his confirmation, 2026-10-04). So the next picture
+       is decoded ahead, every picture once the block is near, and a change waits for its picture — half a second for a
+       tap, two and a half for the timer — then goes ahead regardless. A newer request cancels an older one. */
+    function xpDecode(n){
+      var im = xpScreens[n] && xpScreens[n].querySelector("img");
+      if (!im || !im.decode) return Promise.resolve();
+      if (im.loading === "lazy") im.loading = "eager";
+      return im.decode().catch(function(){});
+    }
+    var xpReq = 0;
+    function xpGo(n, announce, wait){
+      n = Math.max(0, Math.min(xpScreens.length - 1, n));
+      var my = ++xpReq, done = false;
+      function go(){ if (done || my !== xpReq) return; done = true; xpShow(n, announce); }
+      xpDecode(n).then(go);
+      setTimeout(go, wait || 500);
     }
     xpTabs.forEach(function(tab, k){
-      tab.addEventListener("click", function(){ xpShow(k, true); });
+      tab.addEventListener("click", function(){ xpGo(k, true); });
       tab.addEventListener("keydown", function(e){
         var to = e.key === "ArrowRight" ? k + 1 : e.key === "ArrowLeft" ? k - 1 : e.key === "Home" ? 0 : e.key === "End" ? xpTabs.length - 1 : -1;
         if (to < 0 || to >= xpTabs.length) return;
-        e.preventDefault(); xpShow(to, true); xpTabs[to].focus();
+        e.preventDefault(); xpGo(to, true); xpTabs[to].focus();
       });
       var seg = tab.querySelector(".xp-seg b");
       if (seg) seg.addEventListener("animationend", function(){
         if (k !== xpI) return;
-        if (xpI < xpScreens.length - 1) xpShow(xpI + 1, false);
+        if (xpI < xpScreens.length - 1) xpGo(xpI + 1, false, 2500);
         else { xpDone = true; xp.classList.add("is-done"); xpApply(); }
       });
     });
-    xpPrev.addEventListener("click", function(){ xpShow(xpI - 1, true); });
-    xpNext.addEventListener("click", function(){ xpShow(xpI + 1, true); });
+    xpPrev.addEventListener("click", function(){ xpGo(xpI - 1, true); });
+    xpNext.addEventListener("click", function(){ xpGo(xpI + 1, true); });
     xpPlay.addEventListener("click", function(){
-      if (xpDone){ xpUser = false; xpShow(0, true); return; }
+      if (xpDone){ xpUser = false; xpGo(0, true); return; }
       xpUser = !xpUser; xpApply();
     });
     xpStage.addEventListener("mouseenter", function(){ xpHover = true; xpApply(); });
@@ -1414,7 +1436,7 @@
       if (xpSX === null) return;
       var dx = e.clientX - xpSX, dy = e.clientY - xpSY; xpSX = xpSY = null;
       if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
-      xpShow(xpI + (dx < 0 ? 1 : -1), true);
+      xpGo(xpI + (dx < 0 ? 1 : -1), true);
     }, { passive:true });
     xpStage.addEventListener("pointercancel", function(){ xpSX = xpSY = null; }, { passive:true });
     document.addEventListener("visibilitychange", xpApply);
@@ -1439,7 +1461,7 @@
     if (hasIO){
       var xpWarm = new IntersectionObserver(function(entries){
         if (!entries.some(function(e){ return e.isIntersecting; })) return;
-        [].forEach.call(xp.querySelectorAll('img[loading="lazy"]'), function(im){ im.loading = "eager"; });
+        xpScreens.forEach(function(s, k){ xpDecode(k); });
         xpWarm.disconnect();
       }, { rootMargin: "800px 0px" });
       xpWarm.observe(xp);
