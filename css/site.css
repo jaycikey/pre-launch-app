@@ -187,6 +187,11 @@ a{color:inherit;text-decoration:none}
   padding:9px 20px;font-size:15px;font-weight:600;letter-spacing:-.01em;
   white-space:nowrap;transition:opacity .25s var(--ease)}
 .pill-cta:hover{opacity:.82}
+/* The language switch in the header — a short code (UA / EN) that fits every width, the word in the menu and the
+   footer; his ask of 2026-10-04 (the footer alone meant scrolling to the bottom). The generator writes all three. */
+.lang-switch{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;font-size:13px;font-weight:600;
+  letter-spacing:.08em;color:var(--muted);border-radius:var(--r-pill);text-decoration:none}
+.lang-switch:hover{color:var(--ink)}
 
 .burger{display:none;width:44px;height:44px;border:0;background:none;cursor:pointer;
   align-items:center;justify-content:center;flex-direction:column;gap:5px;
@@ -236,7 +241,7 @@ body[data-menu="open"]{overflow:hidden}
 body[data-menu="open"] .hdr{background:var(--bg);border-bottom-color:transparent;
   -webkit-backdrop-filter:none;backdrop-filter:none;padding-right:var(--sbw,0px)}
 body[data-menu="open"] .menu{padding-right:calc(var(--gut-r) + var(--sbw,0px))}
-body[data-menu="open"] .pill-cta{opacity:0;visibility:hidden;pointer-events:none}
+body[data-menu="open"] .pill-cta,body[data-menu="open"] .lang-switch{opacity:0;visibility:hidden;pointer-events:none}
 
 /* ========================================================================== */
 /* footer — byte-identical on all five pages, and it was already the one piece  */
