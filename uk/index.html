@@ -204,14 +204,12 @@
      animation on the active tab's segment: pausing is a class on the block, and reduced motion — which has no
      animation — never advances on its own. */
   .xp{padding-block:clamp(40px,6vw,96px) clamp(64px,9vw,140px)}
-  /* The field is the page's own panel colour (the figures' --subtle), and the fifth screen is dark the way the page's
-     statements are (--plum): his eye on 2026-10-03 — tinted fields per screen stood out from the rest of the design.
-     The state colours live where they are real: in the frame and in the chip. */
+  /* The field is the page's own panel colour (the figures' --subtle) on every screen: his eye on 2026-10-03 — tinted
+     fields per screen stood out from the rest of the design — and on 2026-10-04, when a dark fifth screen among four
+     light ones read as a jump in the light scheme. One block, one field; the end of the story is the button, not a
+     colour. The state colours live where they are real: in the frame and in the chip. */
   .xp-stage{position:relative;display:grid;border-radius:var(--r-xl);background:var(--subtle);touch-action:pan-y;
-    padding:clamp(24px,4vw,56px) clamp(20px,4vw,56px);transition:background-color .4s var(--ease),color .4s var(--ease)}
-  .xp-stage[data-dark]{background:var(--plum);color:#fff}
-  .xp-stage[data-dark] .lede,.xp-stage[data-dark] .eyebrow,.xp-stage[data-dark] .fine{color:#98989F}
-  .xp-stage[data-dark] .btn{background:#fff;color:#000}
+    padding:clamp(24px,4vw,56px) clamp(20px,4vw,56px)}
   .xp-screen{grid-area:1/1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center}
   .xp-title{font-size:clamp(30px,3.6vw,52px);line-height:1.04;letter-spacing:-.035em;margin-top:var(--s-2)}
   .xp-text{margin-top:var(--s-3);max-width:34ch}
@@ -235,8 +233,8 @@
   .xp.js .xp-screen.is-active .xp-copy{transform:none}
   .xp.js .xp-chip{opacity:0;transform:translateX(24px);transition:opacity .3s var(--ease) .4s,transform .3s var(--ease) .4s}
   .xp.js .xp-screen.is-active .xp-chip{opacity:1;transform:none}
-  /* the fifth screen's device steps back a little, no more — his eye on 2026-10-03: half opacity read as "off" */
-  .xp.js .xp-screen[data-dark] .xp-device{opacity:.85;transform:scale(.97);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+  /* the screen with the button: its device steps back a little, no more — his eye on 2026-10-03: half opacity read as "off" */
+  .xp.js .xp-screen[data-cta] .xp-device{opacity:.85;transform:scale(.97);transition:opacity .5s var(--ease),transform .5s var(--ease)}
   .xp-nav{display:none;align-items:center;gap:var(--s-2);margin-top:var(--s-3)}
   .xp.js .xp-nav{display:flex}
   .xp-tabs{flex:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
@@ -413,8 +411,8 @@
     .xp-screen{grid-template-columns:1fr;gap:var(--s-3);align-content:start}
     .xp-device{order:-1;width:min(62vw,320px);max-height:min(56vh,470px);overflow:hidden;
       -webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent)}
-    /* the fifth screen is the words and the button: its frame is shorter here so all three fit one viewport */
-    .xp-screen[data-dark] .xp-device{max-height:min(42vh,350px)}
+    /* the screen with the button is the words and the button: its frame is shorter here so all three fit one viewport */
+    .xp-screen[data-cta] .xp-device{max-height:min(42vh,350px)}
     .xp-cta{margin-top:var(--s-3)}
     .xp-stage{padding:clamp(20px,4vw,32px) clamp(16px,4vw,32px)}
     .xp-title{font-size:clamp(26px,6.4vw,34px)}
@@ -477,7 +475,7 @@
     .switch .track,.switch .track::after,.buy-chip,.merge-tag,
     .wif-bar,.wif-fill,.wif-val,.mini i{transition:none}
     .xp.js [role="tab"][aria-selected="true"] .xp-seg b{animation:none;width:100%}
-    .xp-stage,.xp.js .xp-screen,.xp.js .xp-copy,.xp.js .xp-chip,.xp.js .xp-screen[data-dark] .xp-device{transition:none}
+    .xp.js .xp-screen,.xp.js .xp-copy,.xp.js .xp-chip,.xp.js .xp-screen[data-cta] .xp-device{transition:none}
     .xp.js .xp-copy{transform:none}
   }
 </style>
@@ -607,7 +605,7 @@
 <!-- ============================ 02b · EXPERIENCE (M22) ============================ -->
 <!-- One month, one story: five screens on one device (PRODUCT-EXPERIENCE.md; his brief LANDING-STANDARD.md §5).
      The markup is the data — a screen is an <article> with its words, its frame, its time (data-ms) and, for the last,
-     its darkness (data-dark); the
+     the mark of the button it carries (data-cta); the
      tab list mirrors it one to one. Without JavaScript the five screens read stacked and the controls stay hidden
      (LANDING-STANDARD.md §1); with it, one screen shows at a time and the timer is the segment's CSS animation. -->
 <section class="xp" id="xp" aria-roledescription="carousel" aria-label="Як працює JayCK Flow, у п'яти екранах" data-xp
@@ -676,7 +674,7 @@
           </div>
         </figure>
       </article>
-      <article class="xp-screen" id="xp-s5" role="tabpanel" aria-labelledby="xp-t5" data-ms="10000" data-dark>
+      <article class="xp-screen" id="xp-s5" role="tabpanel" aria-labelledby="xp-t5" data-ms="10000" data-cta>
         <div class="xp-copy">
           <p class="eyebrow xp-label">Твоє</p>
           <h3 class="display xp-title">Без входу в банк. Працює офлайн. Твоє.</h3>
@@ -1303,7 +1301,7 @@
   }
 
   /* ------------------------------------------------ product experience (M22) --
-     The markup is the data: each screen carries its time (data-ms), the last its darkness; the tab list mirrors it. The timer is
+     The markup is the data: each screen carries its time (data-ms), the last the mark of its button; the tab list mirrors it. The timer is
      the CSS animation on the active segment — animationend advances — so pausing is one class, and reduced motion,
      which has no animation, never advances on its own. Focus pauses only when it is visible (keyboard), so a mouse
      click on a tab does not stop the story. */
@@ -1331,7 +1329,6 @@
         var b = tab.querySelector(".xp-seg b");
         if (b){ b.style.animation = "none"; void b.offsetWidth; b.style.animation = ""; }
       });
-      if (xpScreens[n].hasAttribute("data-dark")) xpStage.setAttribute("data-dark", ""); else xpStage.removeAttribute("data-dark");
       xpTabs[n].style.setProperty("--ms", (parseInt(xpScreens[n].getAttribute("data-ms"), 10) || 8000) + "ms");
       xpPrev.disabled = n === 0; xpNext.disabled = n === xpScreens.length - 1;
       var label = xpTabs[n].textContent.trim();
