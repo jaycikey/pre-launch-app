@@ -265,7 +265,25 @@ footer .f-links a{display:inline-flex;align-items:center;min-height:44px;
   padding:0 4px;font-size:14px;color:var(--muted)}
 footer .f-links a:hover{color:var(--ink)}
 footer .f-links a[aria-current="page"]{color:var(--ink);font-weight:600}
+/* The product's profiles — his ask of 2026-10-05, the day the accounts were made. A glyph the height of the
+   footer's words, each inside the same 44px target the links have; the grey and both schemes come from currentColor. */
+footer .f-social{margin-top:var(--s-1);display:flex;flex-wrap:wrap;justify-content:center;gap:0 4px}
+footer .f-social a{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;
+  color:var(--muted);border-radius:var(--r-pill)}
+footer .f-social a:hover{color:var(--ink)}
+footer .f-social svg{width:20px;height:20px}
 footer .f-sub{font-size:13px;color:var(--muted);margin-top:var(--s-1)}
+
+/* ========================================================================== */
+/* intent pages — /future-balance /cash-flow-calendar /bill-calendar (M17)     */
+/* ========================================================================== */
+/* One screen of the app per page, right under the call to action: the picture is the claim the words then explain.
+   The width of the home page's phone; the corners of the phone's own glass. */
+.doc .shot{margin:var(--s-4) auto 0;max-width:320px}
+.doc .shot img{display:block;width:100%;height:auto;border-radius:40px;
+  box-shadow:0 24px 60px rgba(24,60,110,.16),0 6px 18px rgba(24,60,110,.10)}
+.doc .shot + h2{margin-top:var(--s-4)}
+.doc ul.next{list-style:none;padding-left:0}
 
 /* ========================================================================== */
 /* document pages — /help /privacy /terms /support                             */
