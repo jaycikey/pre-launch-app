@@ -125,6 +125,8 @@
   .chip.a{background:var(--amber-soft);color:var(--amber-text)}
   .chip.r{background:var(--red-soft);color:var(--red-text)}
   .chip.b{background:var(--blue-soft);color:var(--blue-text)}
+  /* The calendar's savings-day dot (C10-314, 2026-10-05): the app's own orange, a little larger than the app draws it. */
+  .sdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber);vertical-align:middle;margin-right:6px}
 </style>
 <a class="skip" href="#main">Skip to content</a>
 
@@ -241,6 +243,7 @@
   <div class="row"><div class="n"><span class="chip r">Red</span> badge</div><div class="d">A past day with something you never marked. The colour replaces the direction here, because an unconfirmed past row means the balance above may not be true — and that is equally so whether a bill went out or a payment failed to arrive. The <strong>+</strong> and <strong>−</strong> still tell the two apart.</div></div>
   <div class="row"><div class="n"><span class="chip g">✓</span> badge</div><div class="d">Everything on that day is marked — money in as well as money out.</div></div>
   <div class="row"><div class="n">Small number, left gutter</div><div class="d">The ISO week number. It turns red when that week contains a risk day.</div></div>
+  <div class="row"><div class="n"><span class="sdot" aria-hidden="true"></span>Orange dot</div><div class="d">A savings goal's contribution day — the day of the month set on the goal. In the current month it shows only while that month's contribution is still due; in other months it marks the day every time.</div></div>
   <div class="row"><div class="n">Today</div><div class="d">Today's date is circled. The bottom-right <strong>Today</strong> pill jumps you back to it from anywhere.</div></div>
   <div class="row"><div class="n">+ <em>bottom right</em></div><div class="d">Adds a transaction on the selected day.</div></div>
 </div>

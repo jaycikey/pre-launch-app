@@ -126,6 +126,8 @@
   .chip.a{background:var(--amber-soft);color:var(--amber-text)}
   .chip.r{background:var(--red-soft);color:var(--red-text)}
   .chip.b{background:var(--blue-soft);color:var(--blue-text)}
+  /* The calendar's savings-day dot (C10-314, 2026-10-05): the app's own orange, a little larger than the app draws it. */
+  .sdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber);vertical-align:middle;margin-right:6px}
 </style>
 <a class="skip" href="#main">Перейти до вмісту</a>
 
@@ -242,6 +244,7 @@
   <div class="row"><div class="n"><span class="chip r">Червоний</span> бейдж</div><div class="d">Минулий день, на якому ти щось не позначив. Тут колір замінює напрямок, бо непідтверджений минулий рядок означає, що баланс вище може не бути правдою — і це однаково так, чи рахунок пішов, чи платіж не прийшов. <strong>+</strong> і <strong>−</strong> далі розрізняють ці два випадки.</div></div>
   <div class="row"><div class="n"><span class="chip g">✓</span> бейдж</div><div class="d">Усе на цей день позначено — і надходження, і витрати.</div></div>
   <div class="row"><div class="n">Маленьке число, ліве поле</div><div class="d">Номер тижня ISO. Стає червоним, коли в тому тижні є ризиковий день.</div></div>
+  <div class="row"><div class="n"><span class="sdot" aria-hidden="true"></span>Помаранчева крапка</div><div class="d">День внеску в ціль заощаджень — день місяця, заданий для цілі. У поточному місяці крапка видна, лише поки внесок цього місяця ще не зроблено; в інших місяцях вона позначає цей день щоразу.</div></div>
   <div class="row"><div class="n">Сьогодні</div><div class="d">Сьогоднішня дата обведена. Пігулка <strong>Сьогодні</strong> унизу праворуч повертає до неї звідусіль.</div></div>
   <div class="row"><div class="n">+ <em>унизу праворуч</em></div><div class="d">Додає транзакцію на вибраний день.</div></div>
 </div>
