@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Календар рахунків, що показує баланс після кожного рахунку</title>
-<meta name="description" content="Постав кожен рахунок на день оплати, з тим, як часто він повторюється, і побач, скільки лишиться після нього. JayCK Flow — грошовий календар для iPhone та iPad.">
-<link rel="canonical" href="https://flow.jayck.dev/uk/bill-calendar">
-<link rel="alternate" hreflang="en" href="https://flow.jayck.dev/bill-calendar">
-<link rel="alternate" hreflang="uk" href="https://flow.jayck.dev/uk/bill-calendar">
-<link rel="alternate" hreflang="x-default" href="https://flow.jayck.dev/bill-calendar">
+<title>Твій баланс на головному екрані — чотири віджети</title>
+<meta name="description" content="Віджети JayCK Flow виносять прогноз на головний екран iPhone — баланс зараз, найнижчу точку попереду, сьогоднішній день і весь місяць — без відкриття застосунку.">
+<link rel="canonical" href="https://flow.jayck.dev/uk/widgets">
+<link rel="alternate" hreflang="en" href="https://flow.jayck.dev/widgets">
+<link rel="alternate" hreflang="uk" href="https://flow.jayck.dev/uk/widgets">
+<link rel="alternate" hreflang="x-default" href="https://flow.jayck.dev/widgets">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="JayCK Flow">
-<meta property="og:url" content="https://flow.jayck.dev/uk/bill-calendar">
-<meta property="og:title" content="Календар рахунків, що показує баланс після кожного рахунку">
-<meta property="og:description" content="Постав кожен рахунок на день оплати, з тим, як часто він повторюється, і побач, скільки лишиться після нього. JayCK Flow — грошовий календар для iPhone та iPad.">
+<meta property="og:url" content="https://flow.jayck.dev/uk/widgets">
+<meta property="og:title" content="Твій баланс на головному екрані — чотири віджети">
+<meta property="og:description" content="Віджети JayCK Flow виносять прогноз на головний екран iPhone — баланс зараз, найнижчу точку попереду, сьогоднішній день і весь місяць — без відкриття застосунку.">
 <meta property="og:image" content="https://flow.jayck.dev/og-v2.png">
 <meta property="og:image:secure_url" content="https://flow.jayck.dev/og-v2.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:locale" content="uk_UA">
 <meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Календар рахунків, що показує баланс після кожного рахунку">
-<meta name="twitter:description" content="Постав кожен рахунок на день оплати, з тим, як часто він повторюється, і побач, скільки лишиться після нього. JayCK Flow — грошовий календар для iPhone та iPad.">
+<meta name="twitter:title" content="Твій баланс на головному екрані — чотири віджети">
+<meta name="twitter:description" content="Віджети JayCK Flow виносять прогноз на головний екран iPhone — баланс зараз, найнижчу точку попереду, сьогоднішній день і весь місяць — без відкриття застосунку.">
 <meta name="twitter:image" content="https://flow.jayck.dev/og-v2.png">
 <meta name="twitter:image:alt" content="JayCK Flow: знак-пташка над трьома картками днів одного тижня — $380 на зеленому, $92 на жовтому, −$622 на червоному — під словами Money calendar">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -42,10 +42,10 @@
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "Календар рахунків, що показує баланс після кожного рахунку",
-  "url": "https://flow.jayck.dev/uk/bill-calendar",
+  "name": "Твій баланс на головному екрані — чотири віджети",
+  "url": "https://flow.jayck.dev/uk/widgets",
   "inLanguage": "uk",
-  "description": "Постав кожен рахунок на день оплати, з тим, як часто він повторюється, і побач, скільки лишиться після нього. JayCK Flow — грошовий календар для iPhone та iPad.",
+  "description": "Віджети JayCK Flow виносять прогноз на головний екран iPhone — баланс зараз, найнижчу точку попереду, сьогоднішній день і весь місяць — без відкриття застосунку.",
   "about": { "@type": "MobileApplication", "name": "JayCK Flow", "url": "https://flow.jayck.dev/", "operatingSystem": "iOS", "applicationCategory": "FinanceApplication", "installUrl": "https://apps.apple.com/app/jayck-flow/id6789696499" }
 }
 </script>
@@ -63,7 +63,7 @@
         <a href="/uk/help">Довідка</a>
         <a href="/uk/support">Підтримка</a>
       </nav>
-      <a class="lang-switch" href="/bill-calendar" lang="en" hreflang="en" aria-label="English">EN</a>
+      <a class="lang-switch" href="/widgets" lang="en" hreflang="en" aria-label="English">EN</a>
       <a class="pill-cta" href="https://apps.apple.com/app/jayck-flow/id6789696499">Завантажити</a>
       <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Меню">
         <i></i><i></i><i></i>
@@ -89,40 +89,40 @@
   <a href="/uk/privacy">Приватність</a>
   <a href="/uk/help">Довідка</a>
   <a href="/uk/support">Підтримка</a>
-  <a class="menu-lang" href="/bill-calendar" lang="en" hreflang="en">English</a>
+  <a class="menu-lang" href="/widgets" lang="en" hreflang="en">English</a>
   <a class="menu-cta" href="https://apps.apple.com/app/jayck-flow/id6789696499">Завантажити в App&nbsp;Store</a>
 </div>
 
 <main class="doc" id="main">
-<p class="kicker">Календар рахунків</p>
-<h1>Рахунки на свої дати — і що лишається після кожного</h1>
-<p class="sub">Список рахунків каже, скільки ти маєш сплатити. Календар рахунків каже коли — і яким буде баланс, коли кожен із них пройде.</p>
+<p class="kicker">Віджети</p>
+<h1>Прогноз — без відкриття застосунку</h1>
+<p class="sub">Грошовий календар — про дні попереду. Віджети тримають їх на головному екрані, тож одного погляду на телефон досить, щоб побачити, який вигляд має місяць.</p>
 <a class="cta" href="https://apps.apple.com/app/jayck-flow/id6789696499">Завантажити в App&nbsp;Store</a>
 
 <figure class="shot">
   <picture>
-    <source type="image/webp" width="760" height="1651" srcset="/img/uk/screens/gestures@1x.webp 380w, /img/uk/screens/gestures.webp 760w" sizes="(min-width:861px) 320px, 72vw">
-    <img src="/img/uk/screens/gestures.png" width="760" height="1651" decoding="async" alt="Список днів у JayCK Flow: 10 жовтня з балансом на кінець дня ₴45,779.41, далі дні після нього, кожен рахунок на своїй даті й з тим, як часто він повторюється — Спортзал, щомісяця, −₴1,200.00; Інтернет, щомісяця, −₴350.00. Один рядок відсунуто до «Сховати» і «Видалити».">
+    <source media="(prefers-color-scheme: dark)" type="image/webp" width="760" height="1651" srcset="/img/uk/screens/widgets2-dark@1x.webp 380w, /img/uk/screens/widgets2-dark.webp 760w" sizes="(min-width:861px) 320px, 72vw">
+    <source type="image/webp" width="760" height="1651" srcset="/img/uk/screens/widgets2@1x.webp 380w, /img/uk/screens/widgets2.webp 760w" sizes="(min-width:861px) 320px, 72vw">
+    <img src="/img/uk/screens/widgets2.png" width="760" height="1651" decoding="async" alt="Два віджети JayCK Flow на головному екрані iPhone: Balance — ₴60,383.40 зараз, ₴39.6k зарезервовано і ₴20.8k доступно, найнижча точка ₴35.3k 15 жовтня, одне прострочене на ₴329, — і Day: неділя, 4-те, «Продукти» −₴2,500, ₴57.9k на кінець дня.">
   </picture>
 </figure>
 
-<h2>Кожен рахунок — у день оплати</h2>
-<p>Додай рахунок із сумою, датою і тим, як часто він повторюється — щотижня, раз на два тижні, щомісяця — або разово. Календар поставить кожен наперед, а кожен день покаже баланс на свій кінець, тож вплив рахунку видно в його власну дату, а не наприкінці місяця.</p>
+<h2>Чотири віджети — чотири питання</h2>
+<p>У галереї віджетів вони звуться Balance, Day, Day & Weeks і Month. Balance показує, скільки насправді твоє: баланс зараз, що зарезервовано на заощадження і що доступно, найнижчу точку попереду і все прострочене; кожен рядок можна вимкнути, а сам баланс показується завжди. Day — сьогоднішній день і що на ньому. Day & Weeks — сьогодні поряд із минулим, цим і наступним тижнем. Month — увесь місяць так, як його малює застосунок: кожен день зі своїм балансом і позначеним найнижчим днем місяця.</p>
 
-<h2>Що лишається після кожного</h2>
-<p>Торкнися дня, щоб побачити все, що на ньому, — поруч із датою баланс на кінець дня. Гортай, і за ним ідуть наступні дні, кожен зі своїми рахунками.</p>
+<h2>Ті самі числа, що й у застосунку</h2>
+<p>Віджети читають прогноз самого застосунку, тож найнижча точка на головному екрані — та сама, що на картці балансу. Зміни щось у застосунку — і віджети підтягнуться при наступному оновленні; коли саме, вирішує iOS.</p>
 
-<h2>Сплачено — і ще до сплати</h2>
-<p>Коли рахунок пройшов, проведи його рядок праворуч, щоб позначити проведеним. Рахунки минулих днів, які ти не позначив, видно на картці балансу як «Прострочено» разом із сумою, а картка змінює колір: баланс на ній може бути ще неточним.</p>
+<h2>Як додати</h2>
+<p>Натисни й утримуй головний екран, торкнися «Редагувати», потім «Додати віджет» і вибери JayCK Flow.</p>
 
 <h2>Приватно за замовчуванням</h2>
 <p>Локально за замовчуванням, акаунт для початку не потрібен. Синхронізація, якщо її увімкнути, наскрізно зашифрована пароль-фразою, яку ми не можемо ані прочитати, ані відновити. Без входу в банк — застосунок ніколи не просить банківських облікових даних.</p>
 
 <h2>Читати далі</h2>
 <ul class="next">
-  <li><a href="/uk/cash-flow-calendar">Календар грошового потоку</a></li>
   <li><a href="/uk/future-balance">Що таке майбутній баланс</a></li>
-  <li><a href="/uk/paycheck-calendar">Зарплата частинами і щомісячні рахунки</a></li>
+  <li><a href="/uk/what-if">Що, якщо? — спершу перевір покупку</a></li>
   <li><a href="/uk/guides">Усі посібники</a></li>
   <li><a href="/uk/help">Як працює кожен екран</a></li>
 </ul>
@@ -131,7 +131,7 @@
 <footer>
   <div class="wrap">
     <p class="f-line">JayCK Flow — календар для твоїх грошей.</p>
-    <p class="f-links"><a href="/uk/guides">Посібники</a>·<a href="/uk/help">Довідка</a>·<a href="/uk/privacy">Приватність</a>·<a href="/uk/terms">Умови</a>·<a href="/uk/press">Преса</a>·<a href="/uk/support">Підтримка</a>·<a href="/bill-calendar" lang="en" hreflang="en">English</a>·<a href="mailto:support@jayck.dev">support@jayck.dev</a></p>
+    <p class="f-links"><a href="/uk/guides">Посібники</a>·<a href="/uk/help">Довідка</a>·<a href="/uk/privacy">Приватність</a>·<a href="/uk/terms">Умови</a>·<a href="/uk/press">Преса</a>·<a href="/uk/support">Підтримка</a>·<a href="/widgets" lang="en" hreflang="en">English</a>·<a href="mailto:support@jayck.dev">support@jayck.dev</a></p>
     <p class="f-social"><a href="https://www.tiktok.com/@jayckflow" rel="me" aria-label="JayCK Flow у TikTok"><svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/></svg></a><a href="https://www.youtube.com/@jayckflow" rel="me" aria-label="JayCK Flow на YouTube"><svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z"/></svg></a><a href="https://www.linkedin.com/company/jaycikey/" rel="me" aria-label="Jaycikey у LinkedIn"><svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg></a></p>
     <p class="f-sub">В App Store · Зроблено Jaycikey LLC · © 2026</p>
   </div>

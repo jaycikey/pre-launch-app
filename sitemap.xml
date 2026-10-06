@@ -46,6 +46,21 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://flow.jayck.dev/paycheck-calendar</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.jayck.dev/what-if</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.jayck.dev/widgets</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://flow.jayck.dev/guides</loc>
     <lastmod>2026-10-06</lastmod>
     <priority>0.7</priority>
@@ -92,6 +107,21 @@
   </url>
   <url>
     <loc>https://flow.jayck.dev/uk/bill-calendar</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.jayck.dev/uk/paycheck-calendar</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.jayck.dev/uk/what-if</loc>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.jayck.dev/uk/widgets</loc>
     <lastmod>2026-10-06</lastmod>
     <priority>0.7</priority>
   </url>
