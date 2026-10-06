@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://flow.jayck.dev/</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
@@ -12,42 +12,47 @@
   </url>
   <url>
     <loc>https://flow.jayck.dev/support</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://flow.jayck.dev/privacy</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://flow.jayck.dev/terms</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://flow.jayck.dev/press</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://flow.jayck.dev/future-balance</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://flow.jayck.dev/cash-flow-calendar</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://flow.jayck.dev/bill-calendar</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.jayck.dev/guides</loc>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://flow.jayck.dev/uk</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
@@ -57,37 +62,42 @@
   </url>
   <url>
     <loc>https://flow.jayck.dev/uk/support</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://flow.jayck.dev/uk/privacy</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://flow.jayck.dev/uk/terms</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://flow.jayck.dev/uk/press</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://flow.jayck.dev/uk/future-balance</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://flow.jayck.dev/uk/cash-flow-calendar</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://flow.jayck.dev/uk/bill-calendar</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-06</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.jayck.dev/uk/guides</loc>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.7</priority>
   </url>
 </urlset>
