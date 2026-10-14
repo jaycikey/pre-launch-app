@@ -583,7 +583,7 @@
         <a href="/support">Support</a>
       </nav>
       <a class="lang-switch" href="/uk" lang="uk" hreflang="uk" aria-label="Українська">UA</a>
-      <a class="pill-cta nav-cta" id="hdr-cta" data-hidden="true" href="https://apps.apple.com/app/jayck-flow/id6789696499">Download</a>
+      <a class="pill-cta nav-cta" id="hdr-cta" data-hidden="true" href="/download">Download</a>
       <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu">
         <i></i><i></i><i></i>
       </button>
@@ -625,7 +625,7 @@
   <a href="/help">Help</a>
   <a href="/support">Support</a>
   <a class="menu-lang" href="/uk" lang="uk" hreflang="uk">Українська</a>
-  <a class="menu-cta" href="https://apps.apple.com/app/jayck-flow/id6789696499">Download on the App Store</a>
+  <a class="menu-cta" href="/download">Download</a>
 </div>
 
 <main id="main">
@@ -639,7 +639,7 @@
       Your money already has dates. Now it has a calendar.
     </p>
     <div class="hero-cta" data-reveal data-delay="3">
-      <a class="btn" href="https://apps.apple.com/app/jayck-flow/id6789696499">Download on the App&nbsp;Store</a>
+      <a class="btn" href="/download">Download</a>
       <p class="fine">Free to use · Cross-device sync is a subscription</p>
     </div>
   </div>
@@ -754,7 +754,7 @@
           <p class="eyebrow xp-label">Yours</p>
           <h3 class="display xp-title">No bank login. Works offline. Yours.</h3>
           <p class="lede xp-text">Local by default. Sync, when you turn it on, is end-to-end encrypted with a passphrase we cannot read.</p>
-          <p class="xp-cta"><a class="btn" href="https://apps.apple.com/app/jayck-flow/id6789696499">Download on the App&nbsp;Store</a><span class="fine">Free</span></p>
+          <p class="xp-cta"><a class="btn" href="/download">Download</a><span class="fine">Free</span></p>
         </div>
         <figure class="xp-device">
           <div class="xp-phone">
@@ -1065,7 +1065,7 @@
   <div class="wrap col">
     <h2 class="display t-statement" id="cta-h" data-reveal>Know your future<br>balance today.</h2>
     <p data-reveal data-delay="1">
-      <a class="btn" href="https://apps.apple.com/app/jayck-flow/id6789696499">Download on the App&nbsp;Store</a>
+      <a class="btn" href="/download">Download</a>
     </p>
     <p class="fine" data-reveal data-delay="2" style="margin-top:var(--s-3)">Free to use · iPhone and iPad</p>
   </div>
@@ -1319,12 +1319,12 @@
   }
 
   /* -------------------------------------------------- header CTA (smart) --
-     Visible exactly when no in-page App Store button is on screen — the offer
+     Visible exactly when no in-page Download button is on screen — the offer
      is always somewhere, never twice. Fails open: without IO the link stays on,
      which is the safe direction for a conversion path. */
   var hdrCta = document.getElementById("hdr-cta");
   if (hdrCta) {
-    var storeBtns = [].slice.call(document.querySelectorAll('.btn[href*="apps.apple.com"]'));
+    var storeBtns = [].slice.call(document.querySelectorAll('.btn[href$="/download"]'));
     if (!storeBtns.length || !hasIO) {
       hdrCta.setAttribute("data-hidden", "false");
     } else {

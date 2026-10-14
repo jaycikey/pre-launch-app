@@ -293,6 +293,11 @@ footer .f-sub{font-size:13px;color:var(--muted);margin-top:var(--s-1)}
 .doc ul.guides .g-kicker{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
 .doc ul.guides .g-title{display:block;margin-top:6px;font-size:clamp(20px,2.4vw,24px);font-weight:650;letter-spacing:-.02em;line-height:1.25}
 .doc ul.guides .g-sub{display:block;margin-top:8px;font-size:16px;line-height:1.5;color:var(--muted)}
+/* /download — every way to get the app, one card a store: the devices it serves and the way to it (M26, 2026-10-14).
+   A store not yet public is a label, never a link — its look is beside .cta below. */
+.doc ul.stores{list-style:none;padding:0;margin:var(--s-4) 0 0;display:grid;gap:var(--s-2)}
+.doc ul.stores li{margin:0;padding:clamp(20px,3vw,28px);border:1px solid var(--hair);border-radius:var(--r-ui);background:var(--card)}
+.doc ul.stores h2{margin:0;font-size:clamp(20px,2.4vw,24px)}
 
 /* ========================================================================== */
 /* document pages — /help /privacy /terms /support                             */
@@ -330,11 +335,13 @@ footer .f-sub{font-size:13px;color:var(--muted);margin-top:var(--s-1)}
 .doc a{color:var(--blue-text);text-decoration:underline;text-underline-offset:3px}
 .doc a:hover{text-decoration-thickness:2px}
 .doc strong{color:var(--ink);font-weight:650}
-.doc .cta{display:inline-flex;align-items:center;min-height:48px;
+.doc .cta,.doc .soon{display:inline-flex;align-items:center;min-height:48px;
   background:var(--ink);color:var(--bg);border-radius:var(--r-pill);
   padding:13px 26px;font-size:17px;font-weight:600;letter-spacing:-.01em;
   margin-top:var(--s-3);text-decoration:none}
 .doc .cta:hover{opacity:.92;text-decoration:none}
+/* A store not yet public (/download): the button's shape, not its ink. */
+.doc .soon{background:none;border:1px solid var(--hair);color:var(--muted)}
 /* 16px measured 82ch on /support's security note — smaller type in the same
    column buys more characters, not fewer. One step up puts it under the bar. */
 .doc .note{background:var(--subtle);border:1px solid var(--hair);border-radius:var(--r-sm);

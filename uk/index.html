@@ -584,7 +584,7 @@
         <a href="/uk/support">Підтримка</a>
       </nav>
       <a class="lang-switch" href="/" lang="en" hreflang="en" aria-label="English">EN</a>
-      <a class="pill-cta nav-cta" id="hdr-cta" data-hidden="true" href="https://apps.apple.com/app/jayck-flow/id6789696499">Завантажити</a>
+      <a class="pill-cta nav-cta" id="hdr-cta" data-hidden="true" href="/uk/download">Завантажити</a>
       <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Меню">
         <i></i><i></i><i></i>
       </button>
@@ -626,7 +626,7 @@
   <a href="/uk/help">Довідка</a>
   <a href="/uk/support">Підтримка</a>
   <a class="menu-lang" href="/" lang="en" hreflang="en">English</a>
-  <a class="menu-cta" href="https://apps.apple.com/app/jayck-flow/id6789696499">Завантажити в App Store</a>
+  <a class="menu-cta" href="/uk/download">Завантажити</a>
 </div>
 
 <main id="main">
@@ -640,7 +640,7 @@
       У твоїх грошей уже є дати. Тепер у них є календар.
     </p>
     <div class="hero-cta" data-reveal data-delay="3">
-      <a class="btn" href="https://apps.apple.com/app/jayck-flow/id6789696499">Завантажити в App&nbsp;Store</a>
+      <a class="btn" href="/uk/download">Завантажити</a>
       <p class="fine">Безплатно · Синхронізація між пристроями — за підпискою</p>
     </div>
   </div>
@@ -755,7 +755,7 @@
           <p class="eyebrow xp-label">Твоє</p>
           <h3 class="display xp-title">Без входу в банк. Працює офлайн. Твоє.</h3>
           <p class="lede xp-text">Локально за замовчуванням. Синхронізація, коли ти її ввімкнеш, зашифрована наскрізно парольною фразою, якої ми не можемо прочитати.</p>
-          <p class="xp-cta"><a class="btn" href="https://apps.apple.com/app/jayck-flow/id6789696499">Завантажити в App&nbsp;Store</a><span class="fine">Безплатно</span></p>
+          <p class="xp-cta"><a class="btn" href="/uk/download">Завантажити</a><span class="fine">Безплатно</span></p>
         </div>
         <figure class="xp-device">
           <div class="xp-phone">
@@ -1066,7 +1066,7 @@
   <div class="wrap col">
     <h2 class="display t-statement" id="cta-h" data-reveal>Знай своє майбутнє<br>баланс сьогодні.</h2>
     <p data-reveal data-delay="1">
-      <a class="btn" href="https://apps.apple.com/app/jayck-flow/id6789696499">Завантажити в App&nbsp;Store</a>
+      <a class="btn" href="/uk/download">Завантажити</a>
     </p>
     <p class="fine" data-reveal data-delay="2" style="margin-top:var(--s-3)">Безплатно · iPhone та iPad</p>
   </div>
@@ -1320,12 +1320,12 @@
   }
 
   /* -------------------------------------------------- header CTA (smart) --
-     Visible exactly when no in-page App Store button is on screen — the offer
+     Visible exactly when no in-page Download button is on screen — the offer
      is always somewhere, never twice. Fails open: without IO the link stays on,
      which is the safe direction for a conversion path. */
   var hdrCta = document.getElementById("hdr-cta");
   if (hdrCta) {
-    var storeBtns = [].slice.call(document.querySelectorAll('.btn[href*="apps.apple.com"]'));
+    var storeBtns = [].slice.call(document.querySelectorAll('.btn[href$="/download"]'));
     if (!storeBtns.length || !hasIO) {
       hdrCta.setAttribute("data-hidden", "false");
     } else {

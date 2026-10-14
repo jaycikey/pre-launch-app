@@ -66,6 +66,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://flow.jayck.dev/download</loc>
+    <lastmod>2026-10-14</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://flow.jayck.dev/uk</loc>
     <lastmod>2026-10-14</lastmod>
     <priority>1.0</priority>
@@ -127,6 +132,11 @@
   </url>
   <url>
     <loc>https://flow.jayck.dev/uk/guides</loc>
+    <lastmod>2026-10-14</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://flow.jayck.dev/uk/download</loc>
     <lastmod>2026-10-14</lastmod>
     <priority>0.7</priority>
   </url>
