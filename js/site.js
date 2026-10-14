@@ -1,17 +1,21 @@
 /* ============================================================================
    JayCK Flow — site.js
 
-   The header's two behaviours, shared by all five pages: the band that appears
-   on scroll, and the fullscreen menu. It was five inline copies until today.
+   The header's behaviours, shared by every page framed from `landing/src/layout/top.html`: the band that appears
+   on scroll, the fullscreen menu, and — where the page carries its own Download/store action — the pill that
+   hides while it is on screen (`BACKLOG.md` M26). The first two were five inline copies until the frame was one
+   file; the third is the home page's own rule, generalized here once the defect was found.
 
    NOTHING HERE IS LOAD-BEARING FOR CONTENT. If this file never runs, every
-   page still reads: the links are real links, and a <noscript> block in each
-   page turns the burger off and lays the nav links out as an ordinary row.
-   A page that needs JavaScript to become visible is a page that can fail
-   closed, and one of these five was exactly that until this change.
+   page still reads: the links are real links, the header pill still offers the download page (`top.html`'s own
+   noscript rule forces it visible), and a <noscript> block in each page turns the burger off and lays the nav
+   links out as an ordinary row. A page that needs JavaScript to become visible is a page that can fail closed,
+   and one of these five was exactly that before the frame.
    ========================================================================= */
 (function(){
   "use strict";
+
+  var hasIO = "IntersectionObserver" in window;
 
   var hdr = document.querySelector(".hdr");
   if (hdr) {
@@ -20,6 +24,29 @@
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
+  }
+
+  /* The header pill, where the page carries its own Download/store action (M26 defect, his screenshot on
+     /download): hidden exactly while one of those is on screen, so the same offer is never asked twice. `.cta`
+     and `.soon` are the pages' own Download/store elements — an intent page's single Download button, or the
+     download page's App Store link and Google Play label; nothing else on a shared-frame page carries either
+     class. A page with neither has no `#hdr-cta` either (`build-landing.ts`'s PILL_SMART_PAGES), so this block
+     never runs there. Fails open: without IntersectionObserver the pill stays on, the safe direction for a
+     conversion path. */
+  var hdrCta = document.getElementById("hdr-cta");
+  if (hdrCta) {
+    var storeEls = [].slice.call(document.querySelectorAll(".cta, .soon"));
+    if (!storeEls.length || !hasIO) {
+      hdrCta.setAttribute("data-hidden", "false");
+    } else {
+      var seen = storeEls.map(function(){ return false; });
+      var recount = function(){ hdrCta.setAttribute("data-hidden", seen.indexOf(true) > -1 ? "true" : "false"); };
+      var sio = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ seen[storeEls.indexOf(e.target)] = e.isIntersecting; });
+        recount();
+      }, { threshold: .35 });
+      storeEls.forEach(function(el){ sio.observe(el); });
+    }
   }
 
   var burger = document.getElementById("burger");

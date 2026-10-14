@@ -188,6 +188,21 @@ a{color:inherit;text-decoration:none}
   padding:9px 20px;font-size:15px;font-weight:600;letter-spacing:-.01em;
   white-space:nowrap;transition:opacity .25s var(--ease)}
 .pill-cta:hover{opacity:.82}
+/* Where a page carries its own Download/store action (an intent page's `.cta`, or `/download`'s `.cta` and `.soon`),
+   the pill hides while one of those is on screen, so the offer is never asked twice in one viewport — the home
+   page's own rule, generalized (`landing/js/site.js`) after his screenshot on `/download` found it missing from
+   every other page (`BACKLOG.md` M26). `visibility` (not just opacity) keeps a hidden link out of the tab order.
+   Everything else about this pill — shape, colour, 44px target — is .pill-cta. Hidden, it gives its place back and
+   the language code beside it glides into the corner; shown, it takes the place again (his eye, 2026-10-04: the
+   code floated in the middle of an empty slot). Width, padding, the gap and the fade move together on one long
+   ease, so nothing jumps; 11em is above the widest label (Завантажити). */
+.nav-cta{max-width:11em;overflow:hidden;transform-origin:right center;
+  transition:max-width .6s var(--glide),padding .6s var(--glide),margin .6s var(--glide),
+    opacity .4s var(--ease) .2s,transform .6s var(--glide),visibility 0s}
+.nav-cta[data-hidden="true"]{max-width:0;padding-left:0;padding-right:0;margin-left:calc(-1 * var(--hdr-gap,24px));
+  opacity:0;transform:scale(.94);visibility:hidden;pointer-events:none;
+  transition:max-width .6s var(--glide),padding .6s var(--glide),margin .6s var(--glide),
+    opacity .2s var(--ease),transform .6s var(--glide),visibility 0s linear .6s}
 /* The language switch in the header — a short code (UA / EN) that fits every width, the word in the menu and the
    footer; his ask of 2026-10-04 (the footer alone meant scrolling to the bottom). The generator writes all three. */
 .lang-switch{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;font-size:13px;font-weight:600;
